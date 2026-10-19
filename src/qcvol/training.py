@@ -21,6 +21,8 @@ class Fit:
     success: bool
     message: str
     seconds: float
+    objective_history: list[float]
+    optimized_parameter_count: int
 
     def record(self):
         return {
@@ -35,9 +37,18 @@ def optimize(objective, initial, max_evaluations):
     if max_evaluations < len(initial) + 2:
         raise ValueError("COBYLA budget must be at least parameter count + 2")
     started = time.perf_counter()
-    initial_loss = float(objective(initial))
+    history = []
+
+    def tracked(parameters):
+        value = float(objective(parameters))
+        if not np.isfinite(value):
+            raise ValueError("Training objective became nonfinite")
+        history.append(value)
+        return value
+
+    initial_loss = tracked(initial)
     result = minimize(
-        objective,
+        tracked,
         initial,
         method="COBYLA",
         options={"maxiter": max_evaluations, "rhobeg": 0.3, "tol": 1e-5},
@@ -55,6 +66,8 @@ def optimize(objective, initial, max_evaluations):
         bool(result.success),
         str(result.message),
         time.perf_counter() - started,
+        history,
+        len(initial),
     )
 
 
@@ -119,23 +132,72 @@ def point_prediction(kind, parameters, data, rows, scaling):
         r = np.clip(data.daily.returns[rows - 1] / scaling.return_scale, -1, 1)
         v = np.clip(data.daily.rv[rows - 1] / scaling.rv_scale, 0, 1)
         return paper_probability(r, v, parameters) * scaling.rv_scale
+    if kind not in ("memory", "memory_b", "memory_short"):
+        raise ValueError("Unknown point model")
     return (
-        MemoryCircuit(len(parameters) // 6).predict(data.x[rows - 30], parameters)
+        MemoryCircuit(len(parameters) // 6, short_memory=kind == "memory_short").predict(
+            data.x[rows - 30], parameters
+        )
         * scaling.rv_scale
     )
 
 
-def fit_point(kind, data, seed=0, layers=3, max_evaluations=150):
+def point_initialization(kind, data, scaling, seed, layers, initialization):
+    """All target-informed initial values use training targets in circuit RV units."""
+    if kind not in ("paper", "memory", "memory_b", "memory_short"):
+        raise ValueError("Unknown point model")
+    n_params = 3 if kind == "paper" else MemoryCircuit(layers).n_params
+    rng = np.random.default_rng(seed)
+    if initialization == "legacy":
+        return rng.normal(0, 0.3, n_params)
+    if initialization == "uniform":
+        return rng.uniform(-np.pi, np.pi, n_params)
+    if initialization != "rv_prior" or kind == "paper":
+        raise ValueError("Choose legacy/uniform, or rv_prior for a memory model")
+    target = data.daily.rv[data.target_rows[data.train]] / scaling.rv_scale
+    mean = float(np.mean(target))
+    if not 0 < mean < 1:
+        raise ValueError("Training mean must be inside the probability readout range")
+    weights = np.zeros((layers, 6))
+    weights[:, :4] = rng.normal(0, 0.05, (layers, 4))
+    # At the training feature center, P0 = cos(theta/2)^2 = mean RV.
+    weights[-1, 4] = 2 * np.arccos(np.sqrt(mean))
+    return weights.ravel()
+
+
+def fit_point(
+    kind,
+    data,
+    seed=0,
+    layers=3,
+    max_evaluations=150,
+    initialization="legacy",
+    reduce_inactive=False,
+):
     scaling = PointScaling.fit(data)
     rows = data.target_rows[data.train]
     y = data.daily.rv[rows] / scaling.rv_scale
-    n_params = 3 if kind == "paper" else MemoryCircuit(layers).n_params
+    initial = point_initialization(kind, data, scaling, seed, layers, initialization)
+    active = np.ones(len(initial), dtype=bool)
+    if reduce_inactive:
+        active[1 if kind == "paper" else -1] = False
+    fixed = initial.copy()
+    fixed[~active] = 0
+
+    def expand(parameters):
+        full = fixed.copy()
+        full[active] = parameters
+        return full
 
     def objective(parameters):
-        prediction = point_prediction(kind, parameters, data, rows, scaling) / scaling.rv_scale
+        prediction = (
+            point_prediction(kind, expand(parameters), data, rows, scaling) / scaling.rv_scale
+        )
         return float(np.mean((prediction - y) ** 2))
 
-    fit = optimize(objective, np.random.default_rng(seed).normal(0, 0.3, n_params), max_evaluations)
+    fit = optimize(objective, initial[active], max_evaluations)
+    # Store the public full circuit representation, but report the smaller search dimension.
+    fit.parameters = expand(fit.parameters)
     return fit, scaling
 
 
@@ -160,7 +222,11 @@ def generate_point(kind, parameters, data, scaling, days=256, paths=4, seed=2000
             x = np.column_stack(
                 [y[:, -1], y[:, -7:].mean(axis=1), y[:, -30:].mean(axis=1), r[:, -1]]
             )
-            v = MemoryCircuit(len(parameters) // 6).predict(data.scaler.transform(x), parameters)
+            if kind not in ("memory", "memory_b", "memory_short"):
+                raise ValueError("Unknown point model")
+            v = MemoryCircuit(len(parameters) // 6, short_memory=kind == "memory_short").predict(
+                data.scaler.transform(x), parameters
+            )
         new_y = np.log(np.maximum(v * scaling.rv_scale, 1e-12))
         new_r = np.exp(new_y / 2) * rng.normal(size=paths)
         y, r = np.column_stack([y, new_y]), np.column_stack([r, new_r])
