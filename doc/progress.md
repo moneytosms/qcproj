@@ -96,16 +96,16 @@ pipeline and final combined study, not an assertion that the team has no Phase 1
 
 | Gate | Status | What is missing |
 | --- | --- | --- |
-| 1: reproduce paper | **Open** | Compare fitted curves and long-run/rolling MFDFA against source figures; document deviations, rescaling and encoding-domain treatment |
+| 1: reproduce paper | **Verified with numerical limits; PR #2 open** | Equation-level/core-statistic reproduction and comparison complete; exact table/series equality is not claimed |
 | 2: establish B and D | **Open** | Adequate optimization, matched-capacity short-memory control, depth/level studies, comparable forecast/realism evidence |
 | 3: complete fair scorecard | **Open** | GARCH(1,1), full required finance/quantile controls, stronger matched-compute comparison, uncertainty and convergence checks |
 | 4: final study/report | **Not run** | 20+ seeds, full sweep, paper-matched diagnostics, final report/slides and literature recheck |
 
 ## Next implementation and research work
 
-1. Audit upstream preprocessing and reproduce the original full-sample figure protocol
-   separately from the held-out baseline. Check additional random starts and the B-only
-   model's poor small-budget fit. Preserve the held-out test split.
+1. Review the audited full-sample reproduction in PR #2 and its explicit numerical
+   gaps. Next investigate the B-only model's poor small-budget fit with additional
+   optimizer budget/restarts and matched-capacity controls. Preserve the held-out test split.
 2. Add a matched-capacity short-memory circuit and reduced-phase-parameter variants;
    report identifiable rather than only nominal parameter counts.
 3. Add GARCH and a dedicated HAR quantile-regression baseline (the implemented HAR
@@ -118,3 +118,23 @@ pipeline and final combined study, not an assertion that the team has no Phase 1
    RV data, Ethereum transfer, Qiskit cross-check and IBM hardware measurements.
 
 No hardware demo, transfer run, long final sweep, final paper or slides have been produced.
+
+## Audited reproduction milestone (PR #2)
+
+[PR #2](https://github.com/moneytosms/qcproj/pull/2) independently adds the full-sample
+reproduction to `qvol/`. It has ten converged COBYLA starts (MSE .0020477757088474932),
+three 50,000-step generated histories, every complete 913-day window at step 365,
+20 shuffles per window, full q-step .02 spectra, and 200 Gaussian controls.
+
+Mean generated return h(2) is .49759 and log-RV-increment h(2) is .05249; shuffled
+increments return near .503. Source hashes, 150,000 recurrence steps, and 1,623 original
+rolling estimates were verified. Independent MFDFA fluctuation error is at most 2.22e-15.
+The reproduction suite passes 13 tests; running it with this pipeline's 27 tests gives
+40 passing tests. Seven measured comparison plots were visually inspected.
+
+The [measured report on that branch](https://github.com/moneytosms/qcproj/blob/codex/paper-reproduction/doc/paper-reproduction.md)
+explains differences in generated return tails, the empirical zero-return convention,
+and the unpublished exact scale grid. This verifies the original-paper comparison
+milestone while preserving uncertainty about exact numerical replication. It does not
+change the earlier held-out smoke scores above. Source PDFs and historical results
+remain unchanged. The PR is open for review; it has not been merged automatically.

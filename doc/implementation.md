@@ -23,7 +23,7 @@ with classical models. Do not assume quantum advantage. All essential work runs 
       and bin boundaries use training rows only.
 - [x] Implement the stated RY/RZ encoding and U3 one-qubit circuit, MSE/COBYLA fit.
 - [x] Verify phi redundancy and the exact Bloch-vector classical twin numerically.
-- [ ] Compare fitted curves and MFDFA h(2) with the paper's figures. Record scaling
+- [x] Compare fitted curves and MFDFA h(2) with the paper's figures. Record scaling
       assumptions and discrepancies, rather than calling an algebra check reproduction.
 
 **Gate 1:** numerical circuit checks pass and paper comparison is documented.
@@ -110,8 +110,19 @@ protection only. Independent test paths must not reuse training simulation seeds
 ## Current checkpoint (19 October 2026)
 
 The checked items above have working software and smoke-test evidence. Other checklist
-items include scientific comparisons or mixed tasks that remain incomplete. All research
-gates are still open; no improvements over the paper are established. See
+items include scientific comparisons or mixed tasks that remain incomplete. Gate 1 now has verified equation-level/core-statistic reproduction and a documented
+comparison in [PR #2](https://github.com/moneytosms/qcproj/pull/2), with explicit numerical
+gaps. Exact equality to every source figure/table is not established. Gates 2–4 remain
+open; no improvements over the paper are established. See
 [progress.md](progress.md) for 32 passing tests (including the existing Phase 1 suite),
 measured smoke scores, limitations and
 remaining work. Source PDFs are preserved in the repository root.
+
+## Reproduction milestone
+
+[PR #2](https://github.com/moneytosms/qcproj/pull/2) adds the full audited reproduction
+on an independent branch. It includes ten converged fits, three 50,000-step histories,
+all 913-day/365-step rolling windows, 20 shuffles, q-step .02 spectra, 200 Gaussian controls,
+and a measured report. Original data/source hashes and 150,000 recurrence steps were
+verified. Use the PR's report for measured results and remaining normalization/zero-return
+gaps. The code becomes available in the combined checkout when that PR is merged.
