@@ -1,6 +1,14 @@
 # Quantum Volatility Range Forecaster
 
-SQC course project, IIIT Kottayam. We improve Takaishi's one-qubit Bitcoin volatility model
+SQC course project, IIIT Kottayam.
+
+> **What is in this folder right now: only Phase 1, the reproduction of the base paper.**
+> All code here rebuilds Takaishi's one-qubit model from the paper's equations and runs it on the
+> data the author published in his repository ([takaishi-physics/QCL-volatility](https://github.com/takaishi-physics/QCL-volatility)).
+> The two check scripts (`02_closed_form_check.py`, `03_plot_phase1.py`) only analyse that same paper model.
+> **None of our improvements (A, B, D below) are implemented yet.** They start in Phase 2.
+
+The project goal is to improve Takaishi's one-qubit Bitcoin volatility model
 ([Fractal and Fractional 10(7):442, 2026](https://www.mdpi.com/2504-3110/10/7/442), arXiv 2609.04569) with:
 
 - **B, longer memory:** inputs from yesterday, last 7 days and last 30 days (HAR style)
