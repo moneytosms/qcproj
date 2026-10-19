@@ -242,3 +242,9 @@ is a development rule, not a statistical test. Full details are frozen in
 [nested-memory-protocol.md](nested-memory-protocol.md). Validation reuse, different
 feature maps and total search work remain visible limitations. This milestone
 selects a policy for D/A; it does not claim the final study has passed.
+
+The initial nested sweep exposed a precision mismatch at alpha=1: COBYLA's 1e-5
+trust-region floor did not satisfy the independent 1e-5 gradient threshold. Expose an
+optional optimizer tolerance while preserving the historical default. Repeat the
+full nested grid with floor 1e-7 for both controls, keeping the gradient check, alpha
+grid, starts and decision unchanged. Preserve and cost the inconclusive first attempt.

@@ -73,6 +73,7 @@ def fit_nested(
     short_memory=False,
     max_evaluations=10000,
     jitter=0.05,
+    optimizer_tolerance=1e-7,
 ):
     if not np.isfinite(regularization) or regularization < 0:
         raise ValueError("Regularization must be finite and nonnegative")
@@ -87,7 +88,7 @@ def fit_nested(
         residual = model.predict_encoded(encoded, x, parameters) - target
         return float(np.mean(residual**2) + regularization * np.sum(parameters[2:] ** 2))
 
-    fit = optimize(objective, initial, max_evaluations)
+    fit = optimize(objective, initial, max_evaluations, trust_tolerance=optimizer_tolerance)
     # Independent finite-difference stationarity check in addition to optimizer status.
     step = 1e-5
     gradient = np.empty(4)

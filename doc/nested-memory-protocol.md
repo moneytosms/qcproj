@@ -86,3 +86,20 @@ If longer memory fails this controlled comparison, record the negative result,
 retain the better simpler-input reference and move to D, then A, as separate
 experiments. If it passes, retain B provisionally and carry its controls forward.
 A final independent test study and variability analysis remain required either way.
+
+## Convergence amendment before the repeated sweep
+
+The first measured run used COBYLA trust-region tolerance 1e-5 for both extensions
+(commit cd40d08, local `results/nested-memory-2026-10-19/`). All 65 fits reported
+optimizer success, but the alpha=1 training-selected fits failed the fixed gradient
+threshold: about 1.21e-5 and 1.53e-5. Its recorded decision is **inconclusive**.
+
+Repeat the complete identical grid using nested-model trust-region tolerance 1e-7;
+keep the baseline's established 1e-5 tolerance. Keep the 10,000 ceiling, all starts,
+penalties, validation rule and gradient threshold unchanged. This is a training
+precision correction for both input sets, prompted by the independent stationarity
+check. First-run validation scores were visible in its logs; no alpha, feature, seed,
+split or acceptance-threshold change is made in response to those scores. Preserve
+the first run and report both attempts' compute costs. The repeated run uses
+`configs/nested-memory.json` with its explicit `optimizer_tolerance`. The historical
+root experiment keeps its original default tolerance and results.

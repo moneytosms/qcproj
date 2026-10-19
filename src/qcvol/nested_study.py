@@ -28,6 +28,7 @@ class NestedStudyConfig:
     max_evaluations: int = 10000
     jitter: float = 0.05
     gradient_tolerance: float = 1e-5
+    optimizer_tolerance: float = 1e-7
     minimum_relative_gain: float = 0.01
 
     def __post_init__(self):
@@ -53,6 +54,8 @@ class NestedStudyConfig:
             raise ValueError("Warm-start jitter must be finite and nonnegative")
         if not np.isfinite(self.gradient_tolerance) or self.gradient_tolerance <= 0:
             raise ValueError("Stationarity tolerance must be positive")
+        if not np.isfinite(self.optimizer_tolerance) or self.optimizer_tolerance <= 0:
+            raise ValueError("Optimizer trust-region tolerance must be positive")
         if not np.isfinite(self.minimum_relative_gain) or not 0 <= self.minimum_relative_gain < 1:
             raise ValueError("Minimum validation gain must lie in [0,1)")
 
@@ -160,7 +163,14 @@ def run_followup(data, config, output, source=None):
             **{n: version(n) for n in ("qcvol", "numpy", "scipy")},
         },
         "protocol": "Select restarts by penalized training objective; eligible only on optimizer success and central-gradient check. Select regularization by validation MSE. Paper zero-weight fallback included. No test scores.",
-        "convergence": "COBYLA rhobeg=.3, tol=1e-5; gradient step=1e-5; diagnostic calls counted separately",
+        "convergence": {
+            "method": "COBYLA",
+            "rhobeg": 0.3,
+            "paper_tolerance": 1e-5,
+            "nested_tolerance": config.optimizer_tolerance,
+            "gradient_step": 1e-5,
+            "diagnostic_calls_counted_separately": True,
+        },
         "capacity": "Paper 2 optimized/3 stored angles. Nested full and short: 4 optimized angles. HAR: 4 OLS coefficients, one linear solve. Families have different information maps and forward costs.",
         "limitations": [
             "Upstream author rescaling may use full-sample information",
@@ -275,6 +285,7 @@ def run_followup(data, config, output, source=None):
                     short_memory=kind == "nested_short",
                     max_evaluations=config.max_evaluations,
                     jitter=config.jitter,
+                    optimizer_tolerance=config.optimizer_tolerance,
                 )
                 norm = float(np.max(np.abs(gradient)))
                 row = {

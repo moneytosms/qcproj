@@ -33,9 +33,11 @@ class Fit:
         }
 
 
-def optimize(objective, initial, max_evaluations):
+def optimize(objective, initial, max_evaluations, trust_tolerance=1e-5):
     if max_evaluations < len(initial) + 2:
         raise ValueError("COBYLA budget must be at least parameter count + 2")
+    if not np.isfinite(trust_tolerance) or trust_tolerance <= 0:
+        raise ValueError("Trust-region tolerance must be finite and positive")
     started = time.perf_counter()
     history = []
 
@@ -51,7 +53,7 @@ def optimize(objective, initial, max_evaluations):
         tracked,
         initial,
         method="COBYLA",
-        options={"maxiter": max_evaluations, "rhobeg": 0.3, "tol": 1e-5},
+        options={"maxiter": max_evaluations, "rhobeg": 0.3, "tol": trust_tolerance},
     )
     parameters, loss = result.x, float(result.fun)
     if not np.isfinite(loss):
