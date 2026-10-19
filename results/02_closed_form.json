@@ -1,0 +1,10 @@
+{
+  "max_change_when_phi_varied": 0.0,
+  "max_closed_form_gap": 3.200564813177209e-16,
+  "readout_direction": [
+    0.12694626595347858,
+    0.9797196722465044,
+    -0.15502905977161413
+  ],
+  "working_parameters": 2
+}
