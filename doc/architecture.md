@@ -163,6 +163,15 @@ are differences of **log** RV, as defined in the paper. Hill tails need at least
 A Kupiec test concerns violations of a return quantile under the explicit Gaussian/RV
 mixture; “extreme volatility bin occurred” is not a VaR test.
 
+## Integration with the existing Phase 1 package
+
+Before publishing the first PR, upstream `main` gained the team's `qvol/` reproduction
+package. Rebase onto it and preserve its code, datasets and results. Keep the new
+`qcvol` namespace and root CLI separate because it implements a different held-out
+protocol; do not silently substitute one package's scores for the other's. Root pytest
+runs both suites. Root Ruff excludes `qvol/` to avoid an unrelated formatting rewrite.
+The root guide links to both entry points. Consolidation can be a later reviewed change.
+
 ## Sources verified during implementation
 
 - [Author data repository](https://github.com/takaishi-physics/QCL-volatility), pinned

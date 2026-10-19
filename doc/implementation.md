@@ -112,5 +112,6 @@ protection only. Independent test paths must not reuse training simulation seeds
 The checked items above have working software and smoke-test evidence. Other checklist
 items include scientific comparisons or mixed tasks that remain incomplete. All research
 gates are still open; no improvements over the paper are established. See
-[progress.md](progress.md) for 27 passing tests, measured smoke scores, limitations and
+[progress.md](progress.md) for 32 passing tests (including the existing Phase 1 suite),
+measured smoke scores, limitations and
 remaining work. Source PDFs are preserved in the repository root.

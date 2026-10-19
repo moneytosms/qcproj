@@ -25,7 +25,7 @@ not imply that the scientific gates have passed.
 
 | Check | Evidence |
 | --- | --- |
-| Unit and integration suite | **27 passed**; includes a full offline experiment |
+| Unit and integration suite | **32 passed**: 27 new pipeline tests plus 5 existing `qvol/` tests; includes a full offline experiment |
 | Lint | `uv run ruff check .` passed |
 | Format | `uv run ruff format --check .` passed |
 | Paper algebra | 256 random input pairs; phi error 0; twin maximum error 5.55e−16 |
@@ -87,6 +87,12 @@ paper, a successful realism objective, quantum advantage, or replication of the 
 pilot. One seed provides no estimate of between-seed spread; that field is `null`.
 
 ## Research gate status
+
+Upstream subsequently added a separate full-sample reproduction under `qvol/`, including
+saved Phase 1 results. That work is preserved and linked in the guide. Its five tests were
+run with this pipeline's tests after integration; its long experiment scripts were not
+rerun here. The open gates below describe the evidence still needed for this held-out
+pipeline and final combined study, not an assertion that the team has no Phase 1 work.
 
 | Gate | Status | What is missing |
 | --- | --- | --- |

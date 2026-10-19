@@ -5,6 +5,10 @@ A quantum computing course project extending a one-qubit Bitcoin volatility mode
 training**. Runs on a laptop using NumPy statevectors and SciPy. Quantum advantage is a
 research question, not an assumed result.
 
+The existing [`qvol/`](qvol/README.md) package contains the team's full-sample Phase 1
+paper reproduction. The root `src/qcvol/` package adds the held-out B/D/A experiment
+pipeline. The two use separate namespaces and entry points; the Phase 1 work is preserved.
+
 Start with [the project guide and repository reading order](doc/project-guide.md), then
 [the implementation plan](doc/implementation.md), [architecture decisions](doc/architecture.md),
 and [current progress](doc/progress.md). The two PDFs in this repository are the source
@@ -73,6 +77,8 @@ results/              Local experiment artifacts (gitignored)
 ```
 
 Check changes with `uv run ruff check .`, `uv run ruff format --check .`, and `uv run pytest -q`.
+Root pytest includes both packages' tests; root lint/format checks apply to the new pipeline
+and leave the existing `qvol/` formatting unchanged.
 The upstream dataset retains its own license, saved by the fetch script. No hardware keys
 or online service credentials are required to train or run the models.
 

@@ -19,10 +19,11 @@ finance = ["arch>=7.2,<9"]
 qcvol = "qcvol.cli:main"
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+testpaths = ["tests", "qvol/tests"]
 
 [tool.ruff]
 line-length = 100
+extend-exclude = ["qvol"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/qcvol"]

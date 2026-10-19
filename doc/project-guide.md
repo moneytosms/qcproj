@@ -6,6 +6,13 @@ repository as reference material. The implementation plan is [implementation.md]
 reasons behind engineering choices are in [architecture.md](architecture.md). Actual
 completion and measured checks are in [progress.md](progress.md).
 
+The repository also includes the team's existing [`qvol/`](../qvol/README.md) Phase 1
+reproduction, added upstream while this pipeline was being developed. Its experiments
+use full-sample fitting and live under `qvol/experiments/`; this guide's `qcvol` commands
+run the new held-out comparison pipeline from the repository root. Their outputs are
+separate. Read the Phase 1 README and experiment 01 when studying paper reproduction;
+its claims are not automatically evidence that our held-out models have passed a gate.
+
 ## 1. What question are we trying to answer?
 
 A quiet Bitcoin day is often followed by another quiet day; turbulent days also cluster.
@@ -302,7 +309,9 @@ function-evaluation budget was reached; inspect its message and improve the budg
 2. **This guide** — understand the objective, terminology and execution path.
 3. **doc/implementation.md**, then **doc/progress.md** — intended stages versus actual evidence.
 4. **doc/architecture.md** — assumptions, parameter caveats, reproducibility choices.
-5. **src/qcvol/data.py** — trace one target day and confirm its inputs are in the past.
+5. **qvol/README.md**, then **qvol/experiments/01_reproduce_paper.py** — the existing
+   full-sample reproduction and its saved results. Then **src/qcvol/data.py** — trace
+   one held-out target day and confirm its inputs are in the past.
 6. **src/qcvol/quantum.py** — RY/RZ/U3 → paper encoding → classical twin → BornCircuit.
    Read **tests/test_quantum.py** alongside it for the independent matrix comparison.
 7. **src/qcvol/classical.py** — frequency, softmax, tiny NN and HAR comparators.
