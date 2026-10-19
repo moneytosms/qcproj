@@ -49,9 +49,13 @@ def main():
             ax.grid(alpha=0.2)
     paper = next(s for s in summary if s["kind"] == "paper")
     har = next(r for r in records if r["kind"] == "har_rv")
+    persistence = next(r for r in records if r["kind"] == "persistence")
     for ax, split in zip(axes, ("train", "validation"), strict=True):
         ax.axhline(paper[f"{split}_mse_rv"], color="gray", linestyle="--", label="Paper")
         ax.axhline(har[f"{split}_mse_rv"], color="#497745", linestyle=":", label="Classical HAR RV")
+        ax.axhline(
+            persistence[f"{split}_mse_rv"], color="#80548c", linestyle="-.", label="Persistence"
+        )
         ax.ticklabel_format(axis="y", style="sci", scilimits=(0, 0))
     axes[0].set_title("Training MSE of the training-selected restart")
     axes[1].set_title("Validation MSE of that same restart")
@@ -67,6 +71,7 @@ def main():
         (decision["selections"]["nested_memory"]["winner"], "Selected weekly/monthly", "#176287"),
         (decision["selections"]["nested_short"]["winner"], "Selected yesterday control", "#a15721"),
         ("har_rv", "Classical HAR RV", "#497745"),
+        ("persistence", "Persistence", "#80548c"),
     ]
     for index, (name, label, color) in enumerate(chosen):
         with np.load(root / f"{name}.npz") as arrays:

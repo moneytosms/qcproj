@@ -106,3 +106,22 @@ uv run python scripts/plot_memory_investigation.py results/memory-investigation-
 The declared grid is in `configs/memory-investigation.json`. Each output directory must
 be new. Parameters, every restart, convergence histories, train/validation predictions,
 search costs and source provenance stay in the ignored run folder.
+
+## Baseline preserving memory follow-up
+
+The [measured follow-up](doc/nested-memory-followup.md) tests a two-weight extension
+that equals the original paper at zero memory weights. Its converged, regularized
+comparison retains previous-day inputs for the next D stage; weekly/monthly inputs
+do not beat the matched short-memory control. The full study and D/A validation remain
+pending. See the [fixed protocol and precision amendment](doc/nested-memory-protocol.md).
+
+```bash
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 uv run python scripts/run_nested_memory.py \
+  --author-data data/raw/author --output results/nested-memory-01
+OPENBLAS_NUM_THREADS=1 uv run python scripts/verify_nested_memory.py \
+  results/nested-memory-01 --author-data data/raw/author
+uv run python scripts/plot_nested_memory.py results/nested-memory-01
+```
+
+The current main Born runner still uses HAR inputs. Its D comparison must explicitly
+implement the selected short-input policy before running the final study configuration.

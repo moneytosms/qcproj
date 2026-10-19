@@ -362,3 +362,18 @@ The PDFs' pilot numbers and novelty assertions are context, not proof from this 
 | held-out | observations kept out of parameter fitting |
 | MFDFA | multiscale detrended fluctuation analysis for scaling diagnostics |
 | Kupiec | unconditional coverage test of return-quantile violations |
+
+## Reading the baseline preserving memory follow-up
+
+Start with [the measured decision](nested-memory-followup.md), then the
+[protocol and convergence amendment](nested-memory-protocol.md) and ADR 012 in
+[architecture.md](architecture.md). The follow-up retains previous-day inputs for D;
+its validation results do not establish longer-memory skill.
+
+For the code, read `src/qcvol/nested_memory.py` for the exact zero-weight paper
+identity, warm start and raw-RV HAR comparator. Then read `src/qcvol/nested_study.py`
+for regularization/restart selection, convergence gates and the policy decision.
+`tests/test_nested_memory.py` checks independent matrices and future-data isolation.
+Run, audit and plot using the three `scripts/*nested_memory.py` entry points described
+in the measured note. Raw run folders stay ignored. The existing main Born runner
+still needs the selected short-input policy before the next D comparison.
