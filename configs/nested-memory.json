@@ -1,0 +1,8 @@
+{
+  "seeds": [0, 1, 2, 3, 4],
+  "regularization": [0, 0.0001, 0.001, 0.01, 0.1, 1],
+  "max_evaluations": 10000,
+  "jitter": 0.05,
+  "gradient_tolerance": 0.00001,
+  "minimum_relative_gain": 0.01
+}
