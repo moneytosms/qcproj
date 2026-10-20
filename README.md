@@ -112,8 +112,7 @@ search costs and source provenance stay in the ignored run folder.
 The [measured follow-up](doc/nested-memory-followup.md) tests a two-weight extension
 that equals the original paper at zero memory weights. Its converged, regularized
 comparison retains previous-day inputs for the next D stage; weekly/monthly inputs
-do not beat the matched short-memory control. The full study and D/A validation remain
-pending. See the [fixed protocol and precision amendment](doc/nested-memory-protocol.md).
+do not beat the matched short-memory control. The full study remains pending. The measured D/A development comparison is linked below. See the [fixed protocol and precision amendment](doc/nested-memory-protocol.md).
 
 ```bash
 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 uv run python scripts/run_nested_memory.py \
@@ -123,8 +122,8 @@ OPENBLAS_NUM_THREADS=1 uv run python scripts/verify_nested_memory.py \
 uv run python scripts/plot_nested_memory.py results/nested-memory-01
 ```
 
-The current main Born runner still uses HAR inputs. Its D comparison must explicitly
-implement the selected short-input policy before running the final study configuration.
+The historical main Born runner uses HAR inputs. The dedicated Step 3 runner below
+implements the selected short-input policy; the old final-study configuration still needs updating.
 
 ## Step 3: short-input D → A validation study
 
@@ -135,7 +134,8 @@ check the selected result; no test scores are calculated. The older `qcvol run` 
 `configs/study.json` still describe the original HAR-input pipeline and are not the
 entry point for this short-input comparison.
 
-Read the [fixed protocol](doc/distribution-study-protocol.md) before running:
+Read the [measured findings](doc/distribution-study.md) and
+[fixed protocol](doc/distribution-study-protocol.md) before running:
 
 ```bash
 uv run python scripts/run_distribution_study.py \

@@ -375,8 +375,8 @@ identity, warm start and raw-RV HAR comparator. Then read `src/qcvol/nested_stud
 for regularization/restart selection, convergence gates and the policy decision.
 `tests/test_nested_memory.py` checks independent matrices and future-data isolation.
 Run, audit and plot using the three `scripts/*nested_memory.py` entry points described
-in the measured note. Raw run folders stay ignored. The existing main Born runner
-still needs the selected short-input policy before the next D comparison.
+in the measured note. Raw run folders stay ignored. The dedicated D/A runner described below implements
+the selected short-input policy; the historical main runner retains HAR inputs.
 
 ## Reading the D → A study
 
@@ -408,3 +408,9 @@ invariance, future isolation, phase removal, independent dense matrices, restart
 selection, and artifact tampering. Do not run the old 20-seed configuration as if it
 already implemented this short-input protocol. GARCH, dedicated HAR quantile regression,
 final 20-seed evaluation and the paused report still remain separate work.
+
+Read the [measured Step 3 findings](distribution-study.md) after the protocol. They show
+a small quantum realism gain with slightly worse NLL, better classical NLL, and a large
+remaining weekly-ACF gap. A better aggregate statistic does not mean every part of the
+generated history became realistic. The next work is the Step 4 classical comparison,
+including capped-network optimization; the final 20-seed study follows those checks.

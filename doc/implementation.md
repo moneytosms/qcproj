@@ -53,8 +53,8 @@ completion above does not establish a benefit from memory.
 - [x] Estimate moment scales on training segments only; reuse fixed simulation streams
       during optimization and fresh seeds for evaluation. Fixed seeds reduce noise;
       discrete sampling still makes the objective nonsmooth.
-- [ ] Warm-start realism fits from forecast-only parameters. Sweep lambda in
-      {0, .01, .05, .2}; select lambda and depth on validation only.
+- [x] Warm-start realism fits from forecast-only parameters. Sweep lambda in
+      {0, .01, .05, .2}; select D depth first, then lambda at frozen depth on validation only.
 - [ ] Add frequency and softmax baselines, an exactly 24-parameter tiny neural network,
       HAR residual/quantile baseline, and GARCH(1,1). Record effective as well as nominal
       parameter counts and compute budgets.
@@ -144,3 +144,22 @@ longer-memory gain. This closes the focused B decision; Gate 2 overall remains o
 until D is properly evaluated. Implement the short-input policy in the D runner, then
 validate its probability forecasts before testing A. Keep the quantum/classical controls.
 Do not mark the 20-seed final study complete or launch it before those gates pass.
+
+## Step 3 development checkpoint (20 October 2026)
+
+- [x] Enforce the B-selected previous-day policy for D training, validation and recursion.
+- [x] Fit D at depths 1–4 with five starts, training-only restart selection and independent
+      stationarity checks; select depth on validation NLL.
+- [x] Fit A separately at the frozen D depth, three warm starts per positive lambda,
+      train-only restart selection and a fixed validation trade-off rule including lambda zero.
+- [x] Audit every lambda winner on two new 32×512-day streams; independently replay
+      artifacts and inspect plots. Record training cost and capped restarts.
+
+The [measured comparison](distribution-study.md) selects two layers / lambda .05 for
+quantum. The aggregate realism improvement is modest and costs forecast accuracy;
+weekly persistence remains poor, and classical controls still win on NLL. All D setting
+winners pass their training checks; four alternative network starts remain budget-limited.
+This is completed development evidence, not final 20-seed or independent test evidence.
+Gate 3's complete classical/realism scorecard remains open. Next is Step 4: GARCH,
+dedicated HAR quantile regression, training-effort controls and remaining comparator
+optimization. Keep the project report paused.

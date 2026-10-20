@@ -1,6 +1,6 @@
 # Verified progress
 
-Updated 19 October 2026. This records what was actually built and run. The long-term
+Updated 20 October 2026. This records what was actually built and run. The long-term
 research checklist is [implementation.md](implementation.md). Completed software does
 not imply that the scientific gates have passed.
 
@@ -206,3 +206,33 @@ validation block. Before D's next sweep, implement its selected short-input poli
 the existing main Born runner still defaults to HAR inputs. Then evaluate D's forecast
 distribution, followed by A's realism effect. The full 20-seed study and independent
 test comparison remain pending; the project report remains paused.
+
+## Step 3 D → A development comparison
+
+Completed the [frozen protocol](distribution-study-protocol.md) and
+[measured comparison](distribution-study.md) on 20 October 2026. The new dedicated
+runner uses previous-day log RV and return throughout training, validation and recursive
+sampling; the historical HAR-input runner is preserved.
+
+- 30 forecast fits, 27 realism fits, 3 controls; 60 saved candidate/control records.
+- All 20 quantum D fits and all six training-selected D setting winners pass optimizer
+  status and independent stationarity checks. Four other network starts hit the call
+  ceiling; keep that training limitation visible.
+- Validation selects quantum depth 2, then lambda .05. Fresh-stream mean moment distance
+  improves 14.2774 → 13.0526 (8.6%); NLL worsens .997917 → 1.007528.
+- Softmax scores .979151 before A and .988795 after selected A, with better fresh moment
+  distances too. Full HAR reference NLL is .930155, with additional history information.
+- Quantum weekly ACF remains about .012 against real validation .383. A does not repair
+  the missing long-range structure. B's earlier point-model result is not a universal
+  conclusion about memory in distribution forecasting.
+- 388,860 objective calls plus 1,050 independent stationarity calls; 619.210 fit wall seconds.
+  All 27 A optimizers stop by radius, not by budget; that is not a nonsmooth optimality proof.
+- **59 tests pass**, Ruff checks pass. Independent artifact verification replays 42,360
+  probability rows (max dense-gate error 7.77e−16), 628,224 recursive output days and all
+  recorded choices/scores; both exported figures were inspected.
+
+No new test scores were computed. Validation reuse and finite simulation horizons remain
+limits. Step 4 comparisons and the 20-seed final study remain pending; report/slides stay
+paused. Use `scripts/run_distribution_study.py`, not the old `configs/study.json`, for
+this short-input D/A protocol. Raw measured arrays/plots stay ignored under
+`results/distribution-study-2026-10-20`.

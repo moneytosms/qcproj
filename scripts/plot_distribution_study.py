@@ -66,15 +66,17 @@ def main():
                 s=160 if selected else 35,
                 label=family if j == 0 else None,
             )
-            ax.annotate(
-                f"λ={row['lambda']:g}",
-                (x, y),
-                xytext=(4, 4),
-                textcoords="offset points",
-                fontsize=8,
-            )
+            if selected or row["lambda"] == 0:
+                ax.annotate(
+                    f"λ={row['lambda']:g}",
+                    (x, y),
+                    xytext=(5, 6),
+                    textcoords="offset points",
+                    fontsize=8,
+                )
+    ax.margins(x=0.12, y=0.08)
     ax.set(
-        title="Fresh streams: realism / forecast trade-off",
+        title="Fresh streams: trade-off (stars = selected)",
         xlabel="Distance of mean moments (two-stream mean)",
         ylabel="Validation NLL",
     )
