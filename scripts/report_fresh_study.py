@@ -116,7 +116,7 @@ def figures(result, out):
     ax.barh(range(len(names)), means, xerr=sds, color=[colour(n) for n in names], height=0.65)
     ax.set_yticks(range(len(names)), names, fontsize=8.5)
     ax.invert_yaxis()
-    ax.set_xlim(min(means) * 0.9, max(means) * 1.04)
+    ax.set_xlim(min(means) * 0.9, max(m + e for m, e in zip(means, sds)) * 1.02)
     ax.set_xlabel("test log loss (lower is better), mean ± SD over 20 seeds")
     ax.set_title(
         "Test-period forecast scores, Jan 2025 to Oct 2026",
@@ -150,7 +150,11 @@ def figures(result, out):
         xs - 0.4 + width / 2, result["test_moments"][:3], width, color=INK, label="real test period"
     )
     for i, n in enumerate(focus, start=1):
-        c = QUANTUM if "quantum" in n else (CLASSICAL if "har-A" in n or "har-D" in n else BASE)
+        c = (
+            QUANTUM
+            if "quantum" in n
+            else ("#5eead4" if "network" in n else (CLASSICAL if "softmax" in n else BASE))
+        )
         alpha = 1.0 if n.endswith("-A") else 0.45
         ax.bar(
             xs - 0.4 + width / 2 + i * width,
