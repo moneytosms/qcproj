@@ -30,3 +30,11 @@ classical model. A validation win is exploratory because architectures and calib
 are selected on that same period. It can nominate a frozen candidate for future data only;
 it cannot establish an out-of-sample improvement. No downloaded data or generated model
 outputs are committed.
+
+## Amendment 1: optimizer-cap sensitivity check
+
+Before drawing a conclusion, refit the validation-selected quantum candidate and the
+weekend network with equal 20,000-call / 2,000-iteration budgets, two fresh development
+seeds (902, 903), and two restarts. This is a convergence sensitivity check on the same
+validation dates, not an independent confirmation; retain all failures and make no
+architectural changes after observing it.
