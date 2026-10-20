@@ -74,11 +74,34 @@ def scores(P, labels, rv, level_rv):
     }
 
 
+def paired_intervals(quantum, controls, blocks, rng, replicates=2000):
+    intervals = []
+    for block in blocks:
+        idx = block_indices(len(quantum), block, replicates, rng)
+        for name, losses in controls.items():
+            delta = quantum - losses
+            boot = delta[idx].mean(axis=1)
+            intervals.append(
+                {
+                    "control": name,
+                    "block": block,
+                    "mean_difference": float(delta.mean()),
+                    "lower": float(np.quantile(boot, 0.025)),
+                    "upper": float(np.quantile(boot, 0.975)),
+                }
+            )
+    return intervals
+
+
 def evaluate(data, out, v2_out):
     rec = json.loads((out / "seal.json").read_text())
     for name, digest in rec["artifacts"].items():
         if sha256(out / name) != digest:
             raise ValueError(f"Artifact changed after sealing: {name}")
+    v2_seal = json.loads((v2_out / "seal.json").read_text())
+    for name, digest in v2_seal["artifacts"].items():
+        if sha256(v2_out / name) != digest:
+            raise ValueError(f"v2 artifact changed after sealing: {name}")
     test_rows = data.target_rows[data.test]
     labels, rv = data.labels[data.test], data.daily.rv[test_rows]
     level_rv = np.array([np.exp(pool).mean() for pool in data.bins.pools])
@@ -97,11 +120,17 @@ def evaluate(data, out, v2_out):
     v2_spec = v2.Spec("quantum", 6, layers=3)
     v2_fn, _ = v2.build(v2_spec)
     for seed in SEEDS:
-        m = json.loads((v2_out / f"train-seed{seed}.json").read_text())["models"]["quantum-v2"][
-            "best"
-        ]
+        trained = json.loads((v2_out / f"train-seed{seed}.json").read_text())["models"]
+        m = trained["quantum-v2"]["best"]
         P = np.asarray(v2_fn(np.array(m["parameters"]), v2.features(data, True)[data.test]))
         per_seed.setdefault("quantum-v2", []).append(scores(P, labels, rv, level_rv))
+        for name in ("softmax-v2", "network-v2"):
+            spec, calendar, _ = v2.MODELS[name]
+            probs_fn, _ = v2.build(spec)
+            model = trained[name]["best"]
+            x_classical = v2.features(data, calendar)[data.test]
+            P = np.asarray(probs_fn(np.array(model["parameters"]), x_classical))
+            per_seed.setdefault(name, []).append(scores(P, labels, rv, level_rv))
     summary = {}
     for name, runs in per_seed.items():
         summary[name] = {
@@ -110,19 +139,12 @@ def evaluate(data, out, v2_out):
     ll = {k: np.mean([r["log_loss"] for r in v], axis=0) for k, v in per_seed.items()}
     rng = np.random.default_rng(620000)
     days = len(labels)
-    delta = ll["quantum-v3"] - ll["quantum-v2"]
-    intervals = []
-    for block in (7, 30):
-        idx = block_indices(days, block, 2000, rng)
-        boot = delta[idx].mean(axis=1)
-        intervals.append(
-            {
-                "block": block,
-                "mean_difference": float(delta.mean()),
-                "lower": float(np.quantile(boot, 0.025)),
-                "upper": float(np.quantile(boot, 0.975)),
-            }
-        )
+    intervals = paired_intervals(
+        ll["quantum-v3"],
+        {name: ll[name] for name in ("quantum-v2", "softmax-v2", "network-v2")},
+        (7, 30),
+        rng,
+    )
     result = {
         "post_hoc": True,
         "summary": summary,

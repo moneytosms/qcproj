@@ -1,0 +1,30 @@
+{
+  "protocol": "doc/multimarket-v3-protocol.md",
+  "protocol_sha256": "aa1b373fe57701c71e617ce074f05bbbd05138c51367b980fd3e254c99271430",
+  "data": {
+    "data/adausdt_daily.csv": "e7d482cfd80cb50298c4c52eab375aade5e1b74200b053190eee795007ccc9d3",
+    "data/adausdt_daily.json": "9d72b50d7b48e7e3c614d856de0a42961e27e39819626c77b68573249e272113",
+    "data/bnbusdt_daily.csv": "13523104e5224867643d6e3dd20b789d44aeff12c8fb6ab0d29daf95b654fa31",
+    "data/bnbusdt_daily.json": "0926be57787d4f1abe71667c7da1cfc8b51a378f00be51485820ab7432660703",
+    "data/ltcusdt_daily.csv": "bff9b492ff8ce274d1aa0bcae0aed9e7921dda93d893f95c85a4a48b564fe308",
+    "data/ltcusdt_daily.json": "4501fba773a7af7336bbcb23ff6093436ed5c69d23c1653744e989e9e2e02d3a"
+  },
+  "code_sha256": {
+    "scripts/run_v2_study.py": "0f3cf7c6d3298690e0e6e57fd32dfc942f5cb051669b0709cdcbc7357d67b2be",
+    "scripts/run_v3_study.py": "8124bb9e383eacd1e776ba25f512bc6fefaf60288028c82b895943ce2e71935b",
+    "src/qcvol/data.py": "c8ebc61e7da5e259b3d84dfa829e9edced14a650e85aa93c6a0443bb48a57ec0",
+    "src/qcvol/fresh_study.py": "1d952a6f48346968d4e33d53a2ecff44a74e5da25659371f5ba6103ce5e2c425",
+    "src/qcvol_v2/models.py": "ebf02ec415b04292c7a91e4db3587cbb0b507c938694c9a7d79abf0c249e6098",
+    "src/qcvol_v3/models.py": "2b53ccb557e814dbee91656c794428827a10bdc965252da3432ba20d82a97287",
+    "src/qcvol_next/binance_data.py": "3b1aec24428950d85580061ff7e143f37935149a5a94e49f55839a60e702bb1f"
+  },
+  "models": {
+    "quantum": "Born v3, 6 inputs, depth 3, ridge 0.01, 10 restarts, 20 seeds",
+    "controls": "softmax-v2 (28 params), network-v2 (26 params), same 6 inputs, 5 restarts, 20 seeds",
+    "splits": {
+      "train": "through 2022-12-31",
+      "validation": "2023-01-01 through 2024-12-31",
+      "test": "2025-01-01 through 2026-10-19"
+    }
+  }
+}

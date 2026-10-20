@@ -4,6 +4,10 @@ Updated 20 October 2026. This records what was actually built and run. The long-
 research checklist is [implementation.md](implementation.md). Completed software does
 not imply that the scientific gates have passed.
 
+The early test table below is the original pipeline baseline. For current results,
+environment details, later study checks, and repository branch status, see the
+[research and verification ledger](research-ledger.md).
+
 ## Research on the next experiment (20 October 2026)
 
 The [next-approaches literature note](next-approaches-literature.md) compares the
@@ -490,6 +494,14 @@ previously scored BTC test window closed. A depth-3 RY quantum readout correctio
 7/30-day intervals favor quantum, but candidate selection reused the same validation
 period, so this remains exploratory. No new BTC test score or quantum advantage is claimed.
 See [results](btc-quantum-upgrade-results.md).
+
+### Cross-market v3 evaluations
+
+The [LTC/BNB/ADA panel](multimarket-v3-results.md) failed its registered three-market rule:
+quantum lost 2.79% on LTC and 6.89% on BNB, with only an uncertain 1.24% ADA gain. The
+[LINK/DOT/AVAX follow-up](calibrated-v3-results.md) found a 5.68% AVAX log-loss gain, but
+only 2.45% on LINK and 0.66% on DOT; QLIKE favored classical on all three. The AVAX result
+is a single-market signal, not evidence of a transferable or all-metric advantage.
 
 - Quantum v3 ([results](v3-study.md)): a 10-restart ensemble improves the v2 quantum
    test loss from .5288 to .5145, but remains behind softmax-v2 (.4962) and network-v2

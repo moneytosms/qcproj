@@ -11,7 +11,7 @@ pipeline. The two use separate namespaces and entry points; the Phase 1 work is 
 
 Start with [the project guide and repository reading order](doc/project-guide.md), then
 [the implementation plan](doc/implementation.md), [architecture decisions](doc/architecture.md),
-and [current progress](doc/progress.md). The two PDFs in this repository are the source
+the [research and verification ledger](doc/research-ledger.md), and [current progress](doc/progress.md). The two PDFs in this repository are the source
 specification and explanatory guide; their pilot numbers are not results from this code.
 
 ## Quick start
@@ -68,10 +68,14 @@ see the architecture notes before describing a parameter-matched comparison.
 
 ```text
 doc/                  Plan, decisions, conceptual guide, verified progress
-src/qcvol/            Reusable mathematics, data, models and experiment runner
+src/qcvol/            Core reusable pipeline and early study models
+src/qcvol_v2/         Quantum v2 forecasting models
+src/qcvol_v3/         Quantum v3 forecasting models
+src/qcvol_next/       Weekend-aware models and later development runners
+qvol/                 Separate audited reproduction of the original paper
 tests/                Circuit, leakage, metric and deterministic training checks
-scripts/              Explicit upstream acquisition and optional figures
-configs/              Small smoke run and proposed study budget
+scripts/              Data builders, experiment runners, verifiers and plots
+configs/              Smoke, study and preregistered experiment settings
 uv.lock               Locked Python dependencies
 data/raw/             Downloaded source + license + provenance (gitignored)
 results/              Local experiment artifacts (gitignored)
