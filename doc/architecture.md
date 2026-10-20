@@ -384,3 +384,19 @@ its fits failed stationarity checks (amendment 1 in the protocol).
 
 **Sealing:** the evaluation function is in the sealed package, so test scoring cannot change
 after training; development, selection and training artifacts are hashed into `seal.json`.
+
+## ADR 017 — Quantum v2 in a separate package
+
+**Context:** the fresh-study circuit lost to same-input classical models. A validation-only
+search showed one qubit never received yesterday's volatility, the trigonometric response
+extrapolated badly into the calm 2023-2026 regime, and no model saw the weekday.
+
+**Decision:** v2 makes every rotation angle an affine function of all inputs on both qubits,
+squashes the HAR inputs with 2·tanh(x/2), and adds centered weekend and Monday flags of the
+target day. The same inputs go to the softmax and network comparators. Code lives in
+`src/qcvol_v2` (JAX for exact gradients, optional extra `v2`) because the fresh-study seal
+hashes every file in `src/qcvol`; v2 has its own seal over its artifacts and source.
+
+**Consequence:** the weekend idea was noticed in the already-scored test period, so v2 test
+scores are post-hoc by protocol ([v2-protocol.md](v2-protocol.md)); a new market is the
+clean check.
