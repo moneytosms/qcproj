@@ -50,11 +50,29 @@ statevector calculations.
 
 ## Branch and PR bookkeeping
 
-As of 20 October 2026, PRs #1–#12 were already merged into `main`. PRs #13, #15, and #16
-were merged during this consolidation. PR #14's downloaded market datasets and generated
-fit/evaluation files were removed from its final branch update to comply with the repository
-rule; its model code, tests, configs, frozen protocols, and aggregate score reports are
-retained and merged last in this consolidation.
+As of 20 October 2026, all 16 project PRs are merged into `main`. PRs #13–#16 were merged
+during this consolidation. PR #14's downloaded market datasets and generated fit/evaluation
+files were removed from its final branch update to comply with the repository rule; its model
+code, tests, configs, frozen protocols, and aggregate score reports are retained.
 
-Historical topic branch refs for merged PRs are retained remotely. The branch audit found
-their heads already contained in `main`; they contain no additional unmerged work.
+| PR | Topic branch | Status |
+| --- | --- | --- |
+| #1 | `codex/project-foundation` | Merged |
+| #2 | `codex/paper-reproduction` | Merged |
+| #3 | `codex/memory-fit-investigation` | Merged |
+| #4 | `codex/nested-memory-followup` | Merged |
+| #5 | `codex/distribution-realism-study` | Merged |
+| #6 | `codex/classical-comparisons` | Merged |
+| #7 | `codex/final-study` | Merged |
+| #8 | `nidhi/memory-realism-fresh-data` | Merged |
+| #9 | `codex/calendar-quantum-improvement` | Merged |
+| #10 | `codex/quantum-complementarity` | Merged |
+| #11 | `nidhi/quantum-v2` | Merged |
+| #12 | `srimoneyshankar/eth-study` | Merged |
+| #13 | `srimoneyshankar/eth-study` | Merged |
+| #14 | `feat/multimarket-quantum-study` | Merged |
+| #15 | `research/next-forecasting-approaches` | Merged |
+| #16 | `feat/btc-quantum-upgrade` | Merged |
+
+Remote refs for these topic branches are retained for traceability. The audit found no remote
+branch head ahead of `origin/main`, and no open PRs. Branches were not deleted.
