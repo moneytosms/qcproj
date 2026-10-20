@@ -355,3 +355,13 @@ or final-seed training has occurred. The remaining forecast gap is real in this 
 A post-hoc validation mixture suggests complementary quantum errors, motivating a
 separate, capacity-controlled ensemble protocol. That small exploratory gain is not
 an advantage claim. The overall improvement goal remains active.
+
+### Completed controlled ensemble follow-up
+
+The [protocol](ensemble-protocol.md) was committed before weight fitting. Matched
+five-member ensembles each offer 277 model parameters plus four weight coordinates.
+Both reduce to 35.296% calendar-linear and 64.704% sine, validation NLL .604802036.
+Quantum weight is zero; 2023-fitted weights likewise give no quantum benefit in 2024.
+The [measured result](ensemble-results.md) rejects the candidate before final-seed
+training or benchmark scoring. Independent dense predictions agree within 4.996e-16,
+and all mixture KKT residuals are below 1.354e-8. A numerical tie correction is disclosed.
