@@ -327,3 +327,7 @@ Completed the [pre-committed protocol](fresh-study-protocol.md) and the
   squared error and realism (215 vs 34); all 95% date-bootstrap intervals exclude zero.
   Main cause: the paper's max-based input scaling squashes ordinary days after the 2020
   crash, plus one-day memory.
+- Quantum v2 ([protocol](v2-protocol.md), [results](v2-study.md)): all inputs on both
+  qubits, squashed inputs and weekend/Monday flags, chosen on validation. Post-hoc test log
+  loss 0.529 vs v1 0.570 (−0.041, interval −0.059 to −0.021); weekend input worth 0.027.
+  Same-input softmax still better (0.496; gap 0.033, was 0.051). No quantum advantage.
