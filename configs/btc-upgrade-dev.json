@@ -1,0 +1,23 @@
+{
+  "development_seeds": [900, 901],
+  "final_seeds": [0, 1],
+  "depths": [1, 2, 3],
+  "lambdas": [0.01, 0.05, 0.2, 1.0],
+  "restarts": 2,
+  "network_ridge": 0.001,
+  "forecast_max_calls": 5000,
+  "forecast_max_iterations": 500,
+  "realism_starts": 1,
+  "realism_max_calls": 100,
+  "realism_tolerance": 0.002,
+  "train_days": 256,
+  "train_paths": 1,
+  "burn_in": 60,
+  "selection_paths": 1,
+  "selection_weight": 0.01,
+  "evaluation_paths": 1,
+  "evaluation_burn_in": 100,
+  "bootstrap_replicates": 500,
+  "bootstrap_blocks": [7, 30],
+  "bootstrap_confidence": 0.95
+}
