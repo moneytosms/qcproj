@@ -8,3 +8,4 @@ dist/
 data/raw/
 data/processed/
 results/
+.cache/
