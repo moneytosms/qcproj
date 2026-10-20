@@ -1,0 +1,12 @@
+{
+  "seeds": [0],
+  "layers": [3],
+  "lambdas": [0.0, 0.05],
+  "max_evaluations": 40,
+  "train_path_days": 64,
+  "train_paths": 1,
+  "evaluation_days": 192,
+  "evaluation_paths": 2,
+  "burn_in": 10,
+  "validation_realism_weight": 0.01
+}
