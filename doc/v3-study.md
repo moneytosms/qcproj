@@ -40,3 +40,36 @@ loss and on validation by 0.008.
 - The seal records a hash of `models.py` as it was when sealed, so it no longer matches the
   file. The artifact hashes still match. The import removal does not change any output.
 - Full test suite: 94 passed, 1 skipped (requires the `finance` extra for one seal test).
+
+## Final comparison of all results (test period, post-hoc)
+
+Test log loss, mean over 20 seeds (lower is better). Every value here is post-hoc, because the
+v2 design was chosen after the test period was seen.
+
+| Rank | Model | Type | Test log loss |
+| --- | --- | --- | ---: |
+| 1 | softmax-v2 | classical, 28 params | 0.4962 |
+| 2 | network-v2 | classical, 26 params | 0.5042 |
+| 3 | **quantum-v3** | quantum, 84 params | **0.5145** |
+| 4 | softmax-har-D | classical | 0.5184 |
+| 5 | har-residual | classical baseline | 0.5221 |
+| 6 | quantum-v2 | quantum | 0.5288 |
+| 7 | har-quantile | classical baseline | 0.5366 |
+| 8 | quantum-har-D (Bharadwaj's `BornCircuit`) | quantum | 0.5695 |
+
+Paired block-bootstrap contrasts, v3 minus other model (negative means v3 is better; 7- and
+30-day blocks give the same intervals to three decimals):
+
+- vs quantum-har-D: −0.055 [−0.072, −0.039]
+- vs quantum-v2: −0.014 [−0.022, −0.007]
+- vs softmax-v2: +0.018 [+0.007, +0.028]
+- vs network-v2: +0.010 [+0.004, +0.017]
+- vs softmax-har-D: −0.004 [−0.023, +0.012] (no clear difference)
+
+**Conclusion.** v3 is the best quantum model tested. It is not better than classical: softmax-v2
+and network-v2 beat it. The classical winner is also post-hoc, because its weekend and Monday
+inputs were found on the test period. No quantum advantage is shown. A clean confirmation needs
+data the design has never seen (the planned Ethereum market, or future Bitcoin data).
+
+Comparison computed by `/tmp/claude-1001/scratch/compare_all.py` from sealed artifacts and
+`results/fresh-study/evaluation/daily-losses.npz`.
