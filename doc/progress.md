@@ -350,4 +350,9 @@ to all candidate families, selects by calibrated validation loss, and restricts 
 training to the selected quantum model plus fixed quantum and classical controls. The
 rescored winner is the depth-1 RY HAR hybrid (0.5195 calibrated validation log loss),
 behind the softmax-HAR hybrid (0.5125) and just behind the weekend network (0.5171).
-Final training and the sealed one-time test evaluation remain.
+ETH final test (657 days, 20 seeds) is complete and documented in [eth-study.md](eth-study.md).
+The calibrated RY HAR hybrid scored 0.6480 log loss versus 0.6482 for the weekend network,
+a 0.03% difference. All paired 7/30-day intervals include zero, so the 5% marked-improvement
+threshold was missed. Two classical hybrid seed fits were ineligible and remain included.
+The user goal remains open; a fresh-market replication needs its own frozen protocol and
+untouched test data.
