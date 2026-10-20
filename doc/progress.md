@@ -402,3 +402,13 @@ Each test was evaluated once.
   The selected model version's preregistered replication panel is complete; do not add
   assets to this panel after seeing the outcomes.
 - Final checks: 105 tests passed, 1 skipped; Ruff lint and format checks passed.
+
+
+## Validation-only quantum/network blend check (20 Oct 2026)
+
+A fixed 50/50 probability blend was checked on validation for the four existing markets,
+using per-seed calibrated quantum RY HAR and weekend-network predictions. The blend was
+0.87% lower loss than the network on BTC, 1.80% lower on SOL, 0.40% lower on DOGE, and
+0.95% higher on ETH. No market reached the 5% target. This exploratory result used no test
+labels and is documented in [validation-ensemble.md](validation-ensemble.md); it is not
+confirmatory evidence and does not establish the goal.
