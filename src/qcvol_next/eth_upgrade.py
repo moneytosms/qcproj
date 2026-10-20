@@ -140,7 +140,11 @@ def fit_one(name, depth, data, config, seed, har, base_train):
     }
     width = 5 if uses_weekend else 4
     x, labels = data.x[data.train, :width], data.labels[data.train]
-    ridge = config.network_ridge if name.startswith("network") else 0.0
+    ridge = (
+        config.network_ridge
+        if name.startswith("network") or name == "hybrid-quantum-readout-ry"
+        else 0.0
+    )
     hybrid = name.startswith("hybrid-")
 
     def objective(parameters):

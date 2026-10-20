@@ -368,3 +368,7 @@ behind classical on ETH and was about 1.1% ahead of the best classical model on 
 the 5% target. A validation-fitted blend of quantum plus weekend network assigned weight 0
 to quantum on ETH and 0.928 on BTC, so the signal did not transfer consistently. No test
 predictions were reused for these checks.
+The depth-1 quantum outcome-readout candidate also failed ETH validation: both unregularized
+25-parameter fits exhausted the 50,000-call budget, and calibrated loss (0.5236/0.5245)
+trailed the network (0.5171). Its protocol amendment applies the existing 0.001 L2 penalty;
+only ETH validation will be checked first, and BTC validation runs only if that gate passes.

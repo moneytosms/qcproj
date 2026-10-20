@@ -33,3 +33,15 @@ probabilities and normalize. This gives 10 circuit weights plus 15 readout coeff
 Any confirmatory evaluation requires a new market with a committed protocol, a fixed
 candidate and comparator panel, and an untouched test period. The prior ETH and BTC tests
 remain closed to all new tuning and selection.
+
+## Amendment 1: regularized readout after ETH development failure
+
+The unregularized readout failed both seed eligibility checks at 50,000 objective calls.
+Its trainable readout weights reached magnitudes above 3,000 and its calibrated ETH
+validation losses were 0.5236 and 0.5245, versus 0.5171 for the same-seed network. Reject
+that unregularized candidate. One amended candidate adds the same L2 penalty used by the
+network (`network_ridge = 0.001`) over all circuit and readout parameters. Refit seeds 900
+and 901 on ETH training data only, compare against the already fitted same-seed ETH
+validation baselines, and advance to BTC validation only if it is eligible and clears the
+same 5% margin over the best classical model on ETH. Both prior test periods remain
+untouched by this development step.
