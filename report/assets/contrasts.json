@@ -1,0 +1,26 @@
+[
+  {
+    "left": "quantum-har-A",
+    "right": "quantum-har-D",
+    "block": 30,
+    "mean_difference": 0.03471472786913199,
+    "lower": 0.02298042787176494,
+    "upper": 0.0453888253331821
+  },
+  {
+    "left": "quantum-har-D",
+    "right": "quantum-short-D",
+    "block": 30,
+    "mean_difference": -0.05086957774930086,
+    "lower": -0.07109925698682537,
+    "upper": -0.030581049499101995
+  },
+  {
+    "left": "quantum-har-D",
+    "right": "softmax-har-D",
+    "block": 30,
+    "mean_difference": 0.05108536974957058,
+    "lower": 0.036603197188742116,
+    "upper": 0.0652218516044466
+  }
+]

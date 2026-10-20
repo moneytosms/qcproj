@@ -9,3 +9,9 @@ data/raw/
 data/processed/
 results/
 .cache/
+
+# Local report builds and page-inspection artifacts
+output/
+tmp/
+report/qa/pages/
+report/qa/*.png
