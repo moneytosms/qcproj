@@ -123,6 +123,12 @@ autocorrelation (0.25 to 0.38). Adding a weekday input is the clearest next impr
 
 ## What this means for the project
 
+**Follow-up: versus the paper's own model.** On the same data and test days, our quantum
+model beats the paper's exact 1-qubit model on range forecasts (log loss 0.570 vs 1.196),
+point forecasts (QLIKE 0.504 vs 0.840) and realism (distance 33.5 vs 215.3), with every
+bootstrap interval below zero. See [paper-comparison.md](paper-comparison.md).
+
+
 The project's three ideas now have clean evidence. **B (memory) works.** **A (realism
 training) works for realism when combined with memory and correct targets, but costs some
 forecast accuracy.** **D (range forecasts) works as a framework, but the quantum circuit

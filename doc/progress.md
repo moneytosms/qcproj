@@ -321,3 +321,9 @@ Completed the [pre-committed protocol](fresh-study-protocol.md) and the
   recorded as limits; a weekday input is the clearest next step.
 - 155/160 forecast fits and 120/120 realism fits pass checks; seal committed before scoring;
   independent recomputation matches. 93 tests pass (1 skipped).
+- Follow-up ([protocol](paper-comparison-protocol.md), [results](paper-comparison.md)):
+  the paper's exact 1-qubit model, refitted on the same training years (20 seeds, all fits
+  pass), loses to our quantum-har D on log loss (1.196 vs 0.570), QLIKE (0.840 vs 0.504),
+  squared error and realism (215 vs 34); all 95% date-bootstrap intervals exclude zero.
+  Main cause: the paper's max-based input scaling squashes ordinary days after the 2020
+  crash, plus one-day memory.
