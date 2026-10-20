@@ -2,7 +2,12 @@ import numpy as np
 
 from qcvol.data import synthetic_data
 from qcvol.fresh_runner import FreshConfig
-from qcvol_next.eth_upgrade import fit_one, weekend_data
+from qcvol_next.eth_upgrade import (
+    calibrated_probabilities,
+    fit_one,
+    fit_temperature,
+    weekend_data,
+)
 from qcvol_next.weekend_models import (
     WeekendBorn,
     WeekendHAR,
@@ -66,6 +71,16 @@ def test_classical_weekend_models_return_four_probabilities():
     p = WeekendNetwork().probabilities(x, rng.normal(size=27))
     assert p.shape == (12, 4)
     assert np.allclose(p.sum(axis=1), 1)
+
+
+def test_temperature_calibration_preserves_probabilities_and_fit_bounds():
+    probabilities = np.array([[0.8, 0.1, 0.05, 0.05], [0.1, 0.2, 0.3, 0.4]])
+    labels = np.array([0, 3])
+    assert np.allclose(calibrated_probabilities(probabilities, 1), probabilities)
+    temperature = fit_temperature(probabilities, labels)
+    assert 0.2 <= temperature <= 5
+    calibrated = calibrated_probabilities(probabilities, temperature)
+    assert np.allclose(calibrated.sum(axis=1), 1)
 
 
 def test_weekend_feature_scaling_uses_training_targets_only():

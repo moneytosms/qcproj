@@ -6,6 +6,7 @@ from dataclasses import replace
 from pathlib import Path
 
 import numpy as np
+from scipy.optimize import minimize_scalar
 
 from qcvol.classical import SoftmaxModel, TinyNetwork
 from qcvol.data import load_daily_csv, sha256
@@ -79,6 +80,38 @@ def model_depths(name):
     return DEPTHS if name in QUANTUM else (0,)
 
 
+def calibrated_probabilities(probabilities, temperature):
+    logits = np.log(np.clip(probabilities, 1e-12, 1)) / temperature
+    logits -= logits.max(axis=1, keepdims=True)
+    values = np.exp(logits)
+    return values / values.sum(axis=1, keepdims=True)
+
+
+def fit_temperature(probabilities, labels):
+    result = minimize_scalar(
+        lambda temperature: log_loss(calibrated_probabilities(probabilities, temperature), labels),
+        bounds=(0.2, 5.0),
+        method="bounded",
+        options={"xatol": 1e-4},
+    )
+    return float(result.x)
+
+
+def final_models(selection):
+    return tuple(
+        dict.fromkeys(
+            (
+                selection["best_quantum_model"],
+                "quantum-har",
+                "quantum-weekend-ry",
+                "softmax-weekend",
+                "network-weekend",
+                "hybrid-softmax-weekend",
+            )
+        )
+    )
+
+
 def fit_one(name, depth, data, config, seed, har, base_train):
     model = model_for(name, depth, har)
     uses_weekend = name in {
@@ -134,6 +167,7 @@ def fit_one(name, depth, data, config, seed, har, base_train):
         "fit": best,
         "fits": fits,
         "validation": forecast_scores(validation_p, data.labels[data.validation]),
+        "validation_probabilities": validation_p.tolist(),
     }
 
 
@@ -184,7 +218,7 @@ def write_json(path, value):
     path.write_text(json.dumps(value, indent=2, allow_nan=False) + "\n")
 
 
-def select(config, output):
+def select(data, config, output):
     rows = []
     for seed in config.development_seeds:
         rows.extend(json.loads((output / f"upgrade-develop-seed{seed}.json").read_text())["rows"])
@@ -192,29 +226,71 @@ def select(config, output):
     selection = {}
     for name in MODELS:
         if name == "har-weekend":
-            selection[name] = {"depth": 0, "source": "train-only OLS residual law"}
+            probabilities = WeekendHAR.fit(
+                data.x[data.train], data.y[data.train], data.bins.edges
+            ).probabilities(data.x[data.validation])
+            temperature = fit_temperature(probabilities, data.labels[data.validation])
+            selection[name] = {
+                "depth": 0,
+                "source": "train-only OLS residual law",
+                "mean_validation_calibrated_log_loss": log_loss(
+                    calibrated_probabilities(probabilities, temperature),
+                    data.labels[data.validation],
+                ),
+                "temperature_by_seed": {
+                    str(seed): temperature for seed in config.development_seeds
+                },
+            }
             continue
         depths = model_depths(name)
-        means = {
-            depth: float(
-                np.mean(
-                    [
-                        row["validation"]["log_loss"]
-                        for row in rows
-                        if row["name"] == name and row["depth"] == depth
-                    ]
+        means, temperatures = {}, {}
+        for depth in depths:
+            candidate_rows = [r for r in rows if r["name"] == name and r["depth"] == depth]
+            temperatures[str(depth)] = {}
+            calibrated_losses = []
+            for row in candidate_rows:
+                if "validation_probabilities" in row:
+                    p = np.asarray(row["validation_probabilities"])
+                else:
+                    har = WeekendHAR.fit(data.x[data.train], data.y[data.train], data.bins.edges)
+                    model = model_for(name, depth, har)
+                    width = (
+                        5
+                        if name
+                        in {
+                            *WEEKEND_QUANTUM,
+                            "softmax-weekend",
+                            "network-weekend",
+                            "hybrid-quantum-weekend",
+                            "hybrid-quantum-weekend-ry",
+                            "hybrid-softmax-weekend",
+                        }
+                        else 4
+                    )
+                    p = model.probabilities(
+                        data.x[data.validation, :width],
+                        np.asarray(row["fit"]["parameters"]),
+                    )
+                temp = fit_temperature(p, data.labels[data.validation])
+                temperatures[str(depth)][str(row["seed"])] = temp
+                calibrated_losses.append(
+                    log_loss(calibrated_probabilities(p, temp), data.labels[data.validation])
                 )
-            )
-            for depth in depths
-        }
+            means[depth] = float(np.mean(calibrated_losses))
+        best_depth = min(depths, key=lambda depth: (means[depth], depth))
         selection[name] = {
-            "depth": min(depths, key=lambda depth: (means[depth], depth)),
-            "mean_validation_log_loss_by_depth": means,
+            "depth": best_depth,
+            "mean_validation_calibrated_log_loss_by_depth": means,
+            "temperature_by_depth_and_seed": temperatures,
+            "temperature_by_seed": temperatures[str(best_depth)],
+            "mean_validation_calibrated_log_loss": means[best_depth],
         }
     selection["best_quantum_model"] = min(
         (*WEEKEND_QUANTUM, *HYBRID_QUANTUM),
         key=lambda name: (
-            selection[name]["mean_validation_log_loss_by_depth"][selection[name]["depth"]],
+            selection[name]["mean_validation_calibrated_log_loss_by_depth"][
+                selection[name]["depth"]
+            ],
             selection[name]["depth"],
         ),
     )
@@ -227,12 +303,26 @@ def train_seed(data, config, seed, output):
     har = WeekendHAR.fit(data.x[data.train], data.y[data.train], data.bins.edges)
     base_train = har.probabilities(data.x[data.train])
     models = {}
-    for name in MODELS:
+    models_to_train = final_models(selection)
+    for name in models_to_train:
         if name == "har-weekend":
             continue
         depth = selection[name]["depth"]
         row = fit_one(name, depth, data, config, seed, har, base_train)
-        models[name] = {"depth": depth, "fit": row["fit"], "fits": row["fits"]}
+        temperature = fit_temperature(
+            np.asarray(row["validation_probabilities"]), data.labels[data.validation]
+        )
+        models[name] = {
+            "depth": depth,
+            "fit": row["fit"],
+            "fits": row["fits"],
+            "validation_temperature": temperature,
+            "raw_validation_log_loss": row["validation"]["log_loss"],
+            "calibrated_validation_log_loss": log_loss(
+                calibrated_probabilities(np.asarray(row["validation_probabilities"]), temperature),
+                data.labels[data.validation],
+            ),
+        }
         print(f"train seed={seed} model={name} eligible={row['fit']['eligible']}", flush=True)
     write_json(output / f"upgrade-train-seed{seed}.json", {"seed": seed, "models": models})
 
@@ -313,49 +403,49 @@ def evaluate(data, data_path, config_path, output, config):
     test_rows = data.target_rows[data.test]
     rv = data.daily.rv[test_rows]
     level_means = np.asarray([np.exp(pool).mean() for pool in data.bins.pools])
+    model_names = final_models(selection)
     all_losses = {
-        name: {metric: [] for metric in ("log_loss", "rps_normalized", "extreme_brier", "qlike")}
-        for name in MODELS
+        name: {
+            mode: {
+                metric: [] for metric in ("log_loss", "rps_normalized", "extreme_brier", "qlike")
+            }
+            for mode in ("raw", "calibrated")
+        }
+        for name in model_names
     }
 
     for seed in config.final_seeds:
         record = json.loads((output / f"upgrade-train-seed{seed}.json").read_text())["models"]
-        for name in MODELS:
-            if name == "har-weekend":
-                probabilities = har.probabilities(x)
-            else:
-                entry = record[name]
-                model = model_for(name, entry["depth"], har)
-                width = (
-                    5
-                    if name
-                    in {
-                        *WEEKEND_QUANTUM,
-                        "softmax-weekend",
-                        "network-weekend",
-                        "hybrid-quantum-weekend",
-                        "hybrid-quantum-weekend-ry",
-                        "hybrid-softmax-weekend",
-                    }
-                    else 4
-                )
-                probabilities = model.probabilities(
-                    x[:, :width], np.asarray(entry["fit"]["parameters"])
-                )
-            for metric, values in daily_losses(probabilities, labels, rv, level_means).items():
-                all_losses[name][metric].append(values)
+        for name in model_names:
+            entry = record[name]
+            model = model_for(name, entry["depth"], har)
+            width = 5 if name != "quantum-har" else 4
+            probabilities = model.probabilities(
+                x[:, :width], np.asarray(entry["fit"]["parameters"])
+            )
+            for mode, values in (
+                ("raw", probabilities),
+                (
+                    "calibrated",
+                    calibrated_probabilities(probabilities, entry["validation_temperature"]),
+                ),
+            ):
+                for metric, daily in daily_losses(values, labels, rv, level_means).items():
+                    all_losses[name][mode][metric].append(daily)
 
     summary = {}
-    for name, metrics in all_losses.items():
-        summary[name] = {
-            metric: {
-                "mean": float(np.mean([np.mean(v) for v in values])),
-                "seed_sd": float(np.std([np.mean(v) for v in values], ddof=1))
-                if len(values) > 1
-                else 0,
+    for name, modes in all_losses.items():
+        summary[name] = {}
+        for mode, metrics in modes.items():
+            summary[name][mode] = {
+                metric: {
+                    "mean": float(np.mean([np.mean(v) for v in values])),
+                    "seed_sd": float(np.std([np.mean(v) for v in values], ddof=1))
+                    if len(values) > 1
+                    else 0,
+                }
+                for metric, values in metrics.items()
             }
-            for metric, values in metrics.items()
-        }
     rng = np.random.default_rng(604221)
     intervals = []
     selected_quantum = selection["best_quantum_model"]
@@ -365,9 +455,9 @@ def evaluate(data, data_path, config_path, output, config):
         "hybrid-softmax-weekend",
     ):
         for block in config.bootstrap_blocks:
-            delta = np.mean(all_losses[selected_quantum]["log_loss"], axis=0) - np.mean(
-                all_losses[baseline]["log_loss"], axis=0
-            )
+            delta = np.mean(
+                all_losses[selected_quantum]["calibrated"]["log_loss"], axis=0
+            ) - np.mean(all_losses[baseline]["calibrated"]["log_loss"], axis=0)
             indices = block_indices(len(delta), block, config.bootstrap_replicates, rng)
             boot = delta[indices].mean(axis=1)
             intervals.append(
@@ -387,18 +477,21 @@ def evaluate(data, data_path, config_path, output, config):
         "summary": summary,
         "intervals": intervals,
         "marked_improvement": bool(
-            summary[selected_quantum]["log_loss"]["mean"]
+            summary[selected_quantum]["calibrated"]["log_loss"]["mean"]
             <= 0.95
             * min(
-                summary["softmax-weekend"]["log_loss"]["mean"],
-                summary["network-weekend"]["log_loss"]["mean"],
-                summary["hybrid-softmax-weekend"]["log_loss"]["mean"],
+                summary["softmax-weekend"]["calibrated"]["log_loss"]["mean"],
+                summary["network-weekend"]["calibrated"]["log_loss"]["mean"],
+                summary["hybrid-softmax-weekend"]["calibrated"]["log_loss"]["mean"],
             )
             and all(row["upper"] < 0 for row in intervals)
         ),
         "quantum_seed_daily_losses": {
-            metric: [np.asarray(rows).tolist() for rows in values]
-            for metric, values in all_losses[selected_quantum].items()
+            mode: {
+                metric: [np.asarray(rows).tolist() for rows in values]
+                for metric, values in metrics.items()
+            }
+            for mode, metrics in all_losses[selected_quantum].items()
         },
     }
     write_json(output / "upgrade-evaluation.json", result)
@@ -453,7 +546,7 @@ def main():
                 raise ValueError(f"Development seed {seed} is not in config")
             develop_variants(data, config, seed, args.output)
     elif args.stage == "select":
-        select(config, args.output)
+        select(data, config, args.output)
     elif args.stage == "train":
         for seed in args.seed:
             if seed not in config.final_seeds:

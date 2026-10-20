@@ -135,3 +135,19 @@ For a marked improvement, it must beat the best classical validation family by a
 5% on test, with paired 7- and 30-day intervals below zero. The classical comparison set
 is fixed as weekend softmax, weekend network, and weekend softmax-HAR correction.
 
+## Amendment 4: validation temperature calibration and fixed final panel (20 Oct 2026)
+
+Earlier development scores used raw model probabilities. Apply one scalar softmax
+temperature, bounded to [0.2, 5], to every candidate family, including HAR, and fit it
+only on that development seed's validation predictions. Select each candidate's depth by
+mean calibrated validation log loss and select the best quantum candidate from those
+calibrated means. Report raw and calibrated validation scores. Fit a validation-only
+temperature for each final seed and carry it to that seed's test predictions; test labels
+are never used to fit it.
+
+Final training is limited to the validation-selected quantum candidate, the direct RY
+weekend quantum control, the no-weekend quantum control, and the fixed classical panel
+(weekend softmax, weekend network, weekend softmax-HAR correction). Each is trained with
+the registered final seeds, restarts, and optimizer budget. All development candidates
+and scores remain sealed. No test score has been computed.
+
