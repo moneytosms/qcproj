@@ -469,3 +469,12 @@ and all mixture KKT residuals are below 1.354e-8. A numerical tie correction is 
    qubits, squashed inputs and weekend/Monday flags, chosen on validation. Post-hoc test log
    loss 0.529 vs v1 0.570 (−0.041, interval −0.059 to −0.021); weekend input worth 0.027.
    Same-input softmax still better (0.496; gap 0.033, was 0.051). No quantum advantage.
+
+- Quantum v3 ([results](v3-study.md)): a 10-restart ensemble improves the v2 quantum
+   test loss from .5288 to .5145, but remains behind softmax-v2 (.4962) and network-v2
+   (.5042). This test is post-hoc because v2 already opened it.
+- The controlled calendar ensemble ([results](ensemble-results.md)) assigns zero weight
+   to both quantum members; its classical linear+sine mixture scores .604802 on validation.
+   No final training or benchmark scoring was done for this rejected candidate.
+- After syncing the branch with main: `uv run pytest -q` passes 146 tests (3 skipped);
+   Ruff lint and format checks pass. No marked quantum advantage has been established.
