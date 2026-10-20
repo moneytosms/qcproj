@@ -385,7 +385,54 @@ its fits failed stationarity checks (amendment 1 in the protocol).
 **Sealing:** the evaluation function is in the sealed package, so test scoring cannot change
 after training; development, selection and training artifacts are hashed into `seal.json`.
 
-## ADR 017 — Quantum v2 in a separate package
+## ADR 017 — Calendar inputs, direct day encoding and learned quantum readout
+
+**Evidence:** Nidhi's PR #8 finds useful HAR memory but persistent classical forecast
+wins. Weekend effects appear in both training and validation. The second qubit's original
+direct inputs are monthly log RV and return; yesterday's log RV reaches it through
+entanglement, rather than its own encoding. The user explicitly identified both gaps.
+
+**Decision:** preserve all old models and add `calendar_models.py` and a dedicated
+validation/training runner. Six target-weekday indicators enter every new model's linear
+reference-logit skip. Recursion advances actual UTC dates. Select uniform versus recent
+training weights on validation; all transforms, bins and pools stay training-only.
+
+Compare the original circuit routing with a shared-day variant: add a learned daily
+input to the second qubit's local RY angle in each layer. Zero additional coefficients
+recover the original routing, providing a controlled development ablation. Terminal RZ
+angles are excluded from optimization. Features use atan-standardized HAR inputs.
+
+A trainable three-logit readout combines the first three Born probabilities with the
+linear skip. Setting its feature weights to zero recovers the linear model. This relaxes
+the original direct-Born class-odds restriction and is explicitly a hybrid. Same-input
+tanh and sine feature heads have approximately equal parameter counts; any benefit
+from calendar/recency must not be attributed solely to a quantum circuit.
+
+Forward state sensitivities differentiate each gate and its input multiplier exactly;
+finite differences and original gate replay verify them. Training uses analytic L-BFGS-B,
+training-only restart selection, independent stationarity checks and full cost records.
+Study fingerprints bind dates as well as values. New raw output remains ignored.
+
+**Scope:** the predeclared grid and user clarification are in
+[improvement-plan.md](improvement-plan.md). PR #8 already exposed 2025–2026 scores;
+this follow-up must describe those dates as a reused benchmark. It cannot manufacture
+an unseen holdout by reseeding. No quantum advantage is assumed.
+
+## ADR 018: Compare probability ensembles with matched capacity
+
+The exploratory quantum/sine mixture could benefit simply from adding another model.
+Offer two five-member ensembles with 277 model parameters and four weight degrees of
+freedom each. Both include the same linear, tanh and sine base; additions are two
+quantum models or two classical controls. Fit convex probability mixtures on validation,
+verify simplex KKT conditions, and check 2023-fitted weights against 2024. Preserve
+original training artifacts and package hashes with a separate follow-up script.
+
+The [protocol](ensemble-protocol.md) stops before final-seed training when the quantum
+mixture fails either validation comparison. The [result](ensemble-results.md) selects
+only linear and sine members, so the gate prevents an unjustified larger run. Equal
+parameter counts do not establish equal computation or effective model capacity.
+
+## ADR 019 — Quantum v2 in a separate package
 
 **Context:** the fresh-study circuit lost to same-input classical models. A validation-only
 search showed one qubit never received yesterday's volatility, the trigonometric response
