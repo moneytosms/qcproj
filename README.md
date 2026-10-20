@@ -14,6 +14,14 @@ Start with [the project guide and repository reading order](doc/project-guide.md
 the [research and verification ledger](doc/research-ledger.md), and [current progress](doc/progress.md). The two PDFs in this repository are the source
 specification and explanatory guide; their pilot numbers are not results from this code.
 
+## IEG 313 report
+
+The [implementation-based project report](report/README.md) provides editable Typst
+sources, reproducible vector figures, the required 13-section structure, and
+scientific/writing review records. Build it with the commands in that directory.
+It reports completed studies and distinguishes post-hoc findings and limitations.
+Historical milestone notes below retain their original experiment boundaries.
+
 ## Quick start
 
 Python 3.11+; the locked setup uses Python 3.12 and uv:
@@ -58,7 +66,7 @@ splits and the 30-day warm-up (at least 190 rows for default fractions).
 
 `configs/smoke.json` verifies the workflow using one seed and a small budget. It does not
 establish model performance. `configs/study.json` proposes a larger 20-seed sweep; run it
-after checking convergence and the open research gates in the plan. Eight-level circuits, hardware, transfer, and the final report remain planned.
+after checking convergence and the open research gates in the plan. Eight-level circuits, hardware, transfer, remain planned; the report source is now in `report/`.
 Direct HAR quantile regression and GARCH are evaluated by the focused Step 4 runner below;
 the additional paper audit lives in PR #2.
 The historical three-layer circuit has 24 nominal parameters with two inactive final phase directions;
@@ -185,7 +193,7 @@ remains historical. Read [the frozen protocol](doc/final-study-protocol.md) and
 [the measured 20-seed results](doc/final-study.md). All training
 is sealed before any test scores are computed. Hyperparameters are fixed from development;
 validation is not re-used for selection inside this run. The original paper point circuit
-has a separate RV-MSE panel. The project report stays paused.
+has a separate RV-MSE panel. The project report is now available in `report/`.
 
 ```bash
 uv sync --all-extras
@@ -207,7 +215,7 @@ inspected this test block, and a single period cannot establish universal superi
 The completed run favors HAR forecasts on test NLL. Quantum realism training worsens
 both test NLL and test moment distance; its validation gains do not carry over. All
 selected fits pass training checks, and independent replay verifies the complete run.
-No quantum advantage is demonstrated. The report/slides remain paused.
+No quantum advantage is demonstrated. The report source is in `report/`; slides remain outside this milestone.
 
 ## Calendar and quantum-readout follow-up
 

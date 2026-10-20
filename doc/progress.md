@@ -511,3 +511,18 @@ is a single-market signal, not evidence of a transferable or all-metric advantag
    No final training or benchmark scoring was done for this rejected candidate.
 - After syncing the branch with main: `uv run pytest -q` passes 146 tests (3 skipped);
    Ruff lint and format checks pass. No marked quantum advantage has been established.
+
+## IEG 313 implementation-based report — 20 October 2026
+
+Added `report/` with charged-ieee 0.1.4, the university's complete 13-part structure,
+an academic cover, two-column research body, 10 figures, 12 tables, and 11 numbered
+equations. The abstract states completed work and measured findings. CeTZ diagrams
+match the modules and generation flow; Quill circuits match gate order; Lilaq and
+reproducible SVGs use saved experimental data.
+
+Report verification independently rebuilt 40 per-seed daily-loss arrays, checked 30
+sealed training artifacts, and recomputed all 26 paired bootstrap rows. Repository
+verification recorded 152 passed / 2 skipped. Typst compilation, cross-reference and
+sentence-length checks, and all-page visual review passed. The specific Gopi
+contribution remains unverified; no responsibility was invented. See
+`report/qa/REVIEW.md` for review scope and limitations.
