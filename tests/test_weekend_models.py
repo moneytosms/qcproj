@@ -116,7 +116,11 @@ def test_fixed_replication_panel_uses_preregistered_models():
 def test_replication_seal_hashes_sources_and_locked_environment():
     hashes = code_hashes()
     assert {str(path) for path in Path("src/qcvol").rglob("*.py")} <= hashes.keys()
-    assert {"pyproject.toml", "uv.lock"} <= hashes.keys()
+    assert {
+        "doc/sol-doge-replication-protocol.md",
+        "pyproject.toml",
+        "uv.lock",
+    } <= hashes.keys()
 
 
 def test_weekend_feature_scaling_uses_training_targets_only():

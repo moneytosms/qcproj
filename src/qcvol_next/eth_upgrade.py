@@ -365,7 +365,11 @@ def code_hashes():
         Path("scripts/run_eth_quantum_upgrade.py"),
         Path("scripts/build_binance_daily.py"),
     ]
-    environment_files = [Path("pyproject.toml"), Path("uv.lock")]
+    environment_files = [
+        Path("doc/sol-doge-replication-protocol.md"),
+        Path("pyproject.toml"),
+        Path("uv.lock"),
+    ]
     return {str(path): sha256(path) for path in sorted(source_files + environment_files)}
 
 
