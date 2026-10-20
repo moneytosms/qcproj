@@ -212,7 +212,9 @@ It tests target-weekday inputs, recent-training weights, and a learned quantum f
 readout against the same-input linear/tanh/sine controls. A separate quantum variant
 gives the second qubit a direct yesterday-volatility input; the original routing remains
 an ablation. These are hybrid models, and the previously scored 2025–2026 period is
-an exposed benchmark. Development is currently in progress; no new advantage is claimed.
+an exposed benchmark. The [completed development sweep](doc/calendar-development.md)
+improves forecasts with calendar/readout changes, but updated classical controls still
+lead. No new quantum advantage is claimed; final fitting/scoring remains pending.
 
 ```bash
 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 uv run python scripts/run_calendar_study.py initialize --output results/calendar-study-repeat

@@ -341,3 +341,17 @@ second qubit, and a learned quantum readout with classical skips. Calendar/recen
 similar-capacity classical nonlinear controls are included. Source data and prior study
 artifacts remain unchanged. The new model/gradient/calendar/leakage/seal tests pass;
 no improved empirical score or quantum advantage has yet been established.
+
+### Completed calendar/readout development
+
+The [measured note](calendar-development.md) records the completed fixed sweep:
+114/114 fits pass; independent replay verifies 249,888 probability rows and all saved
+objectives/choices, max error 5.55e−16. Calendar improves linear validation NLL
+.679985→.633722, then recency gives .630626. Quantum readout reaches .617749; the direct
+day variant gives .620583. Classical sine/tanh controls still lead at .608194/.609031.
+All 120 tests pass and the ablation plot was inspected. No new empirical test scoring
+or final-seed training has occurred. The remaining forecast gap is real in this grid.
+
+A post-hoc validation mixture suggests complementary quantum errors, motivating a
+separate, capacity-controlled ensemble protocol. That small exploratory gain is not
+an advantage claim. The overall improvement goal remains active.

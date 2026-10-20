@@ -210,4 +210,7 @@ a new development study, not a revision of the sealed earlier results. See
 [improvement-plan.md](improvement-plan.md) for the predeclared calendar, recency,
 direct-day routing and learned-readout comparison. The two concrete weak spots from the
 user are included. Implementation and synthetic integration checks are complete;
-empirical development, final comparison and the improvement claim are still pending.
+the [empirical development sweep](calendar-development.md) is complete and independently
+verified. Final comparison and a demonstrated improvement over updated classical models
+remain pending. A residual-complementarity diagnostic motivates the next controlled
+ensemble experiment.
