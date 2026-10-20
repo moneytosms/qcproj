@@ -201,3 +201,16 @@ and costs. MFDFA/tails are finite-path diagnostics, with unavailable test Hill e
 labelled. Physical-unit risk and the novelty literature check remain open. The 20-seed
 experiment and plotting tasks are complete; the broader original plan is not. Report
 and slides remain paused. No test-driven rescue tuning follows this result.
+
+## New improvement investigation after Nidhi's PR #8
+
+The user requested a further improvement attempt after checking Nidhi's latest changes.
+Her PR #8 adds a larger dated dataset and changes the memory/realism evidence; this is
+a new development study, not a revision of the sealed earlier results. See
+[improvement-plan.md](improvement-plan.md) for the predeclared calendar, recency,
+direct-day routing and learned-readout comparison. The two concrete weak spots from the
+user are included. Implementation and synthetic integration checks are complete;
+the [empirical development sweep](calendar-development.md) is complete and independently
+verified. Final comparison and a demonstrated improvement over updated classical models
+remain pending. A residual-complementarity diagnostic motivates the next controlled
+ensemble experiment.

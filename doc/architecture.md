@@ -384,3 +384,36 @@ its fits failed stationarity checks (amendment 1 in the protocol).
 
 **Sealing:** the evaluation function is in the sealed package, so test scoring cannot change
 after training; development, selection and training artifacts are hashed into `seal.json`.
+
+## ADR 017 — Calendar inputs, direct day encoding and learned quantum readout
+
+**Evidence:** Nidhi's PR #8 finds useful HAR memory but persistent classical forecast
+wins. Weekend effects appear in both training and validation. The second qubit's original
+direct inputs are monthly log RV and return; yesterday's log RV reaches it through
+entanglement, rather than its own encoding. The user explicitly identified both gaps.
+
+**Decision:** preserve all old models and add `calendar_models.py` and a dedicated
+validation/training runner. Six target-weekday indicators enter every new model's linear
+reference-logit skip. Recursion advances actual UTC dates. Select uniform versus recent
+training weights on validation; all transforms, bins and pools stay training-only.
+
+Compare the original circuit routing with a shared-day variant: add a learned daily
+input to the second qubit's local RY angle in each layer. Zero additional coefficients
+recover the original routing, providing a controlled development ablation. Terminal RZ
+angles are excluded from optimization. Features use atan-standardized HAR inputs.
+
+A trainable three-logit readout combines the first three Born probabilities with the
+linear skip. Setting its feature weights to zero recovers the linear model. This relaxes
+the original direct-Born class-odds restriction and is explicitly a hybrid. Same-input
+tanh and sine feature heads have approximately equal parameter counts; any benefit
+from calendar/recency must not be attributed solely to a quantum circuit.
+
+Forward state sensitivities differentiate each gate and its input multiplier exactly;
+finite differences and original gate replay verify them. Training uses analytic L-BFGS-B,
+training-only restart selection, independent stationarity checks and full cost records.
+Study fingerprints bind dates as well as values. New raw output remains ignored.
+
+**Scope:** the predeclared grid and user clarification are in
+[improvement-plan.md](improvement-plan.md). PR #8 already exposed 2025–2026 scores;
+this follow-up must describe those dates as a reused benchmark. It cannot manufacture
+an unseen holdout by reseeding. No quantum advantage is assumed.
