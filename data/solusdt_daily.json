@@ -1,0 +1,226 @@
+{
+  "source": "Binance spot SOLUSDT 5m klines",
+  "first_day": "2020-08-11",
+  "last_day": "2026-10-19",
+  "days": 2261,
+  "bars": 650813,
+  "source_sha256": {
+    "SOLUSDT-5m-2020-08.zip": "0fe553fe85ad705def0294dc495ea1b0fba0d8c364ea7b8ff4ddecdea51f716c",
+    "SOLUSDT-5m-2020-09.zip": "a8fc0503d686b0315ceb2e9f6fa56cad74cdc9d9f6e641dc57b29876a8ba7d7b",
+    "SOLUSDT-5m-2020-10.zip": "b20e1e846a9d1a1d715742c3ac28087b99306f3825b066a67dcaf6c2e76479ec",
+    "SOLUSDT-5m-2020-11.zip": "daeac4a6f69f3218ca6824053d6f9b05125cee31724fd4c9911f8e3d83b36c10",
+    "SOLUSDT-5m-2020-12.zip": "44b26830ac0d1393b14428d4785cf12f3877765d77813c7dc2431ce996333589",
+    "SOLUSDT-5m-2021-01.zip": "398766c20163727102aa43250f51ddad2356b554c63730b01408269fba0ab87e",
+    "SOLUSDT-5m-2021-02.zip": "412877eaf61233ec425428c1cea4aaea1fa3ab7aa2fefa0ce735fec70a89c238",
+    "SOLUSDT-5m-2021-03.zip": "02ffe547e7b73a4b198b1d0bdc6ded0b4893102b4b7a94914649ff95d515b376",
+    "SOLUSDT-5m-2021-04.zip": "7cf294f0cbff3c70dc8bfba2643f67690e5603495721f5f9239120dbbb522b9c",
+    "SOLUSDT-5m-2021-05.zip": "1da246f9d02fea18d8acd4a8f6103266ea605745dabdf6b8c4318ed54b5af8e1",
+    "SOLUSDT-5m-2021-06.zip": "de1c1cf6c927ce5375806e32fcf9519377b3daac6abd056737e845499fd3a6c1",
+    "SOLUSDT-5m-2021-07.zip": "6dd5f075acb36f2ea4baf518c4dead0d2c459f0c1943e4318204db579d6806a7",
+    "SOLUSDT-5m-2021-08.zip": "ce5550bf1f603e0ffb43ce2b644715a405e6d1a4b07c73d6a74327ef7c7032c3",
+    "SOLUSDT-5m-2021-09.zip": "fbe1dc74f7ee970b108dad840b403c2e3061175f1547476371bab7f852025da4",
+    "SOLUSDT-5m-2021-10.zip": "9d3eb1627aa0b5c39451a21dc2b3e592f3aadb84b691c3999240f3da9bd5635d",
+    "SOLUSDT-5m-2021-11.zip": "099c3b7870c048053f3692f82dd54a5cb4347881ac57ffd1657c6300e0f56809",
+    "SOLUSDT-5m-2021-12.zip": "d3903308fddff496b9756dc77e2dc3f55ba06e14fa115f32742c10947910374e",
+    "SOLUSDT-5m-2022-01.zip": "8fb0c9d70c8f28c0c938934dd3e591b5164a449ad4c29aabfee8139e43e3c36f",
+    "SOLUSDT-5m-2022-02.zip": "bb4dce0ecdef63fe4c495a67abbeb2fe24a6905f484ea6054a2251f6cd0b5c29",
+    "SOLUSDT-5m-2022-03.zip": "1ac483607c9fe0dd56b19c41a89ce6018219e4b9011ed3e838d6be26e641567f",
+    "SOLUSDT-5m-2022-04.zip": "764e96599a79189dc81a9217a0adb8242bcc19a0a8e50030f606fbbe09ddaed8",
+    "SOLUSDT-5m-2022-05.zip": "50c545157da5cb1ab3449a108adb37201a9da1c23e118a0b34db5e3df30dcc26",
+    "SOLUSDT-5m-2022-06.zip": "0b576115e9ce4798fbaa1f775105222372a5c797b14979d216cc9ec3a24b41aa",
+    "SOLUSDT-5m-2022-07.zip": "4a4edd46ad7d64285684033a666b817fbf16dcb27c24c81549846d424a184fd0",
+    "SOLUSDT-5m-2022-08.zip": "ba16343e74006c109bebc75ad74498f451248ea56c9eaec33a99a655caa40a70",
+    "SOLUSDT-5m-2022-09.zip": "f2e26048cb783bfdcf37c1c25a2489a1d50c1d68be221c7838947ff60152192b",
+    "SOLUSDT-5m-2022-10.zip": "9e17849c108d4e93213dddda57908610eea02c06420020593b56800202ab71f2",
+    "SOLUSDT-5m-2022-11.zip": "163f186486de4d2a38d0d76b07f8d2beb9105adc4ea7d91ede9207379fba5cba",
+    "SOLUSDT-5m-2022-12.zip": "ead4fe82aef7a245805f5077ecf85ab9e25f105198874f4aafc7e414b12cfba6",
+    "SOLUSDT-5m-2023-01.zip": "916edc263ddb809d0cac74dcb29fa911d4532a110767a9445df6f03e9fc7121d",
+    "SOLUSDT-5m-2023-02.zip": "db66d67ca1d6b65d5cb8e175745f317ae73059f97ec88d90d07879e3d6d13d60",
+    "SOLUSDT-5m-2023-03.zip": "7e10cf774dac075972595f086c11ce6dd70ed4a9ef6fcab964d28ce7858f0f02",
+    "SOLUSDT-5m-2023-04.zip": "9d682cf2804e4d8105240935ad51b9d07255c6b10286e15eeca9c12a5a26e058",
+    "SOLUSDT-5m-2023-05.zip": "aa5c12f6393a3ce17d10c7cc1fa9273f15978443718e0988b6bcb484b042f27f",
+    "SOLUSDT-5m-2023-06.zip": "9c4ff7680a4571d06235c7cfe6663727d45e3c93847b25dd448d8f385e3da90f",
+    "SOLUSDT-5m-2023-07.zip": "f70cc7d64e61c9b9c19975e1e27cfc8d65b88309cbf8875eaa7800f0237cd61c",
+    "SOLUSDT-5m-2023-08.zip": "7d69a71fa5978de186cc5516c1df715f3e2b76eeb4e8df6420b5d3101ddff593",
+    "SOLUSDT-5m-2023-09.zip": "f41fb71a8509d6ce8bab61fd47ea60fb42775ac2cd87e8bf85591600439f4c03",
+    "SOLUSDT-5m-2023-10.zip": "c7cac86a69d3d711725ccaf09bc1a3e7721dccda17b80c63c43953ef30507b57",
+    "SOLUSDT-5m-2023-11.zip": "f974ec9098658a650dce94e1c6a16bc032c401f40f7df0d681268df2f2945471",
+    "SOLUSDT-5m-2023-12.zip": "33cad76f5cbc1e24c11a537266c8b4b1ecdeab39da158cd6d9c2e831ac6b6954",
+    "SOLUSDT-5m-2024-01.zip": "7f1b4fc423bd1d0404952b8ee66af4c12f332876704ba9d11fe8479a9f8e2879",
+    "SOLUSDT-5m-2024-02.zip": "15f2cfa369f673f7f61c3b8c233be3f651e67953eff8737d0d6052ea5d6273fb",
+    "SOLUSDT-5m-2024-03.zip": "e1e923e24ec3582573fd37cbd2bb4d5bab4718d0e9ea4ad909847d6efd826a49",
+    "SOLUSDT-5m-2024-04.zip": "0ac688c671950175283e91c893a0d2a1e49a634ee27d57abbe1a1076d222fc19",
+    "SOLUSDT-5m-2024-05.zip": "096336d0c5210ff4e9afa3cc23374e0363d5b42f3b07220d101837d53b623b25",
+    "SOLUSDT-5m-2024-06.zip": "f91212b2465423f43c8252fedb24850ef0cb5cc7280fa5292aef90d1c964166f",
+    "SOLUSDT-5m-2024-07.zip": "1e34b11a791050950ef1cba4798525912d33741751219911135b3cf60eef2687",
+    "SOLUSDT-5m-2024-08.zip": "36a0e571233fc1b608238f9bea73049fb0662875acdcffb670bd9bc1547a0e18",
+    "SOLUSDT-5m-2024-09.zip": "e7be8fb40c10c8f127b51e83d56f51bf669858cb1e8c1ba62603cf2f1a0c1a74",
+    "SOLUSDT-5m-2024-10.zip": "92ffadb0b694de76b9ee216a7d3a414a7054c87f9b6e0679691b2f60218d41fe",
+    "SOLUSDT-5m-2024-11.zip": "c2fc9a65984778e9be2b6ea26a094c6a7bf6a7e2004aa0a732a54f1cba534d20",
+    "SOLUSDT-5m-2024-12.zip": "2ba22d7d765686ad70b9a3c2a7be9fde4d269ad1b0c1a5fcbf7ef99cc839128b",
+    "SOLUSDT-5m-2025-01.zip": "5239b0db75b3ca28588e41f45be24360ca648820d654f270869e4679fbc57fd0",
+    "SOLUSDT-5m-2025-02.zip": "fc42b66d261f05b5c35ecfe66cf8ad7b42b349da555bd6c16b074227451fc51e",
+    "SOLUSDT-5m-2025-03.zip": "141acebb46fd7a30c6d47f1b251e5da88e37e54facc2b028ac5d5cfff4525cd3",
+    "SOLUSDT-5m-2025-04.zip": "ceb0d4ce30778bacbb7047ea7ae94e434971842d1caa9594400109557da6ef28",
+    "SOLUSDT-5m-2025-05.zip": "59bdebe9cdf9ffcaa892dfaff151bd3bb62207a133c69b575f054748e2ead328",
+    "SOLUSDT-5m-2025-06.zip": "6ea804afe3f51dd183babef54976defbeb8afca83e922881c46d31f39b0dcfce",
+    "SOLUSDT-5m-2025-07.zip": "643fefb78d12a31ece5391020a8ccfa0a312124c3f891ddb397874890a17d572",
+    "SOLUSDT-5m-2025-08.zip": "6c4cd05bab7074358172b5d6042e17df25cd0079a862225af48bf99e616071a5",
+    "SOLUSDT-5m-2025-09.zip": "1f33823c1fb093280628d71b40bab938f6793c5958f3cf39e5ad2e77b1c36468",
+    "SOLUSDT-5m-2025-10.zip": "be42870ce88ec9cca5f3b9a4a5c4fc21389f8631f50d42b93a4b81149f13fd89",
+    "SOLUSDT-5m-2025-11.zip": "093706d10c8bbe0a2bab54ffeb95c5b52e350aa9cbc9947736197871c625779e",
+    "SOLUSDT-5m-2025-12.zip": "f3d45e4b2cf4cd249486e69f24b36d1d000e7490f57ff9d64a1ca6f35a4a8e7e",
+    "SOLUSDT-5m-2026-01.zip": "0c37d6eeb084b22133d33903112af8b443e2c9d0666140b83120792be15f1cc4",
+    "SOLUSDT-5m-2026-02.zip": "64b7592581b03c639db20a700d7c645116fc1c619c97dd03c3ad8688e25d2311",
+    "SOLUSDT-5m-2026-03.zip": "0ee1dbc2a6796135aa909170449a22175efa966f1dc86032a05126b3c78a97b4",
+    "SOLUSDT-5m-2026-04.zip": "cf20c1273d19f3260b1a92d106cecee3a476e0c68f8ca5e934c5d2d641767eea",
+    "SOLUSDT-5m-2026-05.zip": "d911b9b195da3856e5ab8058693042d4fdf3051e9b7a38a2930a3effbde33918",
+    "SOLUSDT-5m-2026-06.zip": "02b7706d523dd0d49b084115ddfcd76c97b2a30461405bc81a8ce4b063b719d9",
+    "SOLUSDT-5m-2026-07.zip": "6f57eaac549d9e9863bc9996d4afe264f8ee54b3dc793c64970e3f859c347a71",
+    "SOLUSDT-5m-2026-08.zip": "7e083bd0b42c856b9738c08e65ce7dce44f1f352c3956973abb57e4c4459484c",
+    "SOLUSDT-5m-2026-09.zip": "86d292e044ca51263556af81246124b6ea11cc95dcb8f12347fc9860fd335683",
+    "SOLUSDT-5m-2026-10-01.zip": "3829cbefe4790b85c2b4ffaef5b5d7224aaa2288cf8d24c3e8dd8ad8de595b9a",
+    "SOLUSDT-5m-2026-10-02.zip": "1edb3bd95bead9b71619d8e466668194b15f259224271bb7a9595170e0dc51c7",
+    "SOLUSDT-5m-2026-10-03.zip": "94b2b35ab4c074777457d693de65f6c112020c6a3f30f3fbbbbfb5a99b9a8961",
+    "SOLUSDT-5m-2026-10-04.zip": "fcf8aac38c987d8e3e9565c7c4011c275886b2a9d5f2632e2ac7b0fea84005b0",
+    "SOLUSDT-5m-2026-10-05.zip": "7ddf4dc776054202b8e313307f7d74a049c4a1aa8626fff560a9fb7e08757e14",
+    "SOLUSDT-5m-2026-10-06.zip": "c42d84216d1204996acc7ff82847bb595455ca6d2dea0e521dcb0630195bdae1",
+    "SOLUSDT-5m-2026-10-07.zip": "74916fe6b2172059c4a833264f23f8f14ca4c0d9bc115f26bc964d265bfba4fb",
+    "SOLUSDT-5m-2026-10-08.zip": "cd2947e38ff5ce992f722be3fb9e3f0b4c430180bd2cbc409f93dd93d5859486",
+    "SOLUSDT-5m-2026-10-09.zip": "3293e7c9e4584dbee4f74997fbb9668ec08035dec4c150fd3ccf83e691ecad62",
+    "SOLUSDT-5m-2026-10-10.zip": "c93b872d55912fa76db7954bad26265cc81951f82f9787ce6caf5c8d23b29d8d",
+    "SOLUSDT-5m-2026-10-11.zip": "21086c0d8207c87263520f063a585cb301b52a0fe16148e08debc788758c1df9",
+    "SOLUSDT-5m-2026-10-12.zip": "51b017770d62766ee0decd339311ee25c2d6242dce3c98b559a71c935a4224c6",
+    "SOLUSDT-5m-2026-10-13.zip": "21d56564c52c10f1e1cb18564bf4ede72b656c0acd93b923ee72bdcb4d75ef16",
+    "SOLUSDT-5m-2026-10-14.zip": "be1109a11bc0af10390e7b3e5c53b53f424210ed0d131fa6aefb46815648944a",
+    "SOLUSDT-5m-2026-10-15.zip": "2f17aa772182cda8cb9deb7f17a6c7c81daf2a5e3847e918bd3c39798b7b0118",
+    "SOLUSDT-5m-2026-10-16.zip": "4291f58e46cc8a33757c2b6f4aff80990ae4b0dccc263f26a1cf5fc98efb46cb",
+    "SOLUSDT-5m-2026-10-17.zip": "2f221a3f8064cc4be997d8cca8d70e475f9f5e6226663eff17f9e4b70f3fd107",
+    "SOLUSDT-5m-2026-10-18.zip": "b6a5c3c7097a61eece73a874addc9170785aba4d0acf11202bed6e87378affbe",
+    "SOLUSDT-5m-2026-10-19.zip": "76825190f603969237a32dadda34ae2ebdf42a649f26ea5802a3d55d70538eb6"
+  },
+  "gap_count": 10,
+  "missing_5m_bars": 283,
+  "gaps": [
+    {
+      "after_utc": "2020-11-30T05:55:00+00:00",
+      "delta_ms": 3900000,
+      "missing_bars": 12,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2020-12-21T14:05:00+00:00",
+      "delta_ms": 14100000,
+      "missing_bars": 46,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2020-12-25T01:55:00+00:00",
+      "delta_ms": 3900000,
+      "missing_bars": 12,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2021-02-11T03:40:00+00:00",
+      "delta_ms": 4800000,
+      "missing_bars": 15,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2021-03-06T01:55:00+00:00",
+      "delta_ms": 5700000,
+      "missing_bars": 18,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2021-04-20T01:55:00+00:00",
+      "delta_ms": 9300000,
+      "missing_bars": 30,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2021-04-25T04:00:00+00:00",
+      "delta_ms": 17100000,
+      "missing_bars": 56,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2021-08-13T01:55:00+00:00",
+      "delta_ms": 16500000,
+      "missing_bars": 54,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2021-09-29T06:55:00+00:00",
+      "delta_ms": 7500000,
+      "missing_bars": 24,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2023-03-24T12:35:00+00:00",
+      "delta_ms": 5100000,
+      "missing_bars": 16,
+      "offset_ms": 0
+    }
+  ],
+  "incomplete_day_count": 11,
+  "incomplete_days": [
+    {
+      "date": "2020-08-11",
+      "bars": 216,
+      "returns": 215
+    },
+    {
+      "date": "2020-11-30",
+      "bars": 276,
+      "returns": 275
+    },
+    {
+      "date": "2020-12-21",
+      "bars": 242,
+      "returns": 241
+    },
+    {
+      "date": "2020-12-25",
+      "bars": 276,
+      "returns": 275
+    },
+    {
+      "date": "2021-02-11",
+      "bars": 273,
+      "returns": 272
+    },
+    {
+      "date": "2021-03-06",
+      "bars": 270,
+      "returns": 269
+    },
+    {
+      "date": "2021-04-20",
+      "bars": 258,
+      "returns": 257
+    },
+    {
+      "date": "2021-04-25",
+      "bars": 232,
+      "returns": 231
+    },
+    {
+      "date": "2021-08-13",
+      "bars": 234,
+      "returns": 233
+    },
+    {
+      "date": "2021-09-29",
+      "bars": 264,
+      "returns": 263
+    },
+    {
+      "date": "2023-03-24",
+      "bars": 272,
+      "returns": 271
+    }
+  ],
+  "first_day_return_convention": "0; no prior Binance daily close is available",
+  "output_sha256": "f781be52ea701d41ab6489a9d74482519f1d36632be6ab5b7800987ed071aa81"
+}

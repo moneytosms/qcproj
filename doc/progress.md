@@ -375,3 +375,8 @@ only ETH validation will be checked first, and BTC validation runs only if that 
 The regularized readout converged but averaged 0.5221 calibrated log loss, 0.96% worse
 than the same-seed network (0.5171). It failed the ETH gate; no BTC validation or test
 scoring was done for this candidate.
+
+The fixed SOL/DOGE replication data are built and pass coverage checks: SOL has 843 train,
+731 validation, and 657 test targets; DOGE has 1,246/731/657. Both test windows have 288
+5-minute bars every UTC day. Their tests remain unopened; results will be evaluated as a
+single precommitted two-market panel.

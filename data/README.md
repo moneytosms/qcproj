@@ -42,3 +42,8 @@ archive and `--last-date YYYY-MM-DD` for the final daily archive date.
 klines for 2017-08-17 to 2026-10-19 (3,351 UTC days). Its metadata records all archive
 hashes, 33 timestamp gaps, 34 incomplete historical days, and output hash. The test dates
 2025-01-01 to 2026-10-19 have full daily 5-minute coverage.
+
+The fixed replication also includes `solusdt_daily.csv` (2020-08-11 onward, 2,261 days)
+and `dogeusdt_daily.csv` (2019-07-05 onward, 2,664 days), both through 2026-10-19. Their
+JSON metadata records each archive hash and every observed gap. Both have complete
+5-minute coverage on test dates 2025-01-01 to 2026-10-19.
