@@ -454,3 +454,13 @@ and all mixture KKT residuals are below 1.354e-8. A numerical tie correction is 
    qubits, squashed inputs and weekend/Monday flags, chosen on validation. Post-hoc test log
    loss 0.529 vs v1 0.570 (−0.041, interval −0.059 to −0.021); weekend input worth 0.027.
    Same-input softmax still better (0.496; gap 0.033, was 0.051). No quantum advantage.
+
+### BTC quantum readout development
+
+The [protocol](btc-quantum-upgrade-protocol.md) froze a validation-only sweep and kept the
+previously scored BTC test window closed. A depth-3 RY quantum readout correction reached
+0.6457 calibrated validation log loss versus 0.6614 for the weekend network after a
+20,000-call optimizer sensitivity check; both optimizers converged. The nominal paired
+7/30-day intervals favor quantum, but candidate selection reused the same validation
+period, so this remains exploratory. No new BTC test score or quantum advantage is claimed.
+See [results](btc-quantum-upgrade-results.md).
