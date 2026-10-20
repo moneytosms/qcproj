@@ -58,9 +58,10 @@ splits and the 30-day warm-up (at least 190 rows for default fractions).
 
 `configs/smoke.json` verifies the workflow using one seed and a small budget. It does not
 establish model performance. `configs/study.json` proposes a larger 20-seed sweep; run it
-after checking convergence and the open research gates in the plan. GARCH, eight-level
-circuits, paper-figure reproduction, hardware, transfer, and the final report remain planned.
-The supplied circuit has 24 nominal parameters with two inactive final phase directions;
+after checking convergence and the open research gates in the plan. Eight-level circuits, hardware, transfer, and the final report remain planned.
+Direct HAR quantile regression and GARCH are evaluated by the focused Step 4 runner below;
+the additional paper audit lives in PR #2.
+The historical three-layer circuit has 24 nominal parameters with two inactive final phase directions;
 see the architecture notes before describing a parameter-matched comparison.
 
 ## Layout
@@ -148,3 +149,27 @@ uv run python scripts/plot_distribution_study.py results/distribution-study-01
 The full configuration is `configs/distribution-study.json`. Source hashes must match
 when auditing. It is a development comparison, not the final 20-seed study, GARCH/HAR
 quantile comparison or project report. Generated output stays local and ignored.
+
+## Step 4: classical comparisons and training checks
+
+The [measured comparison](doc/classical-comparison.md) adds direct HAR quantile
+regression, a short quantile control, explicitly calibrated GARCH(1,1), and a stable
+regularized neural comparator. It records active parameter limits, full training effort,
+native/common-law quantile scores and seeded path audits. The
+[protocol](doc/classical-comparison-protocol.md) preserves the first capped-network
+attempt and the regularization refinement. This remains validation development evidence.
+
+```bash
+uv sync --all-extras
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 uv run python scripts/run_classical_comparison.py \
+  --author-data data/raw/author --prior results/distribution-study-2026-10-20 \
+  --output results/classical-comparison-01
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 uv run python scripts/verify_classical_comparison.py \
+  results/classical-comparison-01 --author-data data/raw/author
+uv run python scripts/plot_classical_comparison.py results/classical-comparison-01
+```
+
+The prior is a completed Step 3 run with unchanged original model/data source hashes.
+Finance dependencies are optional until this runner is used (`--all-extras` includes them).
+Use `--previous-attempt PATH` to record an earlier comparison's provenance and cost.
+The final-study runner/configuration still needs integration before the 20-seed study.

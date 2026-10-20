@@ -285,3 +285,41 @@ Born simulator to reduce rollout overhead. Test it against both the historical s
 and independent dense Kronecker operators at all four depths. Artifact verification
 uses dense operators and independently reconstructs the full random draw schedule,
 recursive histories, scores and selection rules. Package hashes bind runs to source.
+
+## ADR 014 — Add native finance forecasts and stabilize the classical network
+
+**Decision:** fit HAR quantile regressions directly with HiGHS linear programming;
+certify primal/dual optimality, repair predicted crossings by sorting, and document
+CDF/tail construction when converting quantiles to bins. Keep native quantile scores
+separate from the common categorical/empirical-bin quantiles. Count 60/45 coefficients
+for full/short quantile models, with different information and capacity from D.
+
+**Reason:** OLS plus residual quantiles is useful but is not quantile regression. Direct
+pinball fitting allows conditional uncertainty to change with the inputs. Inverting
+its finite quantile grid requires tail assumptions; native quantile scoring makes that
+extra modeling step visible rather than conflating it with the fitted coefficients.
+
+**GARCH:** use an optional `arch` Gaussian zero-mean GARCH(1,1), five starts on exactly
+the training target-row returns, training-only return rescaling and prefix backcast.
+Validate library recursion and constrained likelihood stationarity independently.
+Author returns/RV have separate unknown scaling, and conditional return variance is
+not realized variance. Fit an explicit training-only log-RV observation calibration
+and empirical residual distribution. Count the two calibration coefficients and residual
+sample. Shared-bin paths update h with generated returns; native GARCH paths are a
+separately labelled observation-law reference. Do not infer physical-unit VaR.
+
+**Network:** exact backpropagation avoids spending dozens of numerical-gradient calls
+per step. The first comparison still caps four old unregularized starts, so preserve
+it and add a declared L2 grid with five fresh starts per penalty. Choose restarts on
+training and alpha on validation, then retain alpha when repeating A. Do not silently
+reuse the earlier network A as an ablation of the new D. The stable regularized model
+is a main comparator; failed unregularized starts remain evidence of conditioning.
+
+**Fairness and evidence:** preserve both attempts, imported-source/artifact hashes,
+all search costs and sensitivity-rank diagnostics. Local Jacobian rank is not a global
+parameter-count theorem. Larger classical grids and richer historical inputs prevent
+compute/capacity-matched superiority claims. The measured scorecard keeps negative
+GARCH outcomes and quantum's small Brier advantage alongside classical NLL/RPS wins.
+No new test scores or final 20-seed study are produced in this milestone. See
+[classical-comparison-protocol.md](classical-comparison-protocol.md) and
+[classical-comparison.md](classical-comparison.md).

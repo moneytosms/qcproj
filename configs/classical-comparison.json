@@ -1,0 +1,14 @@
+{
+  "ridge_penalties": [
+    0.0001,
+    0.001,
+    0.01,
+    0.1
+  ],
+  "network_max_calls": 20000,
+  "network_max_iterations": 10000,
+  "garch_max_iterations": 5000,
+  "audit_days": 512,
+  "audit_paths": 32,
+  "burn_in": 60
+}

@@ -414,3 +414,31 @@ a small quantum realism gain with slightly worse NLL, better classical NLL, and 
 remaining weekly-ACF gap. A better aggregate statistic does not mean every part of the
 generated history became realistic. The next work is the Step 4 classical comparison,
 including capped-network optimization; the final 20-seed study follows those checks.
+
+## Reading the classical comparisons
+
+HAR quantile regression asks separate questions such as “what value covers 5%, 50%,
+or 95% of tomorrow's log volatility?” Each quantile gets its own coefficients, fitted
+to pinball loss. That differs from fitting one mean and recycling the same residual
+spread at every input. The grid here has 15 quantiles, so full HAR needs 60 coefficients.
+Read `finance_baselines.QuantileHAR`, then its LP dual certificates in the verifier.
+
+GARCH maintains a variance state: tomorrow's return variance depends on the last squared
+return and the last variance estimate. That forecast is not the observed RV target.
+Read `CalibratedGARCH` to see the explicit training-only conversion to log RV. Its
+shared-bin simulation and native return simulation use different observation laws;
+the scorecard labels them separately. Unknown original source units still prevent a
+physical-unit risk claim.
+
+Next read `classical_training.py`: analytic derivatives make the network cheaper to
+optimize, but the old unregularized starts can still be ill-conditioned. Penalizing very
+large weights gives a stable comparator; validation chooses the penalty before A is
+repeated. The old network's poor score was not evidence that quantum beats a properly
+trained small neural model.
+
+Read the [protocol and amendment](classical-comparison-protocol.md), then
+[measured findings](classical-comparison.md), `comparison_study.py`, the independent
+verifier and `tests/test_finance_comparison.py`. Trace native quantiles and common-bin
+quantiles separately. The results show classical NLL/RPS wins, a modest quantum Brier
+advantage, and no demonstrated quantum advantage. The next work is freezing/integrating
+the final 20-seed protocol, with these limits intact; the report remains paused.
