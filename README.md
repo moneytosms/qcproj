@@ -172,4 +172,35 @@ uv run python scripts/plot_classical_comparison.py results/classical-comparison-
 The prior is a completed Step 3 run with unchanged original model/data source hashes.
 Finance dependencies are optional until this runner is used (`--all-extras` includes them).
 Use `--previous-attempt PATH` to record an earlier comparison's provenance and cost.
-The final-study runner/configuration still needs integration before the 20-seed study.
+The completed final-study runner below integrates these choices.
+
+## Frozen 20-seed study
+
+Use `configs/final-study.json` with the new runner; the earlier `configs/study.json`
+remains historical. Read [the frozen protocol](doc/final-study-protocol.md) and
+[the measured 20-seed results](doc/final-study.md). All training
+is sealed before any test scores are computed. Hyperparameters are fixed from development;
+validation is not re-used for selection inside this run. The original paper point circuit
+has a separate RV-MSE panel. The project report stays paused.
+
+```bash
+uv sync --all-extras
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 uv run python scripts/run_final_study.py \
+  --author-data data/raw/author --output results/final-study-01
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 uv run python scripts/verify_final_study.py \
+  results/final-study-01 --author-data data/raw/author
+uv run python scripts/plot_final_study.py results/final-study-01 --author-data data/raw/author
+```
+
+`--stage train` only fits/seals; `--stage evaluate` scores an existing sealed run without
+refitting. Source, config, raw-data fingerprint and training-file hashes must match.
+Completed evaluation directories cannot be overwritten; `--evaluation-name NAME` can
+save a deterministic re-evaluation separately. A resumed evaluation does not change choices.
+A new training run always requires a new output folder. Outputs stay local and ignored.
+Seed variability and date-block uncertainty are distinct; earlier smoke work already
+inspected this test block, and a single period cannot establish universal superiority.
+
+The completed run favors HAR forecasts on test NLL. Quantum realism training worsens
+both test NLL and test moment distance; its validation gains do not carry over. All
+selected fits pass training checks, and independent replay verifies the complete run.
+No quantum advantage is demonstrated. The report/slides remain paused.

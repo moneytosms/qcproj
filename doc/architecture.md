@@ -323,3 +323,34 @@ GARCH outcomes and quantum's small Brier advantage alongside classical NLL/RPS w
 No new test scores or final 20-seed study are produced in this milestone. See
 [classical-comparison-protocol.md](classical-comparison-protocol.md) and
 [classical-comparison.md](classical-comparison.md).
+
+## ADR 015 — Freeze the full study and seal training before test scoring
+
+**Decision:** add a dedicated final-study runner with a training phase and a separate
+sealed evaluation phase. Freeze Step 3/4 hyperparameters, use twenty fresh seed labels,
+five D starts and three A starts per seed, and retain every training record. Fit the
+six deterministic finance/control models once. Keep original paper/persistence/raw-RV
+HAR in a separate MSE panel. Preserve the earlier pipeline and its historical defaults.
+
+**Reason:** the old `configs/study.json` uses a different input policy and incomplete
+classical comparisons. Repeating validation model selection inside a final run would
+mix development with measurement. The new protocol evaluates fixed methods rather than
+selecting a winner from test scores. Source/config/data fingerprints and hashes of every
+training artifact are checked before scoring; final evaluation cannot rewrite training.
+A final-kind config requires at least twenty seeds; integration fixtures are labelled
+separately. Previously inspected smoke test results remain an explicit limitation.
+
+**Uncertainty:** training-seed SD measures optimizer/simulation variability on the same
+market period. A paired circular date-block bootstrap of seed-averaged daily NLL differences
+separately describes date uncertainty, with both fixed 7/30-day blocks reported. It does
+not make twenty initializations independent datasets. Include failed selected fits in
+all-seed summaries and show a passing-only sensitivity panel, preserving convergence counts.
+
+**Generation and diagnostics:** train-only initialization and empirical pools keep generated
+histories independent of validation/test observations. Use 32×1024-day paths per method/seed
+and a separately labelled native GARCH law. MFDFA/shuffles use path zero fixed in advance;
+all paths contribute moment/Wasserstein/tail summaries. Short test reference tails and
+scaling diagnostics remain unavailable or weak rather than manufactured evidence. Report
+all training costs and inactive-coordinate limits; different information/capacity/gradient
+implementations preclude a matched-cost quantum-advantage claim. The protocol is in
+[final-study-protocol.md](final-study-protocol.md).

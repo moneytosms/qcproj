@@ -58,10 +58,10 @@ completion above does not establish a benefit from memory.
 - [x] Add frequency and softmax baselines, an exactly 24-parameter tiny neural network,
       HAR residual/quantile baseline, and GARCH(1,1). Record effective as well as nominal
       parameter counts and compute budgets.
-- [ ] Forecast scores: NLL, explicitly normalized ranked probability score, calibration.
-      Implement predictive return-mixture VaR and Kupiec coverage testing separately
+- [x] Forecast scores: NLL, explicitly normalized ranked probability score, calibration.
+- [ ] Implement predictive return-mixture VaR and Kupiec coverage testing separately
       from the probability of the extreme volatility bin.
-- [ ] Realism: ACF, vol-of-vol, return tail index, Wasserstein, MFDFA h(2) and spectrum
+- [x] Realism: ACF, vol-of-vol, return tail index, Wasserstein, MFDFA h(2) and spectrum
       width, with shuffled controls. Label unavailable/unreliable estimates explicitly.
 
 **Gate 3:** complete scorecard, same preprocessing and split, matched seeds/loss/budget
@@ -70,9 +70,9 @@ point outputs must not be presented as calibrated categorical probabilities.
 
 ### 4. Final experiments and communication (weeks 7–8)
 
-- [ ] Run 20+ seeds with sufficient budgets after gates pass; save raw per-seed records,
+- [x] Run 20+ seeds with sufficient budgets after training checks; save raw per-seed records,
       fitted parameters, optimizer status, split metadata, config, and aggregate spread.
-- [ ] Plot ablations, forecast/realism trade-off, extreme-bin calibration, scorecards.
+- [x] Plot ablations, forecast/realism trade-off, extreme-bin calibration, scorecards.
 - [ ] Report limitations, novelty literature check, and any failure to beat classical models.
 - [ ] Write final report and slides from measured outputs.
 - [ ] Optional: independent Qiskit/PennyLane circuit cross-check, IBM hardware shots,
@@ -184,3 +184,20 @@ while failed old unregularized continuations remain explicit historical diagnost
 The forecast-comparator portion of Gate 3 is now measured; full tail/MFDFA/risk and
 final-study uncertainty claims remain open. Integrate/freeze a new full-study protocol
 before running 20+ seeds; the old `configs/study.json` is not that validated protocol.
+
+## Final-study checkpoint (20 October 2026)
+
+This supersedes the pending final-study statements in the historical checkpoints above.
+The [frozen protocol](final-study-protocol.md) has been executed on 20 seeds with sealed
+training, complete effort records, independent replay and six inspected plots. Read
+[the measured results](final-study.md): classical forecasts lead; quantum A worsens
+held-out NLL and moment distance. All selected training checks pass. The focused B
+decision and D/A comparison are measured; a positive improvement is not a completion
+requirement and is not claimed.
+
+Gate 3's originally proposed matched-loss/budget requirement is not established: the
+final protocol explicitly records differing information, parameter counts, gradients
+and costs. MFDFA/tails are finite-path diagnostics, with unavailable test Hill estimates
+labelled. Physical-unit risk and the novelty literature check remain open. The 20-seed
+experiment and plotting tasks are complete; the broader original plan is not. Report
+and slides remain paused. No test-driven rescue tuning follows this result.
