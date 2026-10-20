@@ -1,0 +1,26 @@
+{
+  "artifacts": {
+    "train-seed0.json": "eb0bbf0253eae0c84b5469cf45594bd006cfa39fa854b1dc8397c4ff7ffb7bb9",
+    "train-seed1.json": "1d9e0cddd439fd06a28e0d4a2eb08836ec89ba456a43ec346db8939317d02793",
+    "train-seed2.json": "1e239c12be7fb0a9acc5c7755c4e04590200c058e6367143efe89484d9e3f2a5",
+    "train-seed3.json": "4c48888c739c440a48467457a3dfdee9ae635d54635c1aa990dbb2fecd699bbc",
+    "train-seed4.json": "fe051cc6b664b37c14dd4a0c432d9f6b154ba938b0c461fbe7c6617695e30b35",
+    "train-seed5.json": "0357bc1ecf5ae4fd7f51c62ac205ea61118c3eb18ca4bbafd8b67ed49e2a9372",
+    "train-seed6.json": "ef68add2e5b043a0139c8c1670abcdb0a7c9f515f4a58a222645013ce0f59446",
+    "train-seed7.json": "b1af921305dcf1ee7809df09ed511dbdcdd56b3ec78344c10c8ab383e25a6618",
+    "train-seed8.json": "a95d7de2bf6ea28e9758f025fe050c9aa89a9f481964719c056ba89baddb6246",
+    "train-seed9.json": "0a363450d5103bef0416732a9c1c1c161decd6448a666b1da6e09aa7d238cae3",
+    "train-seed10.json": "691b321bcd0e56146af5457e1393c09f6b8f02ebbea7ce7a71fcd3ea239c2744",
+    "train-seed11.json": "bca3610da3d6d809e7daf2b14318646fddc4ae1055a50a8418e18da4819b61fc",
+    "train-seed12.json": "c7646be668f2b9419f6c4d1c98a7499c8a77d0ba1f8d61028242e1f2df080aef",
+    "train-seed13.json": "a756f9b3f7bcb1f4f3770ea6fef51205f8e4651b240f0da25d3c7e2dc15d7f56",
+    "train-seed14.json": "cd4acc1d771a43dfb40595408849890badeeb7b80cdebd061476f10fd98f071a",
+    "train-seed15.json": "670086ec0cbbeee6c70c56f48905d1849a487f0f2e787a5219c044f8568f85df",
+    "train-seed16.json": "ed97e19b26b678fe7b7dfa0a5282a2ac8c1eefbfec1230b9ed05a16216b58851",
+    "train-seed17.json": "97fe91e0f4fc3ab392a3c7a2eeecc5d81f57e5c2cdd17a08ee5e7265af0daef2",
+    "train-seed18.json": "e5195be728af706068001549b7de6e141933a1c2a0b61ba0e9ff64792403b377",
+    "train-seed19.json": "352b697ef67b637a52f5c6b0f5f52e00e910ff57c708bb534fb7cec3f46ba217"
+  },
+  "qcvol_v3_models_sha256": "185f105f1420b1cb6c1f36b6cb68bac1c2056dd56d50a5037c28b78998b8415f",
+  "test_scores_computed": false
+}
