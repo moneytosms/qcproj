@@ -68,11 +68,12 @@ weekend feature so the comparison is fair.
   settings, and trained models. Test evaluation is one run and reports every candidate.
 - Primary metric: four-level test log loss. Also report ranked probability score, extreme
   bin Brier score, expected-RV QLIKE, and paired 7- and 30-day circular block bootstrap
-  intervals for quantum-weekend minus each classical comparator.
-- A marked improvement requires at least 5% lower mean test log loss than both softmax and
-  the small network, with both 95% block-bootstrap intervals below zero. Otherwise state
-  that this experiment did not meet the target. Do not retune on ETH test; any further
-  candidate needs a new protocol and an untouched test period.
+  intervals for the validation-selected quantum model versus the fixed classical set.
+- A marked improvement requires at least 5% lower mean test log loss than the best of
+  weekend softmax, weekend network, and weekend softmax-HAR hybrid, with both 7- and
+  30-day 95% intervals below zero. Otherwise state that this experiment did not meet the
+  target. Do not retune on ETH test; any further candidate needs a new protocol and an
+  untouched test period.
 
 ## Limits
 

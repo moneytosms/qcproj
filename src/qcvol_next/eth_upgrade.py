@@ -160,8 +160,12 @@ def develop(data, config, seed, output):
 def develop_variants(data, config, seed, output):
     har = WeekendHAR.fit(data.x[data.train], data.y[data.train], data.bins.edges)
     base_train = har.probabilities(data.x[data.train])
-    rows = []
+    destination = output / f"upgrade-variants-seed{seed}.json"
+    rows = json.loads(destination.read_text())["rows"] if destination.is_file() else []
+    completed = {row["name"] for row in rows}
     for name in VARIANT_MODELS:
+        if name in completed:
+            continue
         for depth in DEPTHS:
             row = fit_one(name, depth, data, config, seed, har, base_train)
             rows.append(row)
@@ -172,7 +176,7 @@ def develop_variants(data, config, seed, output):
                 f"eligible={row['fit']['eligible']}",
                 flush=True,
             )
-    write_json(output / f"upgrade-variants-seed{seed}.json", {"seed": seed, "rows": rows})
+    write_json(destination, {"seed": seed, "rows": rows})
 
 
 def write_json(path, value):
