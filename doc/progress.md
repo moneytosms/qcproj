@@ -412,3 +412,40 @@ using per-seed calibrated quantum RY HAR and weekend-network predictions. The bl
 0.95% higher on ETH. No market reached the 5% target. This exploratory result used no test
 labels and is documented in [validation-ensemble.md](validation-ensemble.md); it is not
 confirmatory evidence and does not establish the goal.
+## Calendar and quantum-readout improvement: development in progress
+
+Inspected Nidhi's latest PR #8 at `341dc7e`, then branched from it. Her fresh-data study
+supersedes the earlier limited memory conclusion: memory helps on the larger dataset,
+and matched-horizon realism helps simulation at a forecast cost. Classical forecasts
+still lead. The original branch passes 94 tests in this environment.
+
+The [new plan](improvement-plan.md) was committed before empirical fitting. It targets
+weekend inputs, training-regime weighting, direct yesterday-volatility encoding on the
+second qubit, and a learned quantum readout with classical skips. Calendar/recency and
+similar-capacity classical nonlinear controls are included. Source data and prior study
+artifacts remain unchanged. The new model/gradient/calendar/leakage/seal tests pass;
+no improved empirical score or quantum advantage has yet been established.
+
+### Completed calendar/readout development
+
+The [measured note](calendar-development.md) records the completed fixed sweep:
+114/114 fits pass; independent replay verifies 249,888 probability rows and all saved
+objectives/choices, max error 5.55e−16. Calendar improves linear validation NLL
+.679985→.633722, then recency gives .630626. Quantum readout reaches .617749; the direct
+day variant gives .620583. Classical sine/tanh controls still lead at .608194/.609031.
+All 120 tests pass and the ablation plot was inspected. No new empirical test scoring
+or final-seed training has occurred. The remaining forecast gap is real in this grid.
+
+A post-hoc validation mixture suggests complementary quantum errors, motivating a
+separate, capacity-controlled ensemble protocol. That small exploratory gain is not
+an advantage claim. The overall improvement goal remains active.
+
+### Completed controlled ensemble follow-up
+
+The [protocol](ensemble-protocol.md) was committed before weight fitting. Matched
+five-member ensembles each offer 277 model parameters plus four weight coordinates.
+Both reduce to 35.296% calendar-linear and 64.704% sine, validation NLL .604802036.
+Quantum weight is zero; 2023-fitted weights likewise give no quantum benefit in 2024.
+The [measured result](ensemble-results.md) rejects the candidate before final-seed
+training or benchmark scoring. Independent dense predictions agree within 4.996e-16,
+and all mixture KKT residuals are below 1.354e-8. A numerical tie correction is disclosed.
