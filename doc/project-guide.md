@@ -375,5 +375,42 @@ identity, warm start and raw-RV HAR comparator. Then read `src/qcvol/nested_stud
 for regularization/restart selection, convergence gates and the policy decision.
 `tests/test_nested_memory.py` checks independent matrices and future-data isolation.
 Run, audit and plot using the three `scripts/*nested_memory.py` entry points described
-in the measured note. Raw run folders stay ignored. The existing main Born runner
-still needs the selected short-input policy before the next D comparison.
+in the measured note. Raw run folders stay ignored. The dedicated D/A runner described below implements
+the selected short-input policy; the historical main runner retains HAR inputs.
+
+## Reading the D → A study
+
+D asks the model for four probabilities for tomorrow, rather than one volatility value.
+For example, assigning a high probability to "calm" is penalized when tomorrow is
+"extreme". NLL measures that penalty. Low NLL is useful, but a model can predict one
+day reasonably and still generate unrealistic long histories when it feeds on its own
+outputs. A adds a training penalty for those generated histories' ACF and volatility
+changes. It can improve histories while worsening daily forecasts; both must be shown.
+
+We kept yesterday's volatility and return after the B investigation. Read
+[distribution-study-protocol.md](distribution-study-protocol.md), then
+`src/qcvol/distribution_models.py`: every model reads just those two inputs, even when
+`generation.py` constructs all four historical columns. `ShortBorn` has 1–4 layers;
+`ShortSoftmax` and `ShortNetwork` receive the same information. Full HAR is a separate
+reference with additional history. The new tiny network differs from the historical
+four-input one, while retaining 24 stored coordinates.
+
+Next read `distribution_study.py`: fit multiple starts on training → choose the best
+training restart at each depth → choose D depth using validation → freeze depth → fit
+A penalties from the D fit → choose training restarts → choose lambda using a declared
+validation forecast/realism trade-off. Lambda zero permits keeping D unchanged. A
+fresh-stream audit then checks sensitivity to generated random histories; it cannot
+turn the reused validation block into a new dataset.
+
+Use `scripts/run_distribution_study.py`, the independent saved-output verifier, and the
+plotter from the README. `tests/test_distribution_study.py` checks unused-memory
+invariance, future isolation, phase removal, independent dense matrices, restart/depth
+selection, and artifact tampering. Do not run the old 20-seed configuration as if it
+already implemented this short-input protocol. GARCH, dedicated HAR quantile regression,
+final 20-seed evaluation and the paused report still remain separate work.
+
+Read the [measured Step 3 findings](distribution-study.md) after the protocol. They show
+a small quantum realism gain with slightly worse NLL, better classical NLL, and a large
+remaining weekly-ACF gap. A better aggregate statistic does not mean every part of the
+generated history became realistic. The next work is the Step 4 classical comparison,
+including capped-network optimization; the final 20-seed study follows those checks.
