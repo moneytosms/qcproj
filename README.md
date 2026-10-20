@@ -228,3 +228,11 @@ run `train`, then `seal` using the same training runner/output. Score with
 `scripts/verify_calendar_study.py OUTPUT --evaluation`, then export figures with
 `scripts/plot_calendar_study.py OUTPUT`. Output directories cannot be overwritten by
 initialization/evaluation. All new experiment output stays ignored.
+
+The subsequent [matched ensemble experiment](doc/ensemble-results.md) rejects the
+quantum-complementarity hypothesis in this development grid. Both classical and quantum
+ensembles choose only calendar-linear and sine forecasts (validation NLL .604802).
+Follow [its protocol](doc/ensemble-protocol.md) and reproduce it with
+`scripts/ensemble_complementarity.py --source OUTPUT --output NEW_OUTPUT`.
+Its progression gate fails, so no twenty-seed run or new benchmark scores are claimed
+for that ensemble candidate.

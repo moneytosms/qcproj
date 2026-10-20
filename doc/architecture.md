@@ -417,3 +417,17 @@ Study fingerprints bind dates as well as values. New raw output remains ignored.
 [improvement-plan.md](improvement-plan.md). PR #8 already exposed 2025–2026 scores;
 this follow-up must describe those dates as a reused benchmark. It cannot manufacture
 an unseen holdout by reseeding. No quantum advantage is assumed.
+
+## ADR 018: Compare probability ensembles with matched capacity
+
+The exploratory quantum/sine mixture could benefit simply from adding another model.
+Offer two five-member ensembles with 277 model parameters and four weight degrees of
+freedom each. Both include the same linear, tanh and sine base; additions are two
+quantum models or two classical controls. Fit convex probability mixtures on validation,
+verify simplex KKT conditions, and check 2023-fitted weights against 2024. Preserve
+original training artifacts and package hashes with a separate follow-up script.
+
+The [protocol](ensemble-protocol.md) stops before final-seed training when the quantum
+mixture fails either validation comparison. The [result](ensemble-results.md) selects
+only linear and sine members, so the gate prevents an unjustified larger run. Equal
+parameter counts do not establish equal computation or effective model capacity.

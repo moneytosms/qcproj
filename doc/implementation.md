@@ -212,5 +212,7 @@ direct-day routing and learned-readout comparison. The two concrete weak spots f
 user are included. Implementation and synthetic integration checks are complete;
 the [empirical development sweep](calendar-development.md) is complete and independently
 verified. Final comparison and a demonstrated improvement over updated classical models
-remain pending. A residual-complementarity diagnostic motivates the next controlled
-ensemble experiment.
+remain unestablished. The [controlled ensemble follow-up](ensemble-results.md) is now
+complete: all three ensembles choose only calendar-linear and sine predictions.
+Quantum additions receive zero weight, and the declared progression gate fails.
+No final-seed run or new benchmark scoring is performed for this rejected candidate.

@@ -46,3 +46,13 @@ No superiority claim unless the measured effect and uncertainty support it.
 
 This stage tests forecast complementarity. It does not establish improved generated
 paths, hardware advantage, or transfer to another asset. Those require separate work.
+
+## Numerical handling clarification after first execution
+
+The first execution returned identical optima up to roundoff: pooled differences near
+1e-15 and chronological differences near 1e-9. Its literal `<` comparison marked the
+pooled difference as an improvement, but the chronological gate failed. We corrected
+the comparison to treat absolute differences at or below 1e-7 as numerical ties.
+This clarification was made after seeing those outputs; it is not a predeclared
+scientific effect threshold. It cannot turn a failed gate into a successful one.
+The first raw run remains preserved; the corrected output is in a separate directory.
