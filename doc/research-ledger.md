@@ -50,10 +50,11 @@ statevector calculations.
 
 ## Branch and PR bookkeeping
 
-As of 20 October 2026, all 16 project PRs are merged into `main`. PRs #13–#16 were merged
-during this consolidation. PR #14's downloaded market datasets and generated fit/evaluation
-files were removed from its final branch update to comply with the repository rule; its model
-code, tests, configs, frozen protocols, and aggregate score reports are retained.
+As of 20 October 2026, research and implementation PRs #1–#16 and documentation PR #17 are
+merged into `main`. PRs #13–#17 were merged during this consolidation. PR #14's downloaded
+market datasets and generated fit/evaluation files were removed from its final branch update to
+comply with the repository rule; its model code, tests, configs, frozen protocols, and aggregate
+score reports are retained.
 
 | PR | Topic branch | Status |
 | --- | --- | --- |
@@ -73,6 +74,8 @@ code, tests, configs, frozen protocols, and aggregate score reports are retained
 | #14 | `feat/multimarket-quantum-study` | Merged |
 | #15 | `research/next-forecasting-approaches` | Merged |
 | #16 | `feat/btc-quantum-upgrade` | Merged |
+| #17 | `docs/repository-ledger` | Merged |
+| #18 | `docs/repository-branch-audit` | Merged |
 
 Remote refs for these topic branches are retained for traceability. The audit found no remote
 branch head ahead of `origin/main`, and no open PRs. Branches were not deleted.
