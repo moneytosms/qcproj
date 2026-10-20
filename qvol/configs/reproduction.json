@@ -1,0 +1,20 @@
+{
+  "restarts": 10,
+  "fit_seed": 0,
+  "max_evaluations": 2000,
+  "optimizer_tolerance": 1e-8,
+  "generated_steps": 50000,
+  "generation_seeds": [0, 1, 2],
+  "window": 913,
+  "step": 365,
+  "shuffles": 20,
+  "shuffle_seed": 20261019,
+  "q_min": -5.0,
+  "q_max": 5.0,
+  "q_count": 501,
+  "min_scale": 20,
+  "max_scale": 182,
+  "scale_count": 24,
+  "gaussian_controls": 200,
+  "representative_window": 0
+}
