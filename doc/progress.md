@@ -345,4 +345,9 @@ Protocol amendment 2 adds RY weekend encoding and alternating entangler directio
 variants were selected on validation before final training. RY depth 3 improved mean
 validation loss to 0.5711, alternating CNOT depth 3 to 0.6523. A third amendment tests an
 RY quantum expert on the HAR baseline because the existing RZ hybrid was close to the
-network. ETH test scores remain unopened.
+network. Amendment 4 applies validation-fitted scalar temperature calibration uniformly
+to all candidate families, selects by calibrated validation loss, and restricts final
+training to the selected quantum model plus fixed quantum and classical controls. The
+rescored winner is the depth-1 RY HAR hybrid (0.5195 calibrated validation log loss),
+behind the softmax-HAR hybrid (0.5125) and just behind the weekend network (0.5171).
+Final training and the sealed one-time test evaluation remain.

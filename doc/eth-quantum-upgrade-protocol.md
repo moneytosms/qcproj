@@ -151,3 +151,9 @@ weekend quantum control, the no-weekend quantum control, and the fixed classical
 the registered final seeds, restarts, and optimizer budget. All development candidates
 and scores remain sealed. No test score has been computed.
 
+The frozen development sweep, rescored under this amendment, selects the RY HAR hybrid
+at depth 1 (mean calibrated validation log loss 0.5195). The fixed classical softmax-HAR
+hybrid scores 0.5125; the weekend network scores 0.5171. Thus validation still does not
+show a quantum lead. These figures were recorded before final training; no ETH test score
+has been computed.
+
