@@ -15,6 +15,7 @@ def main():
     parser.add_argument("--prior", type=Path, required=True)
     parser.add_argument("--config", type=Path, default=Path("configs/classical-comparison.json"))
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--previous-attempt", type=Path)
     args = parser.parse_args()
     source = {
         "sha256": {
@@ -22,6 +23,15 @@ def main():
         },
         "config_sha256": sha256(args.config),
     }
+    if args.previous_attempt:
+        previous = json.loads((args.previous_attempt / "manifest.json").read_text())
+        if previous["status"] != "complete":
+            raise ValueError("Previous attempt must be complete")
+        source["previous_attempt"] = {
+            "directory": str(args.previous_attempt.resolve()),
+            "manifest_sha256": sha256(args.previous_attempt / "manifest.json"),
+            "head": previous["code"]["head"],
+        }
     result = run_comparison(
         prepare(load_author_data(args.author_data)),
         args.prior,

@@ -3,7 +3,7 @@
 import json
 import os
 import time
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from importlib.metadata import version
 from pathlib import Path
 
@@ -28,6 +28,7 @@ from .training import optimize
 
 @dataclass
 class ComparisonConfig:
+    ridge_penalties: list[float] = field(default_factory=lambda: [0.0001, 0.001, 0.01, 0.1])
     network_max_calls: int = 20000
     network_max_iterations: int = 10000
     garch_max_iterations: int = 5000
@@ -36,7 +37,15 @@ class ComparisonConfig:
     burn_in: int = 60
 
     def __post_init__(self):
+        if (
+            not self.ridge_penalties
+            or len(set(self.ridge_penalties)) != len(self.ridge_penalties)
+            or any(not np.isfinite(a) or a <= 0 for a in self.ridge_penalties)
+        ):
+            raise ValueError("Need distinct positive finite ridge penalties")
         for name, value in asdict(self).items():
+            if name == "ridge_penalties":
+                continue
             if type(value) is not int or value < (0 if name == "burn_in" else 1):
                 raise ValueError(f"{name} must be a valid integer")
         if self.audit_days < 64:
@@ -291,6 +300,57 @@ def run_comparison(data, prior, output, config, source, progress=print):
         model,
         base,
     )
+    ridge_fits = []
+    ridge_winners = [
+        {
+            "fit": winner,
+            "ridge": 0.0,
+            "start": winner["start"],
+            "validation_nll": log_loss(
+                model.probabilities(data.x[data.validation], base), data.labels[data.validation]
+            ),
+        }
+    ]
+    for ridge in config.ridge_penalties:
+        group = []
+        for start in old_manifest["config"]["starts"]:
+            initial = np.random.default_rng(start).normal(0, 0.3, model.n_params)
+            fit = continue_network(
+                initial, data, config.network_max_calls, config.network_max_iterations, ridge
+            )
+            fit.update({"start": start})
+            row = {"ridge": ridge, "start": start, "fit": fit}
+            group.append(row)
+            ridge_fits.append(row)
+            write_json(output / "network-ridge-fits.json", ridge_fits)
+        best = min(group, key=lambda r: (r["fit"]["objective"], r["start"]))
+        best = dict(best)
+        best["validation_nll"] = log_loss(
+            model.probabilities(data.x[data.validation], np.array(best["fit"]["parameters"])),
+            data.labels[data.validation],
+        )
+        ridge_winners.append(best)
+    ridge_selection = min(ridge_winners, key=lambda r: (r["validation_nll"], r["ridge"]))
+    winner = ridge_selection["fit"]
+    ridge = ridge_selection["ridge"]
+    base = np.array(winner["parameters"])
+    write_json(
+        output / "network-ridge-selection.json",
+        {"ridge": ridge, "start": winner["start"], "winners": ridge_winners},
+    )
+    save(
+        {
+            "id": "network-refined-D",
+            "family": "network",
+            "origin": "ridge-selected",
+            "fit": winner,
+            "ridge": ridge,
+            "searched_coordinates": 24,
+            "sensitivity": sensitivity_rank(model, base, data.x[data.train]),
+        },
+        model,
+        base,
+    )
     # Refresh A; old network A was trained from a different D fit.
     candidates = []
     prior_config = old_manifest["config"]
@@ -321,7 +381,7 @@ def run_comparison(data, prior, output, config, source, progress=print):
             "selection_score": nll + prior_config["selection_weight"] * summary["distance_of_mean"],
         }
 
-    candidates.append(validation_candidate("network-continued-D", base, 0, winner["start"], winner))
+    candidates.append(validation_candidate("network-refined-D", base, 0, winner["start"], winner))
     for weight in prior_config["lambdas"]:
         if weight == 0:
             continue
@@ -343,7 +403,7 @@ def run_comparison(data, prior, output, config, source, progress=print):
                     moments(data.y[data.train]),
                     scales,
                 )
-                return nll + weight * summary["distance_of_mean"]
+                return nll + ridge * float(p @ p) + weight * summary["distance_of_mean"]
 
             fit = optimize(
                 objective,
@@ -355,7 +415,7 @@ def run_comparison(data, prior, output, config, source, progress=print):
             fit_record["initial_parameters"] = initial.tolist()
             candidates.append(
                 validation_candidate(
-                    f"network-continued-A-l{weight}-s{start}",
+                    f"network-refined-A-l{weight}-s{start}",
                     fit.parameters,
                     weight,
                     start,
@@ -373,11 +433,11 @@ def run_comparison(data, prior, output, config, source, progress=print):
                 )
             )
     selected = min(winners, key=lambda r: (r["selection_score"], r["lambda"]))
-    if selected["id"] != "network-continued-D":
+    if selected["id"] != "network-refined-D":
         p = np.array(selected["parameters"])
         save(
             {
-                "id": "network-continued-A",
+                "id": "network-refined-A",
                 "family": "network",
                 "origin": "continued",
                 "fit": selected["fit"],
@@ -391,6 +451,7 @@ def run_comparison(data, prior, output, config, source, progress=print):
         )
     decision = {
         "network_forecast_start": winner["start"],
+        "network_ridge": ridge,
         "network_forecast_eligible": winner["eligible"],
         "selected_network_candidate": selected["id"],
         "selected_lambda": selected["lambda"],
@@ -447,6 +508,12 @@ def run_comparison(data, prior, output, config, source, progress=print):
             "prior_training_objective_calls": old_manifest["objective_calls"],
             "prior_training_diagnostic_calls": old_manifest["diagnostic_calls"],
             "prior_fit_seconds": old_manifest["fit_seconds"],
+            "new_ridge_objective_calls": sum(r["fit"]["objective_calls"] for r in ridge_fits),
+            "new_ridge_gradient_evaluations": sum(
+                r["fit"]["gradient_evaluations"] for r in ridge_fits
+            ),
+            "new_ridge_diagnostic_calls": sum(r["fit"]["diagnostic_calls"] for r in ridge_fits),
+            "new_ridge_fit_seconds": sum(r["fit"]["seconds"] for r in ridge_fits),
             "new_network_objective_calls": sum(f["objective_calls"] for f in continuations),
             "new_network_gradient_evaluations": sum(
                 f["gradient_evaluations"] for f in continuations

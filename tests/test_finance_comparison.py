@@ -29,6 +29,14 @@ def test_analytic_network_gradient_and_continuation():
         theta, data.x[data.train], data.labels[data.train]
     )[0]
     assert np.isfinite(loss)
+    regularized, ridge_gradient = network_loss_gradient(
+        p, data.x[data.train], data.labels[data.train], 0.01
+    )
+    ridge_objective = lambda theta: network_loss_gradient(
+        theta, data.x[data.train], data.labels[data.train], 0.01
+    )[0]
+    np.testing.assert_allclose(ridge_gradient, central_gradient(ridge_objective, p), atol=1e-8)
+    assert regularized == pytest.approx(loss + 0.01 * (p @ p))
     np.testing.assert_allclose(gradient, central_gradient(objective, p), atol=1e-8)
     fit = continue_network(p, data, max_calls=100, max_iterations=20)
     assert fit["objective"] <= fit["initial_objective"]

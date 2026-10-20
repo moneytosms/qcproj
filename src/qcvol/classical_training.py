@@ -11,7 +11,7 @@ from .distribution_study import central_gradient
 from .metrics import log_loss
 
 
-def network_loss_gradient(parameters, x, labels):
+def network_loss_gradient(parameters, x, labels, ridge=0.0):
     p = np.asarray(parameters)
     x = short_inputs(x)
     hidden = np.tanh(x @ p[:6].reshape(2, 3) + p[6:9])
@@ -31,16 +31,18 @@ def network_loss_gradient(parameters, x, labels):
         delta.sum(axis=0),
         (x[:, :1] * delta).sum(axis=0),
     ]
-    return log_loss(probabilities, labels), gradient
+    return log_loss(probabilities, labels) + ridge * float(p @ p), gradient + 2 * ridge * p
 
 
-def continue_network(initial, data, max_calls=20000, max_iterations=10000):
+def continue_network(initial, data, max_calls=20000, max_iterations=10000, ridge=0.0):
     started = time.perf_counter()
     history = []
     best = [float("inf"), None]
 
     def objective(p):
-        value, gradient = network_loss_gradient(p, data.x[data.train], data.labels[data.train])
+        value, gradient = network_loss_gradient(
+            p, data.x[data.train], data.labels[data.train], ridge
+        )
         history.append(value)
         if value < best[0]:
             best[:] = [value, p.copy()]
@@ -61,10 +63,14 @@ def continue_network(initial, data, max_calls=20000, max_iterations=10000):
     )
     parameters = best[1]
     model = ShortNetwork()
-    loss = lambda p: log_loss(model.probabilities(data.x[data.train], p), data.labels[data.train])
+    loss = lambda p: (
+        log_loss(model.probabilities(data.x[data.train], p), data.labels[data.train])
+        + ridge * float(p @ p)
+    )
     gradient = float(np.max(np.abs(central_gradient(loss, parameters))))
     return {
         "parameters": parameters.tolist(),
+        "ridge": ridge,
         "initial_parameters": np.array(initial).tolist(),
         "objective": float(best[0]),
         "initial_objective": history[0],

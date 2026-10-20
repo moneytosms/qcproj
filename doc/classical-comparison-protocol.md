@@ -109,3 +109,25 @@ Primary implementation references:
 [SciPy linprog](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html).
 Installed arch source is also checked because its installed version is newer than the
 published documentation landing page.
+
+## Amendment after the first completed comparison
+
+The first Step 4 attempt (`results/classical-comparison-2026-10-20`, package checkpoint
+`5749764`) completed. Analytic continuation tightened the already-best network fit to
+gradient norm 6.21e−8, but four other starts exhausted 10,000 iterations, including one
+with gradient norm .00126. Keep this run and its costs. More calls did not reliably
+resolve poorly conditioned unregularized network directions.
+
+Before the refined run, add a standard finite-norm baseline: penalize **all 24 network
+coordinates** with alpha×sum(p²), at alpha=.0001,.001,.01,.1. Each alpha gets five fresh
+original N(0,.3) starts (seeds 0–4), the same analytic allowance and stationarity checks.
+Choose each restart on penalized training loss, then alpha by validation NLL, including
+the continued unregularized training winner at alpha zero as a fallback. Report all
+20 new fits and the added validation search; this is not a compute-matched comparison.
+The grid is fixed to address conditioning, not tuned to an independent test result.
+
+Freeze selected alpha before repeating A. Keep the alpha penalty in A's training loss;
+use the unchanged lambda/warm-start/selection protocol and fresh streams 50000/60000.
+Retain the unregularized continued D as its own scorecard row. This refinement reuses
+validation for development and does not create new independent statistical evidence.
+Save to a new directory and include the first attempt's hashes/costs in the evidence.
