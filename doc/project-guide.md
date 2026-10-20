@@ -469,4 +469,10 @@ paths, independent polynomial MFDFA, and paired bootstrap reconstruction. Tests 
 `test_final_study.py` cover future-data isolation, sealing, integration-vs-final labels,
 independent MFDFA and corrupted uncertainty artifacts. The plotter exports scorecards,
 ablations, calibration, path diagnostics, forecast curves, training effort and CSV.
-The measured study note will record actual completion; the project report stays paused.
+Finish with [the measured 20-seed findings](final-study.md). HAR forecasts lead on test
+NLL; quantum D scores .691983 and quantum A .862279, while HAR quantile scores .528910.
+Realism training moves generated moments toward the training target but worsens the
+held-out test moment comparison. Its earlier validation gains did not generalize to
+this period. All selected training checks pass, so preserve this negative result.
+Read the date-bootstrap intervals and coverage limits before interpreting rankings:
+twenty seeds are not twenty market periods. The project report stays paused.

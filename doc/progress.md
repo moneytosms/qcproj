@@ -271,3 +271,35 @@ Current branch checks: **68 tests pass**, including finance gradient/certificate
 an end-to-end comparison with independent verification, deliberate LP-certificate and
 selection tampering, and the original `qvol/` suite. Ruff lint/format and whitespace
 checks pass. Raw measured output remains ignored.
+
+## Final frozen study (20 October 2026)
+
+Completed the [frozen protocol](final-study-protocol.md) and
+[measured 20-seed comparison](final-study.md), after the Step 4 training repairs.
+Source/config/data/training-artifact hashes were sealed before test scoring; no
+hyperparameters or restarts were selected against test results.
+
+- 20 fresh seeds, 240 forecast records, 260 path records and **8,519,680 output days**.
+- All 300 D fits and 100 paper fits pass optimizer/independent-gradient checks; all
+  180 A fits terminate by radius. Every selected seed passes. Finance checks pass.
+- Test NLL: HAR quantile .528910; HAR residual .529544; network D .578365; softmax D
+  .582168; quantum D .691983; quantum A .862279. No quantum advantage demonstrated.
+- Quantum A worsens mean test moment distance 19.7151→31.8644 as well as NLL.
+  Softmax/network A also worsen both mean scores. The earlier validation realism gains
+  do not carry over; do not hide the negative outcomes or retune against this test.
+- Calibrated GARCH has the smallest shared-law test moment distance (10.7134), despite
+  weaker forecast NLL. Softmax D now leads extreme-bin Brier; only three extreme events
+  limit calibration inference. Native HAR nominal 90% coverage is just 79.7%.
+- Separate seed variability and paired 7/30-day date-bootstrap intervals are reported.
+  Quantum A−D intervals are positive for both blocks; some D-vs-classical intervals
+  include zero at 30 days. One reused period cannot establish universal superiority.
+- 363,800 iterative objective calls, 9,800 independent diagnostic calls and 30 LP solves;
+  1176.850 summed fit seconds, with development costs and method differences retained.
+- Independent verification replays **42,480 probability rows**, max dense-gate error
+  6.66e−16, every recursive output day, independent MFDFA and exact bootstrap results.
+- **81 tests pass**, Ruff lint/format and whitespace checks pass; all six final figures
+  inspected. Artifacts/plots/CSV stay ignored under `results/final-study-2026-10-20`.
+
+The final study is complete for this protocol. Physical-unit risk, novelty review,
+unseen-market replication and optional hardware/transfer are not thereby completed.
+The project report and slides remain paused at the user's request.

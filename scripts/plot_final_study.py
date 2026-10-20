@@ -153,8 +153,9 @@ def main():
         y = r["log_loss"]["mean"]
         ax.scatter(x, y, color=color(r["id"]), marker="*" if r["id"].endswith("-A") else "o", s=100)
         if r["id"] in ("quantum-A", "network-A", "har-quantile", "softmax-A", "garch-calibrated"):
+            offset = (4, -14) if r["id"] == "softmax-A" else (4, 7)
             ax.annotate(
-                LABELS[r["id"]], (x, y), xytext=(4, 5), textcoords="offset points", fontsize=8
+                LABELS[r["id"]], (x, y), xytext=offset, textcoords="offset points", fontsize=8
             )
     ax.set_xscale("log")
     ax.margins(x=0.3, y=0.15)
