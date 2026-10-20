@@ -2,7 +2,12 @@ from datetime import UTC, datetime
 
 import numpy as np
 
-from qcvol_next.binance_data import FIVE_MIN_MS, build_daily, timestamp_ms
+from qcvol_next.binance_data import (
+    FIVE_MIN_MS,
+    archive_url,
+    build_daily,
+    timestamp_ms,
+)
 
 
 def two_days(missing=False, shifted=False):
@@ -21,6 +26,12 @@ def test_timestamp_ms_accepts_both_binance_spot_units():
     micros = int(datetime(2025, 1, 1, tzinfo=UTC).timestamp() * 1_000_000)
     assert timestamp_ms(millis) == millis
     assert timestamp_ms(micros) == micros // 1000
+
+
+def test_archive_url_supports_a_second_spot_symbol():
+    assert archive_url(datetime(2024, 1, 1).date(), True, "BTCUSDT").endswith(
+        "/BTCUSDT/5m/BTCUSDT-5m-2024-01.zip"
+    )
 
 
 def test_build_daily_uses_utc_5m_returns_and_reports_gaps():

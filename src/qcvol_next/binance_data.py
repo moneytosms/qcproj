@@ -43,11 +43,11 @@ def sha256(path):
     return digest.hexdigest()
 
 
-def archive_url(day, monthly):
+def archive_url(day, monthly, symbol=SYMBOL):
     kind = "monthly" if monthly else "daily"
     stamp = day.strftime("%Y-%m" if monthly else "%Y-%m-%d")
-    name = f"{SYMBOL}-{INTERVAL}-{stamp}.zip"
-    return f"{BASE}/{kind}/klines/{SYMBOL}/{INTERVAL}/{name}"
+    name = f"{symbol}-{INTERVAL}-{stamp}.zip"
+    return f"{BASE}/{kind}/klines/{symbol}/{INTERVAL}/{name}"
 
 
 def timestamp_ms(value):
@@ -72,18 +72,18 @@ def download_checked(url, cache):
     return archive
 
 
-def source_archives(cache):
+def source_archives(cache, symbol=SYMBOL):
     archives = []
     month = date(FIRST.year, FIRST.month, 1)
     last_month = date(LAST.year, LAST.month, 1)
     while month <= last_month:
         if month.year == LAST.year and month.month == LAST.month:
             break
-        archives.append(download_checked(archive_url(month, True), cache))
+        archives.append(download_checked(archive_url(month, True, symbol), cache))
         month = date(month.year + (month.month == 12), month.month % 12 + 1, 1)
     day = max(FIRST, last_month)
     while day <= LAST:
-        archives.append(download_checked(archive_url(day, False), cache))
+        archives.append(download_checked(archive_url(day, False, symbol), cache))
         day += timedelta(days=1)
     return archives
 
@@ -180,10 +180,13 @@ def build_daily(bars):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--cache", type=Path, default=Path(".cache/binance-eth-5m"))
-    parser.add_argument("--output", type=Path, default=Path("data/ethusdt_daily.csv"))
+    parser.add_argument("--symbol", default=SYMBOL)
+    parser.add_argument("--cache", type=Path)
+    parser.add_argument("--output", type=Path)
     args = parser.parse_args()
-    paths = source_archives(args.cache)
+    args.cache = args.cache or Path(f".cache/binance-{args.symbol.lower()}-5m")
+    args.output = args.output or Path(f"data/{args.symbol.lower()}_daily.csv")
+    paths = source_archives(args.cache, args.symbol)
     bars, source_hashes = parse_archives(paths)
     rows, gaps, incomplete_days = build_daily(bars)
     if rows[0]["date"] != FIRST.isoformat() or rows[-1]["date"] != LAST.isoformat():
@@ -199,7 +202,7 @@ def main():
         for row in rows:
             writer.writerow(row)
     info = {
-        "source": "Binance spot ETHUSDT 5m klines",
+        "source": f"Binance spot {args.symbol} 5m klines",
         "first_day": rows[0]["date"],
         "last_day": rows[-1]["date"],
         "days": len(rows),

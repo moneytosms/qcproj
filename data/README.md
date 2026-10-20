@@ -30,3 +30,7 @@ are complete. Rebuild with:
 ```bash
 uv run python scripts/build_binance_daily.py
 ```
+
+The builder also accepts `--symbol BTCUSDT`; by default this writes
+`data/btcusdt_daily.csv` and uses a symbol-specific ignored cache. The same checksum,
+timestamp, gap, and daily RV rules apply.
