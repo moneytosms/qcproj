@@ -4,6 +4,17 @@ Updated 20 October 2026. This records what was actually built and run. The long-
 research checklist is [implementation.md](implementation.md). Completed software does
 not imply that the scientific gates have passed.
 
+## Research on the next experiment (20 October 2026)
+
+The [next-approaches literature note](next-approaches-literature.md) compares the
+supplied project proposal with implemented studies and primary papers. It
+recommends a bounded downside-semivariance input ablation before quarticity,
+continuous severity heads or online adaptation. It also documents 14
+unobservable terminal RZ coefficients in the current six-input Born circuits
+(independent-simulator perturbation difference at most 8.88e-16), missing v3
+optimizer records and unequal restart/ensemble controls. No new model fits,
+held-out forecasting scores or implementation gains are claimed by this note.
+
 ## Delivered in this implementation
 
 - Installable `qcvol` Python package, locked environment, offline synthetic demo, CLI.
