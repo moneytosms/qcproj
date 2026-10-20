@@ -359,3 +359,10 @@ untouched test data.
 
 BTCUSDT is the fixed-architecture replication target. Its protocol is committed in
 [btc-replication-protocol.md](btc-replication-protocol.md) before data download or scoring.
+BTC replication is complete and documented in [btc-study.md](btc-study.md). The RY HAR
+hybrid scored 0.5320 log loss versus 0.5309 for the best classical network; 97.5% paired
+intervals crossed zero. It did not meet the 5% improvement threshold. Across both tested
+markets there is no marked quantum advantage; the user goal remains active.
+An equal 20-seed probability ensemble was also checked on validation only. It remained
+behind classical on ETH and was about 1.1% ahead of the best classical model on BTC, below
+the 5% target. No test predictions were reused for this check.
