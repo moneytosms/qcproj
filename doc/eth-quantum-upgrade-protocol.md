@@ -17,13 +17,16 @@ Use Binance public spot ETHUSDT 5-minute klines. Monthly ZIPs are used through
 current month is not yet released. Verify each ZIP against its `.CHECKSUM` sidecar before
 parsing it. Binance documents that spot timestamps from 2025-01-01 use microseconds;
 earlier spot timestamps use milliseconds. Convert both to UTC and fail on duplicate
-timestamps or missing calendar dates. Detect and report missing 5-minute bars without
-filling them; record incomplete-day counts and source/output SHA-256 in metadata.
+timestamps or missing calendar dates. Detect and report missing 5-minute bars from
+timestamp differences without assuming timestamps remain epoch-aligned after a gap; do not
+fill them. Record incomplete-day counts and source/output SHA-256 in metadata.
 
-Daily RV is the sum of squared consecutive 5-minute log-close returns, grouped by the UTC
-date of the later bar. Daily return is log close-to-close; `intervals` and
-`zero_volume_fraction` match the Bitstamp daily schema. Drop the first 30 days as HAR
-lookback, so the first forecast target is 2017-09-16.
+Daily RV is the sum of squared observed consecutive log-close returns, grouped by the UTC
+date of the later bar. When a bar gap occurs, use the one observed close-to-close return
+across that gap and never invent missing prices; record the gap and mark the day
+incomplete. Daily return is log close-to-close; `intervals` counts only observed 5-minute
+returns and `zero_volume_fraction` matches the Bitstamp daily schema. Drop the first 30
+days as HAR lookback, so the first forecast target is 2017-09-16.
 
 | Split | Target dates | Use |
 | --- | --- | --- |
@@ -44,6 +47,8 @@ rows only. The test period remains unopened until the final models and code are 
 4. Two-hidden-unit tanh network with the same inputs and 27 parameters, close to the
    30-parameter depth-3 quantum candidate.
 5. HAR residual/quantile baseline with a target-weekend term in its location regression.
+6. Quantum and softmax log-probability corrections to the same HAR baseline, with the
+   weekend input supplied to both experts.
 
 Every learned model uses the same train rows, target labels, log loss, optimizer budget,
 validation dates, and target-day weekend feature where applicable. The four-input quantum
@@ -53,7 +58,9 @@ weekend feature so the comparison is fair.
 ## Selection and final evaluation
 
 - Development seeds: 900 and 901; 5 fixed restarts per candidate fit.
-- Select quantum depth by mean validation log loss, ties to lower depth. No settings are
+- Test circuit depths 1-3, with 10 trainable weights per layer. This keeps the depth-3
+  circuit's 30 parameters close to the 27-parameter classical network. Select quantum
+  depth by mean validation log loss, ties to lower depth. No settings are
   selected from test results.
 - Final quantum models use seeds 0-19 with selected depth. Classical comparators use the
   same final seeds where their fitting procedure is stochastic.
@@ -81,3 +88,16 @@ win that fails on test remains a failed headline result.
   [Spot REST API kline documentation](https://developers.binance.com/en/docs/products/spot/rest-api#klinecandlestick-data).
 - Binance documents that daily files appear the next day and monthly files on the first
   Monday of the month in the public-data README above.
+
+## Amendment 1: archive gap handling (20 Oct 2026, before model evaluation)
+
+The checksum-verified archive contains 33 timestamp gaps affecting 34 UTC dates. After a
+large historical gap, timestamps resume with a 94.8-second offset from their prior
+5-minute grid, although subsequent bars remain 5 minutes apart. The builder therefore
+checks timestamp differences rather than requiring epoch-aligned timestamps. It includes
+each observed close-to-close return once in that date's RV, including one observed return
+across a gap; it does not synthesize missing bars. The exact gap list, affected days, and
+number of fully sampled 5-minute returns per day are committed in the metadata. No
+complete calendar dates are missing; all incomplete dates are in 2023 or earlier, and the
+2025-01-01 to 2026-10-19 test period has 288 observed bars per day. The forecast procedure
+remains unchanged, and no model score has been computed.

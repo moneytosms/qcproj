@@ -17,3 +17,16 @@ uv run python scripts/build_bitstamp_daily.py
 ```
 
 `bitstamp_daily.json` records the input and output SHA-256 hashes.
+
+`ethusdt_daily.csv` is derived from Binance public ETHUSDT spot 5-minute klines, with
+monthly ZIPs through 2026-09 and daily ZIPs for 2026-10-01 through 2026-10-19. Every ZIP
+was checked against its `.CHECKSUM` sidecar. `ethusdt_daily.json` records source and output
+hashes, gaps, and incomplete UTC days. Binance spot archive timestamps use milliseconds
+before 2025-01-01 and microseconds from that date onward. The source has 33 gaps affecting
+34 days and 1,703 missing 5-minute intervals; no missing bars were fabricated. RV includes
+observed close-to-close returns across gaps once. The 2025-01-01 to 2026-10-19 test dates
+are complete. Rebuild with:
+
+```bash
+uv run python scripts/build_binance_daily.py
+```

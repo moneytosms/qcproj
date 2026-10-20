@@ -384,3 +384,21 @@ its fits failed stationarity checks (amendment 1 in the protocol).
 
 **Sealing:** the evaluation function is in the sealed package, so test scoring cannot change
 after training; development, selection and training artifacts are hashed into `seal.json`.
+
+## ADR 017 — Test a weekend-aware quantum forecast on ETH
+
+Keep the sealed `qcvol` package unchanged. Place the follow-up circuit, matching classical
+models, Binance data builder, and training runner in `qcvol_next` and `scripts/`. The new
+2-qubit ansatz applies one learned weekend-conditioned Z rotation per qubit per layer
+before entanglement. Depths 1-3 keep the depth-3 circuit near the small network's parameter
+count. The weekend flag is standardized from training target dates and is supplied to the
+softmax, network, HAR residual, and classical hybrid controls as well.
+
+**Reason:** the Bitstamp test showed a weekday effect while the model received no calendar
+input. This experiment tests that concrete omission on ETH, then checks whether the
+quantum circuit benefits more than equally informed classical forecasters. The ETH test is
+opened only after protocol, tuning, training, and hashes are frozen.
+
+**Gap handling:** retain timestamp gaps as observed, record them, and never synthesize bars.
+Use each actual adjacent close return once, even when it spans missing intervals. This
+avoids discarding an observed price move while keeping data quality visible.

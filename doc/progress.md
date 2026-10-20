@@ -327,3 +327,17 @@ Completed the [pre-committed protocol](fresh-study-protocol.md) and the
   squared error and realism (215 vs 34); all 95% date-bootstrap intervals exclude zero.
   Main cause: the paper's max-based input scaling squashes ordinary days after the 2020
   crash, plus one-day memory.
+
+## ETH quantum upgrade (20 Oct 2026)
+
+The user asked for a real forecast improvement over classical models, not just another
+paper comparison. The [protocol](eth-quantum-upgrade-protocol.md) was committed before
+ETH model scores. Binance ETHUSDT spot 5-minute archives are checksum-verified. The
+derived daily file covers 2017-08-17 to 2026-10-19 (3,351 days; 963,337 bars). The archive
+contains 33 timestamp gaps, 1,703 missing 5-minute intervals, and 34 affected days;
+2025-01-01 to 2026-10-19 has complete 288 bars per day. Gaps are recorded, never filled;
+observed close changes across gaps enter RV once. The builder and weekend circuit have
+focused unit tests, including timestamp unit conversion, offset handling, and exact
+statevector equivalence. No ETH validation or test
+scores have been computed yet. Next: run frozen development and selection stages, finalize
+the candidate, seal artifacts, then score the ETH test once.
