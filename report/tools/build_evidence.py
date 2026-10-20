@@ -17,7 +17,7 @@ import numpy as np
 from scipy.special import softmax
 
 from qcvol.data import load_daily_csv
-from qcvol.fresh_runner import paired_intervals
+from qcvol.fresh_runner import code_revision, paired_intervals
 from qcvol.fresh_study import prepare_dates
 from qcvol.quantum import BornCircuit
 
@@ -81,6 +81,7 @@ plt.rcParams.update(
         "text.color": "#182a3c",
         "axes.edgecolor": "#9ba9b6",
         "savefig.bbox": "tight",
+        "svg.hashsalt": "qvrf-report-v1",
     }
 )
 BLUE, TEAL, GREY = "#235b86", "#16847d", "#8d9ba6"
@@ -88,6 +89,8 @@ BLUE, TEAL, GREY = "#235b86", "#16847d", "#8d9ba6"
 
 def save(fig, name):
     fig.savefig(ASSETS / (name + ".svg"), metadata={"Date": None})
+    path = ASSETS / (name + ".svg")
+    path.write_text("\n".join(line.rstrip() for line in path.read_text().splitlines()) + "\n")
     plt.close(fig)
 
 
@@ -209,8 +212,49 @@ save(fig, "observed-data")
     )
     + "\n"
 )
+# Later panels retain aggregate reports only. Validate transcription/arithmetic;
+# do not present this as seed-level replay or raw-data verification.
+secondary = []
+for filename, assets in [
+    ("multimarket-v3-results.md", {"LTC", "BNB", "ADA"}),
+    ("calibrated-v3-results.md", {"LINK", "DOT", "AVAX"}),
+]:
+    for line in (ROOT / "doc" / filename).read_text().splitlines():
+        cells = [cell.strip().replace("*", "") for cell in line.split("|")[1:-1]]
+        if len(cells) != 6 or cells[0] not in assets:
+            continue
+        asset = cells[0]
+        quantum, best = float(cells[1]), float(cells[4])
+        gain = float(cells[5].replace("%", "").replace("−", "-"))
+        assert abs(100 * (best - quantum) / best - gain) < 0.011
+        for value in (quantum, best):
+            assert f"{value:.6f}" in (ROOT / "report/main.typ").read_text()
+        secondary.append(
+            {
+                "asset": asset,
+                "quantum_nll": quantum,
+                "best_classical_nll": best,
+                "reported_gain_percent": gain,
+                "source": "doc/" + filename,
+            }
+        )
+assert len(secondary) == 6
+for filename in ("scripts/run_v3_study.py", "scripts/evaluate_calibrated_v3.py"):
+    code = (ROOT / filename).read_text()
+    assert "0.025" in code and "0.975" in code
+for filename in ("multimarket-v3-protocol.md", "calibrated-v3-protocol.md"):
+    assert "97.5%" in (ROOT / "doc" / filename).read_text()
+original_source = seal["code"]["package_source_sha256"]
+current_source = code_revision()["package_source_sha256"]
+changed_source = [
+    name for name, value in original_source.items() if current_source.get(name) != value
+]
+added_source = sorted(current_source.keys() - original_source.keys())
+assert changed_source == ["fresh_runner.py"]
+assert added_source == ["calendar_models.py", "calendar_study.py"]
+
 qa = {
-    "implementation_commit": "fc8d6c8",
+    "implementation_commit": "0aeab94",
     "python": platform.python_version(),
     "sealed_training_artifacts_checked": len(seal["artifacts"]),
     "tracked_matches_local_evaluation": True,
@@ -218,6 +262,12 @@ qa = {
     "independent_daily_loss_max_error": errors,
     "paired_bootstrap_rows_recomputed": len(intervals),
     "test_level_counts": result["test_level_counts"],
+    "current_package_matches_historical_source_seal": False,
+    "changed_historical_package_files": changed_source,
+    "added_package_files_since_seal": added_source,
+    "later_panel_aggregate_checks": secondary,
+    "later_panel_interval_confidence": {"protocol": 0.975, "implemented": 0.95},
+    "later_panel_per_seed_replay_available": False,
     "sources": {
         str(p.relative_to(ROOT)): digest(p)
         for p in [

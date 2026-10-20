@@ -2,7 +2,7 @@
 
 ## Scientific review
 
-Implementation baseline: `fc8d6c8`. The report does not change model code,
+Implementation baseline: `0aeab94`. The report does not change model code,
 experiment configurations, source datasets, or the supplied reference PDFs.
 
 - Confirmed fresh-study results against both tracked JSON and local saved evaluation.
@@ -20,16 +20,28 @@ experiment configurations, source datasets, or the supplied reference PDFs.
   candidates. No proposal-only experiment is reported as implemented.
 - Distinguished categorical regime probabilities from numerical intervals, variance
   from volatility, seed variability from date uncertainty, and simulation from hardware.
-- Contribution attribution uses repository evidence; Gopi's tasks remain unverified.
+- The user requested a balanced allocation of development, research, validation,
+  and report work across all five members. The contribution table records that
+  allocation without rewriting Git authorship or inventing verified completion.
+- Integrated current upstream main at `0aeab94` after discovering newly merged
+  studies. Checked the six later v3 aggregate score rows and their gain arithmetic.
+  These panels lack committed raw data/per-seed artifacts, so no independent
+  seed replay is claimed for them.
+- Found and disclosed that both later v3 protocols require 97.5% intervals, while
+  the evaluation implementations compute 95% intervals. AVAX's 5.68% mean NLL gain
+  is retained as an exploratory primary-metric signal; three-asset gates failed.
+- Current fresh-study source seal does not fully match: fresh_runner.py adds the
+  bootstrap_confidence field and two calendar modules were added after sealing.
+  Training artifact hashes and independent numerical replays still match.
 
-Current repository verification: **152 passed, 2 skipped**. Skips:
+Current repository verification: **154 passed, 2 skipped**. Skips:
 `tests/test_finance_comparison.py:181` lacks ignored historical study artifacts;
 `qvol/tests/test_reproduction.py:82` lacks optional MFDFA. Existing saved audit
 results are attributed to the recorded study, not represented as rerun here.
 
 ## Technical writing and template review
 
-`writing-checks.json` records all 13 sections, 10 figures, 12 tables, and 11
+`writing-checks.json` records all 13 sections, 10 figures, 13 tables, and 11
 numbered equations. All important figure/table/equation labels are referenced.
 Bibliographic keys resolve. Narrative paragraphs have no flagged sentences over
 35 words. The abstract has no placeholder language and states actual results.
@@ -40,7 +52,7 @@ manual review covers captions, interpretation, equations, and figure readability
 ## Rendered-page review
 
 Compiled successfully with Typst 0.15.1 and bundled TeX Gyre fonts, without compiler
-warnings. Rendered all 16 A4 pages with Poppler at 1600 pixels on the long edge.
+warnings. Rendered all 17 A4 pages with Poppler at 1600 pixels on the long edge.
 Inspected every page in contact sheets and enlarged the mathematical/diagram pages.
 
 - Pages 1–4: title identity, official logo, instructors, abstract, generated contents,
@@ -50,7 +62,7 @@ Inspected every page in contact sheets and enlarged the mathematical/diagram pag
   workflow labels, and training/test boundaries checked.
 - Pages 9–12: data-derived chart labels, error-bar meaning, interval identities,
   forecast/realism units, score tables, and post-hoc/replication distinctions checked.
-- Pages 13–16: contribution records, numerical citations, line-wrapped build
+- Pages 13–17: latest panel limitations, balanced contribution allocation, numerical citations, and line-wrapped build
   commands, evidence index, complete scorecard, and review table checked.
 
 Corrected label overflow in the architecture diagram, enlarged generation nodes,
@@ -58,6 +70,6 @@ separated the Bloch-twin vector onto its own equation line, and corrected Typst
 subscript grouping before the final inspection. No unresolved page-edge overflow,
 missing reference, clipped caption, broken equation, or font substitution was found.
 
-The university's contribution section is present for every member. Specific tasks
-for Gopi cannot be validated without additional team information. The CSE department
+The university's contribution section is present for every member, with substantial
+responsibilities assigned to all five under the user's allocation directive. The CSE department
 and 2026–2027 academic year remain editable assumptions, documented in report/README.md.

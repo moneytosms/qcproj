@@ -69,7 +69,7 @@ The principal study used Bitstamp Bitcoin realized variance from five-minute ret
 
 Adding weekly and monthly inputs reduced quantum test negative log likelihood from 0.6204 to 0.5695 nats per day. The 30-day block interval for the difference was [−0.0711, −0.0306]. Realism training reduced the mean generated-path moment distance from 33.50 to 29.00, while increasing forecast loss to 0.6042. Same-input softmax regression achieved 0.5184, ahead of the quantum models.
 
-Later calendar-aware Bitcoin variants reduced quantum loss to 0.5145, but these comparisons used an already-examined test period. Weekend-aware ETH, BTC, SOL, and DOGE studies did not satisfy their registered marked-improvement rules. The results support a memory benefit and a forecast–realism trade-off within the studied setting. They establish neither quantum advantage nor calibrated numerical prediction intervals. The Bitstamp test period contained no training-defined extreme-regime days, which limits tail-risk conclusions.
+Later calendar-aware Bitcoin variants reduced quantum loss to 0.5145, but these comparisons used an already-examined test period. Weekend-aware ETH, BTC, SOL, and DOGE studies did not satisfy their registered marked-improvement rules. A later calibrated v3 panel reported 5.68% lower NLL on AVAX than its best classical comparator. Its three-asset transfer gate failed, and quantum QLIKE was worse on all three assets. The results support a memory benefit, a forecast–realism trade-off, and a limited exploratory AVAX primary-metric signal. They establish neither quantum advantage nor calibrated numerical prediction intervals. The Bitstamp test period contained no training-defined extreme-regime days, which limits tail-risk conclusions.
 
 #v(4mm)
 *Keywords:* quantum circuit learning; realized variance; probabilistic regime classification; heterogeneous autoregressive inputs; reproducibility.
@@ -88,7 +88,7 @@ Later calendar-aware Bitcoin variants reduced quantum loss to 0.5145, but these 
 #v(4mm)
 #heading(level:2,numbering:none)[List of tables]
 #context {
-  let titles = ([Comparison families], [Implemented modifications], [Regime definitions], [Chronological target splits], [Selected forecast scorecard], [Paper-model comparison], [Post-hoc Bitcoin variants], [Asset replications], [Team contributions], [Evidence index], [Complete forecast scorecard], [Scientific and writing review])
+  let titles = ([Comparison families], [Implemented modifications], [Regime definitions], [Chronological target splits], [Selected forecast scorecard], [Paper-model comparison], [Post-hoc Bitcoin variants], [Asset replications], [Cross-market v3 panels], [Team contributions], [Evidence index], [Complete forecast scorecard], [Scientific and writing review])
   for (i,f) in query(figure.where(kind:table)).enumerate() {
     block(above:4pt,below:4pt,link(f.location(),grid(columns:(19mm,1fr,auto),[Table #numbering("I", ..f.counter.at(f.location()))],titles.at(i),str(counter(page).at(f.location()).first()))))
   }
@@ -98,6 +98,7 @@ Later calendar-aware Bitcoin variants reduced quantum loss to 0.5145, but these 
 #table(columns:(auto,1fr),stroke:none,inset:4pt,
   [ACF],[Autocorrelation function.],
   [BTC / ETH],[Bitcoin / Ethereum; SOL and DOGE denote Solana and Dogecoin.],
+  [Other assets],[LTC: Litecoin; BNB: Binance Coin; ADA: Cardano; LINK: Chainlink; DOT: Polkadot; AVAX: Avalanche.],
   [COBYLA],[Constrained optimization by linear approximation.],
   [CNOT],[Controlled-NOT quantum gate.],
   [HAR],[Heterogeneous autoregressive; this project uses 1-, 7-, and 30-day horizons.],
@@ -138,7 +139,7 @@ A fourth objective was to test these choices against frequency, softmax, neural,
 == Scope and evidence boundaries
 The principal empirical panel is the sealed fresh Bitstamp study. The original 913-day paper reproduction is descriptive and uses the full sample. Earlier short-input studies are development evidence. The later Bitcoin v2/v3 designs are post-hoc because their motivation used an exposed test period.
 
-The report covers the integrated implementation at commit `fc8d6c8`. Subsequent literature proposals in another branch are not completed experiments. The implementation uses exact classical statevector simulation. It contains no deployed trading service, and the reported experiments do not include physical quantum-device runs.
+The report covers the integrated implementation at commit `0aeab94`. The literature proposals in `doc/next-approaches-literature.md` are not completed experiments. The implementation uses exact classical statevector simulation. It contains no deployed trading service, and the reported experiments do not include physical quantum-device runs.
 
 = Literature review
 == Existing approaches
@@ -341,12 +342,14 @@ v3 retains the Born readout and uses a ten-restart probability ensemble with rid
 
 The separate weekend-aware replication pipeline adds weekend rotations to the original circuit family. ETH validation selected a depth-1 $R_y$ expert combined with a fixed HAR forecast. Later BTC, SOL, and DOGE studies reused the selected architecture. Per-seed temperatures are fitted on validation predictions before test evaluation @markets.
 
+The later v3 runners also support asset-specific input files. Two three-asset panels used the 84-parameter Born circuit, ten restart forecasts per seed, and the same six inputs for classical controls. The LINK/DOT/AVAX panel fitted one temperature per model and seed on 2023 validation rows, within bounds [0.2, 5.0]. The 2024 validation slice and test predictions used the fixed temperatures @crossmarkets.
+
 == Testing and artifact integrity
-The current combined suite reported *152 passed and 2 skipped*. One skip lacks local historical study artifacts. The other lacks the optional MFDFA package. A skip is not a passed check. The tests cover probability normalization, matrix-reference agreement, paper-twin equivalence, feature leakage, gradient checks, and experiment-stage safeguards.
+The current combined suite reported *154 passed and 2 skipped*. One skip lacks local historical study artifacts. The other lacks the optional MFDFA package. A skip is not a passed check. The tests cover probability normalization, matrix-reference agreement, paper-twin equivalence, feature leakage, gradient checks, and experiment-stage safeguards.
 
 For this report, independent replay recomputed 20 quantum HAR and 20 softmax HAR daily-loss arrays from saved parameters. The softmax replay used an explicit design matrix and independent normalization. Both matched the saved losses with zero maximum numerical discrepancy in this environment.
 
-The report audit also verified all 30 sealed training-artifact hashes, the data and configuration hashes, every model’s saved mean NLL, and all 26 paired bootstrap interval rows. The tracked results matched the local evaluation JSON exactly. These checks validate the reported evidence; they are not a new training experiment.
+The report audit also verified all 30 sealed training-artifact hashes, the data and configuration hashes, every model’s saved mean NLL, and all 26 paired bootstrap interval rows. The tracked results matched the local evaluation JSON exactly. These checks validate the reported evidence; they are not a new training experiment. The current package differs from the historical fresh-study source seal: `fresh_runner.py` adds a configuration field, and two calendar modules were added. The training-artifact hashes still match; this report does not claim that the entire historical source seal matches the current package.
 
 = Results and discussion
 == Paper reproduction and earlier study outcomes
@@ -458,8 +461,32 @@ Some classical hybrid fits failed eligibility: 2/20 for ETH, 1/20 for BTC, 1/20 
 The additional 25-parameter quantum-outcome readout failed its ETH validation gate @readout. Its regularized mean calibrated NLL was 0.5221, compared with 0.5171 for the same-seed network. BTC validation and new test scoring were not run for this rejected candidate. Exploratory fixed 50/50 quantum/network blends also failed to reach a 5% validation gain on any of the four assets.
 
 
+== Additional cross-market v3 results
+@tab-crossmarkets summarizes the two later v3 panels @crossmarkets. The first used LTC, BNB, and ADA. The temperature-calibrated follow-up used LINK, DOT, and AVAX. Both used the same 657 test dates as earlier asset studies. Candidate and asset selection followed earlier outcomes, so the evidence remains exploratory.
+
+#tab(table(columns:(auto,1fr,1fr,1fr),inset:4pt,stroke:.35pt+rgb("ccd5dc"),
+ table.header([*Asset*],[*Quantum NLL*],[*Best classical*],[*Relative gain*]),
+ [LTC],[0.613210],[0.596593],[−2.79%],
+ [BNB],[0.391824],[0.366583],[−6.89%],
+ [ADA],[0.760215],[0.769787],[+1.24%],
+ [LINK],[0.577113],[0.591609],[+2.45%],
+ [DOT],[0.638703],[0.642954],[+0.66%],
+ [AVAX],[0.448466],[0.475457],[+5.68%],
+),[Later v3 test panels. LTC/BNB/ADA are uncalibrated; LINK/DOT/AVAX use 2023-fitted temperatures. Values are retained aggregate study reports, rather than independently replayed per-seed results in this report audit.],<tab-crossmarkets>)
+
+Both three-asset pass rules failed. The AVAX mean reduction exceeded 5%, and its reported 30-day quantum-minus-softmax interval was [−0.04826, −0.01078]. That is a single-asset signal on NLL. Quantum QLIKE was worse than both classical controls on LINK, DOT, and AVAX. The observation does not establish an all-metric or transferable advantage.
+
+An additional reporting discrepancy limits the interval claim. Both frozen protocols specified 97.5% intervals, while the evaluation code used the 2.5th and 97.5th percentiles, producing 95% intervals. This report preserves the actual interval level and does not claim that the registered uncertainty requirement was met.
+
+The newer market data and per-seed fit/evaluation artifacts are excluded from the merged repository. Their aggregate reports are retained. The v3 restart runner also omitted optimizer termination flags and iteration counts in these records, contrary to the calibrated protocol. Consequently, this report cannot independently audit those panels' source-data transformations, seed-level losses, or optimizer termination.
+
+== Additional validation-only development
+The BTC upgrade sweep selected a depth-3 quantum $R_y$ readout on HAR @btcupgrade. After a higher-budget convergence check, mean calibrated validation NLL was 0.645654 versus 0.661433 for the network, a 2.39% reduction. Two fresh development seeds and two restarts were used. The previously scored BTC test period remained closed. Selection and temperature fitting reused the validation period, so its intervals are descriptive.
+
+The BTC market-signal study added preceding-week BTC log-RV to other assets' input blocks @btcupgrade. Its complete SOL validation panel improved by only 0.39% over the network. The 5% gate failed; ETH was stopped partially, and DOGE and BTC self-control were not run. These incomplete panels are not presented as completed replications.
+
 == Interpretation
-The clearest supported effect is the fresh-study memory benefit. Realism-aware training produced a measurable trade-off for the four chosen path statistics. Classical baselines remained competitive or better, and later quantum improvements did not satisfy the registered replication criteria.
+The clearest supported effect is the fresh-study memory benefit. Realism-aware training produced a measurable trade-off for the four chosen path statistics. Classical baselines remained competitive or better in the main study. Later v3 evaluation reported a 5.68% AVAX NLL gain, but both three-asset panel rules failed. The interval-level discrepancy and missing seed artifacts limit that exploratory signal.
 
 A comparison between a quantum circuit and a classical baseline is not a hardware speedup experiment. Exact statevector execution on a laptop supplies no evidence of computational quantum advantage. The paper model’s exact classical twin further reinforces the need for careful attribution.
 
@@ -467,10 +494,10 @@ A comparison between a quantum circuit and a classical baseline is not a hardwar
 == Achievements
 The completed repository contains a paper reproduction audit, one- and two-qubit forecasters, classical controls, past-only preprocessing, recursive generation, and reproducible evaluation stages. The main fresh study includes saved fits, sealed artifacts, daily losses, and paired date-bootstrap intervals.
 
-The matched memory comparison improved quantum regime NLL by 0.0509 on the 657-day Bitstamp test block. Realism training lowered the selected path discrepancy and increased forecast loss. Calendar-aware variants improved the quantum model’s exposed-period score, while the multi-asset studies failed their marked-improvement gates.
+The matched memory comparison improved quantum regime NLL by 0.0509 on the 657-day Bitstamp test block. Realism training lowered the selected path discrepancy and increased forecast loss. Calendar-aware variants improved the quantum model’s exposed-period score. Later v3 panels produced a limited AVAX NLL signal while failing their transfer rules. A separate BTC validation sweep nominated an untested candidate.
 
 == Limitations
-The studies use small noiseless simulated circuits and a limited set of crypto assets. The main test block contains no training-defined extreme events. Twenty seeds quantify algorithmic variability, not twenty independent market histories. Repeated Bitcoin benchmark use limits confirmatory interpretation of later designs.
+The studies use small noiseless simulated circuits and a limited set of crypto assets. Newer cross-market panels lack committed per-seed artifacts and used 95% intervals where their protocols required 97.5%. The main test block contains no training-defined extreme events. Twenty seeds quantify algorithmic variability, not twenty independent market histories. Repeated Bitcoin benchmark use limits confirmatory interpretation of later designs.
 
 Model capacity, effective parameter count, optimizer effort, and input information are not uniformly identical across every comparison. Training-pool support constrains generated extremes. Four path moments do not characterize the full distribution. Data gaps, source provenance, and nonstationarity remain relevant.
 
@@ -482,16 +509,18 @@ Numerical interval forecasting requires an explicit continuous predictive law an
 These items are future work. No results from them are included in the reported achievements.
 
 = Contributions
-Contributions below follow repository authorship and explicit implementation credits at the audited snapshot. They identify recorded work, rather than estimate equal effort or infer tasks from membership alone. @tab-contributions includes every member listed in the supplied team document.
+The allocation in @tab-contributions assigns substantial research, development, validation, and report responsibilities to all five members. It is the team responsibility allocation requested for this report. It does not replace the repository's original implementation credits or independently verify each person's task completion.
 
-#tab(table(columns:(.8fr,1.5fr),inset:4pt,stroke:.35pt+rgb("ccd5dc"),
- table.header([*Team member*],[*Recorded contribution*]),
- [Nidhi Rakesh],[Original `qvol/` reproduction; fresh Bitstamp study and saved artifacts; paper comparison; quantum v2/v3 studies.],
- [Gopi Krish],[Listed as a team member in the supplied project document. Specific completed tasks are not identifiable from the inspected Git history or repository credits.],
- [Srimoneyshankar Ajith],[Project source material; weekend-aware ETH/BTC/SOL/DOGE data and experiments; calibration, replication protocols, and readout investigations.],
- [Vishnunath A Suresh],[Integration of model and study branches; conflict resolution and combined verification; subsequent literature investigation.],
- [Bharadwaj B Chand],[Core `qcvol` pipeline and Born circuit; paper audit; memory investigations; distribution/realism and classical comparisons; sealed final study and verification.],
-),[Contribution record supported by Git authorship and repository documentation. Unrecorded responsibilities are not fabricated.],<tab-contributions>)
+#tab(table(columns:(.75fr,1.6fr),inset:4pt,stroke:.35pt+rgb("ccd5dc"),
+ table.header([*Team member*],[*Research, development, and report responsibility*]),
+ [Nidhi Rakesh],[Paper reproduction and circuit-encoding research; fresh-study and v2/v3 model development; circuit validation; abstract, circuit descriptions, and model-version review.],
+ [Gopi Krish],[Classical-baseline and scoring-rule research; comparator and metric validation; reporting-helper and result-table checks; literature review, comparative results, citations, and editorial review.],
+ [Srimoneyshankar Ajith],[Market-data and calendar-feature research; acquisition, weekend-aware models, calibration, and replication workflows; dataset/protocol documentation and asset-results discussion.],
+ [Vishnunath A Suresh],[Research synthesis and reproducibility design; branch integration and combined verification; Typst build, architecture/plot integration, cross-references, appendices, and final compilation.],
+ [Bharadwaj B Chand],[Memory/distribution/realism methodology research; core experimental pipeline, Born circuit, classical comparisons, and independent checks; objectives, novelty, mathematics, methods, and limitations.],
+),[Balanced team responsibility allocation. All members share scientific consistency review and approval of the compiled report; original code authorship remains credited in the repository.],<tab-contributions>)
+
+Each member reviews the source evidence and rendered figures for the sections within their responsibility. Compilation and final consistency review are shared tasks, coordinated through the report source and reproducible checks. Specific Git authorship remains inspectable for implementation provenance.
 
 = References
 #bibliography("references.bib",style:"ieee",title:none)
@@ -538,7 +567,7 @@ def history_features(log_rv, returns):
 ```
 
 == Evidence index and provenance
-@tab-evidence connects key claims to inspectable source artifacts. `report/qa/evidence-checks.json` records the independent replay and hashes produced during this report’s audit. The source snapshot is `fc8d6c8`; the report changes do not modify the scientific model files.
+@tab-evidence connects key claims to inspectable source artifacts. `report/qa/evidence-checks.json` records the independent replay and hashes produced during this report’s audit. The source snapshot is `0aeab94`; the report changes do not modify the scientific model files.
 
 #tab(table(columns:(1.1fr,2fr),inset:5pt,stroke:.35pt+rgb("ccd5dc"),
  table.header([*Claim or component*],[*Primary repository evidence*]),
@@ -549,6 +578,7 @@ def history_features(log_rv, returns):
  [Paper audit and follow-up],[`doc/paper-reproduction.md`; `doc/paper-comparison.md`; saved `paper-comparison.json`],
  [Post-hoc variants],[`doc/v2-study.md`; `doc/v3-study.md`; `src/qcvol_v2/`; `src/qcvol_v3/`],
  [Asset replications],[`doc/eth-study.md`; `doc/btc-study.md`; `doc/sol-doge-study.md`; `src/qcvol_next/`],
+ [Later v3 panels],[`doc/multimarket-v3-results.md`; `doc/calibrated-v3-results.md`; frozen protocols and `scripts/evaluate_calibrated_v3.py`],
  [Team identity],[Supplied seven-page _Schrödinger’s Cat: Quantum Volatility Range Forecaster_ document; instructor names supplied separately.],
 ),[Claim-to-source index for reproducibility and scientific review.],<tab-evidence>)
 

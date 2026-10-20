@@ -1,6 +1,6 @@
 # IEG 313 project report
 
-The 16-page Typst report covers the implementation at `fc8d6c8`. It follows all
+The 17-page Typst report covers the implementation at `0aeab94`. It follows all
 13 sections of the supplied university template. Its abstract reports completed
 experiments and their measured outcomes. It uses `charged-ieee:0.1.4` as its
 primary foundation, with a separate academic cover and front matter, a two-column
@@ -40,12 +40,19 @@ tracked fresh-study fits and saved evaluation, not retraining.
 - `reference/` preserves the supplied university template and team proposal
   unchanged. Proposal statements do not override tested implementation facts.
 
-The contribution table follows explicit credits and Git authorship. Gopi Krish's
-specific tasks are not recorded in the inspected repository and were not supplied.
-The report states that evidence limit rather than inventing a responsibility.
-Department and academic year use the CSE / 2026–2027 interpretation for the current
-course report; these can be edited centrally in `metadata.typ` if needed. Instructor
-names and all five student/register-number pairs follow user-supplied material.
+The contribution table assigns substantial research, development, validation, and
+report preparation responsibilities across all five members, following the user's
+requested allocation. It preserves original code credits and does not equate an
+allocation with independently verified personal completion. Department and academic
+year use the CSE / 2026–2027 interpretation for the current course report; these can
+be edited centrally in `metadata.typ`. Instructor names and all five student/register
+number pairs follow user-supplied material.
+
+The latest v3 panels retain aggregate reports without their raw data or per-seed
+fit/evaluation artifacts. The report identifies that evidence limit and the 95%
+implemented versus 97.5% registered interval discrepancy. Fresh-study training
+artifacts still match their hashes, but the current package differs from its
+historical source seal (one added configuration field and two calendar modules).
 
 ## Asset provenance
 

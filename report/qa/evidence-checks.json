@@ -1,5 +1,5 @@
 {
-  "implementation_commit": "fc8d6c8",
+  "implementation_commit": "0aeab94",
   "python": "3.11.16",
   "sealed_training_artifacts_checked": 30,
   "tracked_matches_local_evaluation": true,
@@ -15,6 +15,63 @@
     25,
     0
   ],
+  "current_package_matches_historical_source_seal": false,
+  "changed_historical_package_files": [
+    "fresh_runner.py"
+  ],
+  "added_package_files_since_seal": [
+    "calendar_models.py",
+    "calendar_study.py"
+  ],
+  "later_panel_aggregate_checks": [
+    {
+      "asset": "LTC",
+      "quantum_nll": 0.61321,
+      "best_classical_nll": 0.596593,
+      "reported_gain_percent": -2.79,
+      "source": "doc/multimarket-v3-results.md"
+    },
+    {
+      "asset": "BNB",
+      "quantum_nll": 0.391824,
+      "best_classical_nll": 0.366583,
+      "reported_gain_percent": -6.89,
+      "source": "doc/multimarket-v3-results.md"
+    },
+    {
+      "asset": "ADA",
+      "quantum_nll": 0.760215,
+      "best_classical_nll": 0.769787,
+      "reported_gain_percent": 1.24,
+      "source": "doc/multimarket-v3-results.md"
+    },
+    {
+      "asset": "LINK",
+      "quantum_nll": 0.577113,
+      "best_classical_nll": 0.591609,
+      "reported_gain_percent": 2.45,
+      "source": "doc/calibrated-v3-results.md"
+    },
+    {
+      "asset": "DOT",
+      "quantum_nll": 0.638703,
+      "best_classical_nll": 0.642954,
+      "reported_gain_percent": 0.66,
+      "source": "doc/calibrated-v3-results.md"
+    },
+    {
+      "asset": "AVAX",
+      "quantum_nll": 0.448466,
+      "best_classical_nll": 0.475457,
+      "reported_gain_percent": 5.68,
+      "source": "doc/calibrated-v3-results.md"
+    }
+  ],
+  "later_panel_interval_confidence": {
+    "protocol": 0.975,
+    "implemented": 0.95
+  },
+  "later_panel_per_seed_replay_available": false,
   "sources": {
     "doc/fresh-study-results/results.json": "4b0917a3f9cc19cae5b3421f4a12f0983a8e8ac9b2cc002159b237a89bf22594",
     "data/bitstamp_daily.csv": "bff1209621cd2ac95880b789668b950caec1b3198bf73d22e3d3b4767037f17a",
