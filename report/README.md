@@ -40,11 +40,11 @@ tracked fresh-study fits and saved evaluation, not retraining.
 - `reference/` preserves the supplied university template and team proposal
   unchanged. Proposal statements do not override tested implementation facts.
 
-The contribution table assigns substantial research, development, validation, and
-report preparation responsibilities across all five members, following the user's
-requested allocation. It preserves original code credits and does not equate an
-allocation with independently verified personal completion. Department and academic
-year use the CSE / 2026–2027 interpretation for the current course report; these can
+The contribution table divides research and technical responsibilities across the
+five members: quantum models, classical evaluation, market-data experiments,
+forecasting methodology and generalization, and Born-model/realism methods. It
+preserves original code credits and does not equate responsibility with independently
+verified personal completion. Department and academic year use the CSE / 2026–2027 interpretation for the current course report; these can
 be edited centrally in `metadata.typ`. Instructor names and all five student/register
 number pairs follow user-supplied material.
 

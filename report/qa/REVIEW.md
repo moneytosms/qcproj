@@ -73,3 +73,11 @@ missing reference, clipped caption, broken equation, or font substitution was fo
 The university's contribution section is present for every member, with substantial
 responsibilities assigned to all five under the user's allocation directive. The CSE department
 and 2026–2027 academic year remain editable assumptions, documented in report/README.md.
+
+## Contribution wording revision
+
+Replaced document-production tasks and assignment commentary with concise research
+and technical responsibilities for each member. The section covers quantum model
+development, classical evaluation, market-data replication, model forecasting methodology and
+generalization, and Born-model/realism experiments. Shared work concerns interpretation
+and methodological limitations. Original implementation credits remain unchanged.
