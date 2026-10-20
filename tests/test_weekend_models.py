@@ -98,6 +98,7 @@ def test_weekend_quantum_forecast_fit_runs_on_synthetic_history():
         "quantum-weekend",
         "quantum-weekend-ry",
         "quantum-weekend-alternating",
+        "hybrid-quantum-weekend-ry",
     ):
         row = fit_one(name, 1, data, config, 900, har, base)
         assert row["fit"]["parameters"]

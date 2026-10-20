@@ -22,7 +22,9 @@ WEEKEND_QUANTUM = (
     "quantum-weekend-ry",
     "quantum-weekend-alternating",
 )
-QUANTUM = ("quantum-har", *WEEKEND_QUANTUM, "hybrid-quantum-weekend")
+HYBRID_QUANTUM = ("hybrid-quantum-weekend", "hybrid-quantum-weekend-ry")
+QUANTUM = ("quantum-har", *WEEKEND_QUANTUM, *HYBRID_QUANTUM)
+VARIANT_MODELS = (*WEEKEND_QUANTUM[1:], "hybrid-quantum-weekend-ry")
 MODELS = (
     "quantum-har",
     *WEEKEND_QUANTUM,
@@ -32,6 +34,7 @@ MODELS = (
     "network-weekend",
     "har-weekend",
     "hybrid-quantum-weekend",
+    "hybrid-quantum-weekend-ry",
     "hybrid-softmax-weekend",
 )
 
@@ -65,6 +68,8 @@ def model_for(name, depth, har):
         return WeekendNetwork()
     if name == "hybrid-quantum-weekend":
         return Hybrid(har, WeekendBorn(depth))
+    if name == "hybrid-quantum-weekend-ry":
+        return Hybrid(har, WeekendBorn(depth, weekend_axis="y"))
     if name == "hybrid-softmax-weekend":
         return Hybrid(har, WeekendSoftmax())
     raise ValueError(f"Unknown model: {name}")
@@ -81,6 +86,7 @@ def fit_one(name, depth, data, config, seed, har, base_train):
         "softmax-weekend",
         "network-weekend",
         "hybrid-quantum-weekend",
+        "hybrid-quantum-weekend-ry",
         "hybrid-softmax-weekend",
     }
     width = 5 if uses_weekend else 4
@@ -155,7 +161,7 @@ def develop_variants(data, config, seed, output):
     har = WeekendHAR.fit(data.x[data.train], data.y[data.train], data.bins.edges)
     base_train = har.probabilities(data.x[data.train])
     rows = []
-    for name in WEEKEND_QUANTUM[1:]:
+    for name in VARIANT_MODELS:
         for depth in DEPTHS:
             row = fit_one(name, depth, data, config, seed, har, base_train)
             rows.append(row)
@@ -201,8 +207,8 @@ def select(config, output):
             "depth": min(depths, key=lambda depth: (means[depth], depth)),
             "mean_validation_log_loss_by_depth": means,
         }
-    selection["best_quantum_weekend"] = min(
-        WEEKEND_QUANTUM,
+    selection["best_quantum_model"] = min(
+        (*WEEKEND_QUANTUM, *HYBRID_QUANTUM),
         key=lambda name: (
             selection[name]["mean_validation_log_loss_by_depth"][selection[name]["depth"]],
             selection[name]["depth"],
@@ -324,6 +330,7 @@ def evaluate(data, data_path, config_path, output, config):
                         "softmax-weekend",
                         "network-weekend",
                         "hybrid-quantum-weekend",
+                        "hybrid-quantum-weekend-ry",
                         "hybrid-softmax-weekend",
                     }
                     else 4
@@ -347,8 +354,12 @@ def evaluate(data, data_path, config_path, output, config):
         }
     rng = np.random.default_rng(604221)
     intervals = []
-    selected_quantum = selection["best_quantum_weekend"]
-    for baseline in ("softmax-weekend", "network-weekend", "har-weekend"):
+    selected_quantum = selection["best_quantum_model"]
+    for baseline in (
+        "softmax-weekend",
+        "network-weekend",
+        "hybrid-softmax-weekend",
+    ):
         for block in config.bootstrap_blocks:
             delta = np.mean(all_losses[selected_quantum]["log_loss"], axis=0) - np.mean(
                 all_losses[baseline]["log_loss"], axis=0
@@ -367,7 +378,7 @@ def evaluate(data, data_path, config_path, output, config):
             )
     result = {
         "split_dates": split_dates(data),
-        "selected_quantum_weekend": selected_quantum,
+        "selected_quantum_model": selected_quantum,
         "quantum_selected_depth": selection[selected_quantum]["depth"],
         "summary": summary,
         "intervals": intervals,
@@ -377,6 +388,7 @@ def evaluate(data, data_path, config_path, output, config):
             * min(
                 summary["softmax-weekend"]["log_loss"]["mean"],
                 summary["network-weekend"]["log_loss"]["mean"],
+                summary["hybrid-softmax-weekend"]["log_loss"]["mean"],
             )
             and all(row["upper"] < 0 for row in intervals)
         ),

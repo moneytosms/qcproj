@@ -342,4 +342,7 @@ statevector equivalence. Initial two-seed validation did not meet the goal: the 
 network scored 0.5303 and softmax-HAR hybrid 0.5160, versus 0.6076 for the selected direct
 quantum circuit and 0.5306 for the quantum-HAR hybrid. ETH test scores remain unopened.
 Protocol amendment 2 adds RY weekend encoding and alternating entangler direction; these
-variants will be selected on validation before final training.
+variants were selected on validation before final training. RY depth 3 improved mean
+validation loss to 0.5711, alternating CNOT depth 3 to 0.6523. A third amendment tests an
+RY quantum expert on the HAR baseline because the existing RZ hybrid was close to the
+network. ETH test scores remain unopened.

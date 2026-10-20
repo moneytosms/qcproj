@@ -89,6 +89,19 @@ win that fails on test remains a failed headline result.
 - Binance documents that daily files appear the next day and monthly files on the first
   Monday of the month in the public-data README above.
 
+## Amendment 1: archive gap handling (20 Oct 2026, before model evaluation)
+
+The checksum-verified archive contains 33 timestamp gaps affecting 34 UTC dates. After a
+large historical gap, timestamps resume with a 94.8-second offset from their prior
+5-minute grid, although subsequent bars remain 5 minutes apart. The builder therefore
+checks timestamp differences rather than requiring epoch-aligned timestamps. It includes
+each observed close-to-close return once in that date's RV, including one observed return
+across a gap; it does not synthesize missing bars. The exact gap list, affected days, and
+number of fully sampled 5-minute returns per day are committed in the metadata. No
+complete calendar dates are missing; all incomplete dates are in 2023 or earlier, and the
+2025-01-01 to 2026-10-19 test period has 288 observed bars per day. The forecast procedure
+remains unchanged.
+
 ## Amendment 2: validation-only circuit variants (20 Oct 2026)
 
 The first validation sweep did not meet the goal: the best direct quantum weekend model
@@ -106,15 +119,18 @@ depth by mean validation log loss, then compare that fixed selection with all cl
 models after final training. This amendment does not change the test set, metrics, or
 success threshold. No new test score has been computed.
 
-## Amendment 1: archive gap handling (20 Oct 2026, before model evaluation)
+## Amendment 3: RY circuit correction on HAR (20 Oct 2026)
 
-The checksum-verified archive contains 33 timestamp gaps affecting 34 UTC dates. After a
-large historical gap, timestamps resume with a 94.8-second offset from their prior
-5-minute grid, although subsequent bars remain 5 minutes apart. The builder therefore
-checks timestamp differences rather than requiring epoch-aligned timestamps. It includes
-each observed close-to-close return once in that date's RV, including one observed return
-across a gap; it does not synthesize missing bars. The exact gap list, affected days, and
-number of fully sampled 5-minute returns per day are committed in the metadata. No
-complete calendar dates are missing; all incomplete dates are in 2023 or earlier, and the
-2025-01-01 to 2026-10-19 test period has 288 observed bars per day. The forecast procedure
-remains unchanged, and no model score has been computed.
+The validation-selected direct RY circuit (0.5711 mean loss) and RZ circuit (0.6076)
+remain behind the weekend network (0.5303). The existing quantum correction to the HAR
+residual model (RZ expert, depth 1) scored 0.5306, close to the network but behind the
+classical softmax-HAR correction (0.5160). Add one candidate: the same HAR plus a
+weekend-aware RY quantum expert, depths 1-3. Compare it with the same-input softmax-HAR
+correction using the existing log-probability formula and train/validation splits. No
+test score has been computed.
+
+Select the strongest quantum model (direct or HAR correction) by two-seed validation loss.
+For a marked improvement, it must beat the best classical validation family by at least
+5% on test, with paired 7- and 30-day intervals below zero. The classical comparison set
+is fixed as weekend softmax, weekend network, and weekend softmax-HAR correction.
+
