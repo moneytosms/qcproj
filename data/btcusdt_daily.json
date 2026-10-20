@@ -1,0 +1,515 @@
+{
+  "source": "Binance spot BTCUSDT 5m klines",
+  "first_day": "2017-08-17",
+  "last_day": "2026-10-19",
+  "days": 3351,
+  "bars": 963337,
+  "source_sha256": {
+    "BTCUSDT-5m-2017-08.zip": "d18c324e86822142d45f2ff33d3d0e193726fe1584ffd148c50f91fa4b2fdadd",
+    "BTCUSDT-5m-2017-09.zip": "b9b27b4fc6a12746dcf8dec6cd8efd3c4dfe746789c4e1162ebfe33a2989e3e5",
+    "BTCUSDT-5m-2017-10.zip": "4e1a5d3eb8accc2911f1fd1060ad15b1e3bbb1ff674d494ad01bc40a6bf53f9c",
+    "BTCUSDT-5m-2017-11.zip": "dbd53002ea79d6bfea2cdf8c00976a9c2f0647a2ad5e2b619ae60e1db2b93a07",
+    "BTCUSDT-5m-2017-12.zip": "fab87582c0bfd79f200dfbbeebbce39fabf7c137c768daa867d9d688f64c6b19",
+    "BTCUSDT-5m-2018-01.zip": "c08222ead41339fe656ac2e4389d365a0cadcc0e24c6e538bb76006e4e9ee5e0",
+    "BTCUSDT-5m-2018-02.zip": "44bc33f321fbc4a4dd5c99bec7bbb4ca86e5cc33ddc6459610a18db7ae872c0b",
+    "BTCUSDT-5m-2018-03.zip": "9f79a89dad86fbce45f7be8f0487e115a4e8d609b4c415b5a32781e823df0cd4",
+    "BTCUSDT-5m-2018-04.zip": "7cb8824ccd38c38320f5ec095d8e6d0fec7a6707b9a935873da9898939bca07c",
+    "BTCUSDT-5m-2018-05.zip": "c2965719efcc49fa3b63d53a37f4b612985836c0064297fb79af798f26e9e955",
+    "BTCUSDT-5m-2018-06.zip": "5bc6c6bbf69e088fe7b5715052d42eae8fd8681e26cb437881b74c77f457847b",
+    "BTCUSDT-5m-2018-07.zip": "f2c64ad1821b5f495694d4669895c62f961c585639cce4a0cd06214f406631ae",
+    "BTCUSDT-5m-2018-08.zip": "f1277c6c1e25a0c6f36a82a7c655094756ebf51b161176ad17410a73f96fddef",
+    "BTCUSDT-5m-2018-09.zip": "820d494c55b1b0149872f54af63d8245a98c48d83ede5f8b949ee49f42b52704",
+    "BTCUSDT-5m-2018-10.zip": "1dbf662fb263e9cd25889eac5ebb79f9d5b4af0b264598970fccd03324c9cbb0",
+    "BTCUSDT-5m-2018-11.zip": "98463143980a2cf664ee9416d7e7d585551cd76b97475ec319b370a2a120e5e9",
+    "BTCUSDT-5m-2018-12.zip": "75680727b955d3b371fc72e34aef79fa19ff4f3ad777016bcca9ee9cb26ec619",
+    "BTCUSDT-5m-2019-01.zip": "e5a64b286a194f690779557f87fc84eb35a09aae2f1e284a7da85289fe848f42",
+    "BTCUSDT-5m-2019-02.zip": "01c1e37145ad1a27f1159c17f5d13ee29e367838033835ea3a8808fe9148aff3",
+    "BTCUSDT-5m-2019-03.zip": "c91f75887afbfd6bf7da205b35c248e56b394fb12437aa0d7cd90670883122af",
+    "BTCUSDT-5m-2019-04.zip": "785a918b0dc9d9657578ffa7c356fa10d040c9a0262485cf1f744d2cef8467c3",
+    "BTCUSDT-5m-2019-05.zip": "1133835a11452420295c07d14a8b51e84c202d59af1ba4c0d89ffc531428b27b",
+    "BTCUSDT-5m-2019-06.zip": "afb029797231b99b7e5267d819ce77f99f0460320cea1d7f594023a63f46151e",
+    "BTCUSDT-5m-2019-07.zip": "514253f42219318868610b2402ef01a5509b883b3453b05b8ca04162713a5f04",
+    "BTCUSDT-5m-2019-08.zip": "a05861391ccc27354bd8b10e9c194f98c9ba59d1fb52711e86ec08484b9e1b78",
+    "BTCUSDT-5m-2019-09.zip": "359e30bfcfe07292be3eac91d99addf1db1b986eef5023b1d6d19a450903ae49",
+    "BTCUSDT-5m-2019-10.zip": "24cb68fee29a479e9ddfccb0e09442c1f308820c86e06a94a689bf8021f9d7c9",
+    "BTCUSDT-5m-2019-11.zip": "9165c6d5e2eaa27733cf5a6cf298baf3ca70b91db12de80cc1dd1eefe6f27b15",
+    "BTCUSDT-5m-2019-12.zip": "ca816089ea5bcecbad5dfcc4ad84a3d1d15aed16b18664095235db29aa87b110",
+    "BTCUSDT-5m-2020-01.zip": "06d2ae5dc44a5d679ee795107988491265678572cb851bf68aefdd67296d1649",
+    "BTCUSDT-5m-2020-02.zip": "5a55ea80e8139c03d5ffd1cf5d442ff2060168e7054889718e5f4b5cf417b2db",
+    "BTCUSDT-5m-2020-03.zip": "18e19c32d81eba36afc03029bd124b2468a4ae07d68a780a81fd3453a5784265",
+    "BTCUSDT-5m-2020-04.zip": "0284b9c8e7fc2545249637bc76a5f0eecc267f2cb7374f8b0f0648d8feaf7587",
+    "BTCUSDT-5m-2020-05.zip": "798617aa2af58b8f350e27807e9816e0c86f9f5f606a4bb945c8a6f9a90cc8e1",
+    "BTCUSDT-5m-2020-06.zip": "854b542e3c20cf4c106bbcb9fe761e35de756f1d061f0ef887c9f84a7a37f930",
+    "BTCUSDT-5m-2020-07.zip": "99f3c881214d0b940f562d4b4a8660a5bfee17b34a114a0aa01d3f1b064ea4eb",
+    "BTCUSDT-5m-2020-08.zip": "21435bfdff6477504a5611c4749d3c6dd35a4ba52db6ecc5adf05ce25b2faebf",
+    "BTCUSDT-5m-2020-09.zip": "7d74fdf334c4a334857dede2224d214bb9c40c07d5fc20eeeb57f5022b4a2616",
+    "BTCUSDT-5m-2020-10.zip": "c7a6731dfa5f936f626c28090a4e76cd952a0998958d4f717ee76cea1b8d2135",
+    "BTCUSDT-5m-2020-11.zip": "b6eaa1dc16993083d794cf2445c5596dbc298df5b8ab4d891a45435564d1bb92",
+    "BTCUSDT-5m-2020-12.zip": "c169b2a72cc188c8089abc9f3c6f9699e4759a5e7d0d7a7c69d9117b0da68049",
+    "BTCUSDT-5m-2021-01.zip": "5eda1c9f22259d37f6602ca3ee8072a670131939c7a4bc7e048a2a0077e03d6f",
+    "BTCUSDT-5m-2021-02.zip": "64cacfee55b7e73d6728a6e7cf32b03be2f205c06ad27a99889f002d0c853769",
+    "BTCUSDT-5m-2021-03.zip": "d67c748616c67d16d92695e42c32084818adf53100931f7d6bb01d1c6a21cf65",
+    "BTCUSDT-5m-2021-04.zip": "e365a42f9b3cd6262110977b37d341f90e339ef5b617de2d90c945c53a930854",
+    "BTCUSDT-5m-2021-05.zip": "1c6ef655c4cd33fa6777ad02e60a78ffc254a69a217a22a56e57c125faf20b6b",
+    "BTCUSDT-5m-2021-06.zip": "de8a478e5e30da06250976df98bf0a8b3aa040c4667334263f7c126097665bdb",
+    "BTCUSDT-5m-2021-07.zip": "fbd9221353c0471581c7b7e3bec7538c79e3472da2bf30cfdee4f766dbf28e73",
+    "BTCUSDT-5m-2021-08.zip": "ad8168331b2f0c83e7d4dea149b09881d5f4ecb0e6c7049f8637f2ef5a6dbf78",
+    "BTCUSDT-5m-2021-09.zip": "73eef8294b704bcde8f35cf26098c79cc50591e49a65a970eff97ac10e78fac1",
+    "BTCUSDT-5m-2021-10.zip": "cf28329e5f490ccb0e6759b8f66930a7397e65c2d8f5c4dfd727f44a54bbfae4",
+    "BTCUSDT-5m-2021-11.zip": "69725bd82baef5339e32c773937966ec413648dfaf985741f9be730b9cddd915",
+    "BTCUSDT-5m-2021-12.zip": "17c2731a870d09d0ea1345b9af40234fae47c947ff373499799169cdfda3b41c",
+    "BTCUSDT-5m-2022-01.zip": "be1f2f943b365b9b00c1be4cbcb7c631990318baf36e7a4d8410ea9dc7bc1cda",
+    "BTCUSDT-5m-2022-02.zip": "3cdb10f37876bb53487a5f68bdb00f87a2fa0dba0706133264bfcb5170d35cdd",
+    "BTCUSDT-5m-2022-03.zip": "e980799352cf0447752d97a20704ffdcce18544525743a4d3ec9dc076cc25765",
+    "BTCUSDT-5m-2022-04.zip": "a738199ee22e198fd9e51a7ecbcbd656c11603a530750ba26efa4c13d891ecd6",
+    "BTCUSDT-5m-2022-05.zip": "9e342e114551ef3598fb1bf9d385878861878b9c9c42714eca82e867a9feda81",
+    "BTCUSDT-5m-2022-06.zip": "5d4ef9d9fd134a239daebe1cd9261da7379991503d3093a0848d85c6172c9ab0",
+    "BTCUSDT-5m-2022-07.zip": "f55cca50df856fdf179a2193e1bcf4507bc27a296042486e023814c3b21c62c7",
+    "BTCUSDT-5m-2022-08.zip": "d65ea001b11191e31f6637f5893155273fcd02da3b269b9296007fbc1d49513e",
+    "BTCUSDT-5m-2022-09.zip": "87208eb2b3b67f105b40ebff1a5eb81ca1d377ddd70936eecf224bafcee4e5b9",
+    "BTCUSDT-5m-2022-10.zip": "b94e591ff353f2001d801ffcd2d7e2e2649f9efed49ac636f19a241ead90e19e",
+    "BTCUSDT-5m-2022-11.zip": "928433fc8313bc1616a2c5ca79b78525bb09ea2ca84a81c66500cdfb6bcccc40",
+    "BTCUSDT-5m-2022-12.zip": "3e1195cefa671991251ab5e1f606b9d7f7b7279dfd7efd033ae1aca2190ff698",
+    "BTCUSDT-5m-2023-01.zip": "0b77520b2fc89c896430fd885bda345a808d61a512ef34ce62cf6a150b81e9ff",
+    "BTCUSDT-5m-2023-02.zip": "337dd3741251bafe88c6e6faf39bcb89b75b6504f9d5ddc67221ee9371a7e7d4",
+    "BTCUSDT-5m-2023-03.zip": "840da3f1dba73d44c483b2c600528ee845366a8f2dec3db1d0be9e128741ec19",
+    "BTCUSDT-5m-2023-04.zip": "0ce744f9e9712a818b0090572d5541b83c2acec7d67de808ee5a66ff4299b008",
+    "BTCUSDT-5m-2023-05.zip": "d288014d0cde16c31d524dc63a9ed779de6c1a65e08df6b069ced8b688da21e4",
+    "BTCUSDT-5m-2023-06.zip": "781415877a1eaf4b376351bb3dc3cc31bc941b009a7b89a6a833cb6fb757279f",
+    "BTCUSDT-5m-2023-07.zip": "88859cd91277f3e0c9df85bb66f5c2d91273612a7ccd60e2a4be86ea3cc4b84c",
+    "BTCUSDT-5m-2023-08.zip": "a36e0b195d907bf100788f48ebae360ade5a31066bdee8469f610b802ff8e8f0",
+    "BTCUSDT-5m-2023-09.zip": "4058d18e256eb96841c67cb6e27375f0dcee6d2d425b4ad5907f055890ca5761",
+    "BTCUSDT-5m-2023-10.zip": "6a14d2b75ad5020d56c12cd17e90e6661023f34a12fa4173364fd26a9879ae56",
+    "BTCUSDT-5m-2023-11.zip": "dcf1c619885ca4fc351b4c990afe850141563f09e61b386a8d9151ea402575e2",
+    "BTCUSDT-5m-2023-12.zip": "8e3b780eddcff7f19f24f25d799b2affe03113b90457b8caa22a454f065fbf56",
+    "BTCUSDT-5m-2024-01.zip": "a375f811f672ad70de97af533f6e70181647a9e978838b451ac17d5c17313ad8",
+    "BTCUSDT-5m-2024-02.zip": "4bbed105653be96229f6678b3ce3df7366a6ced5aea32285da2bf62ac5f890ed",
+    "BTCUSDT-5m-2024-03.zip": "fd3670210b38640ee9562b7761879fae8cfed3beec7d7313b868cf618ca4c72a",
+    "BTCUSDT-5m-2024-04.zip": "b41c6d2703ee9e4c8167de082dcd363fac39ed176ebe9eacf7f0109e284a5948",
+    "BTCUSDT-5m-2024-05.zip": "3a9c810274f38b18abda912c3446df51cb160c4c0e376655fb7defb1cacf5de2",
+    "BTCUSDT-5m-2024-06.zip": "627dd48125d89759e498d2db2e523166787bda4dd9a64ca56abf9fba235ba71e",
+    "BTCUSDT-5m-2024-07.zip": "7fcfb7aa22c344f0c6bb0a7d2ae2dbfd1a1e597fc80806daa341068dfdab6586",
+    "BTCUSDT-5m-2024-08.zip": "4ead243e5f862df551e12815d8ddc4c67da711fda253325c36f83a1ff3ef36d7",
+    "BTCUSDT-5m-2024-09.zip": "a9989fa72ee8eba72cdd79b0e251652fcd456a31548a3014a8660b65405bc67a",
+    "BTCUSDT-5m-2024-10.zip": "5cd2d0dcc2dc193fc7b31be69166021fca41b9fce61ab6a0771ce00db864c327",
+    "BTCUSDT-5m-2024-11.zip": "72851d323b0d43f7c8cdf177ca85ded66ec511ed3b1a53e63cca0d2501c75bc0",
+    "BTCUSDT-5m-2024-12.zip": "0a2f70744f9244a066ab4ced934a725d85b247e917cfe22ada218435c1573301",
+    "BTCUSDT-5m-2025-01.zip": "4ed2edba26630a98b6ac6102b41dad00e1542640336f0d571c5a7394b39df983",
+    "BTCUSDT-5m-2025-02.zip": "a4859a5b4ad31f41f3ffad1d9a044154ff529c41983b76432ef3f10981b32415",
+    "BTCUSDT-5m-2025-03.zip": "1eb1fb0c76a0e8302abdec42d54b844bd3c3d6d7e6e69ae434aaa1dea445d54d",
+    "BTCUSDT-5m-2025-04.zip": "3ba9f1fd519bad5f190dfe0acda0dd57f904ad5eb848378be329b43cf69b5041",
+    "BTCUSDT-5m-2025-05.zip": "a1f4381240c422cda18464a054b34f75bb32bc5bb9137306e6c9d412e1b160aa",
+    "BTCUSDT-5m-2025-06.zip": "7c005bb32458cc9c797244c49d2be734f626561fb40031fba4b86831e95f06d9",
+    "BTCUSDT-5m-2025-07.zip": "8e4890be772dee102d3f5051fc9da5786f1f5203fd5bf251f47d5d8abcf79209",
+    "BTCUSDT-5m-2025-08.zip": "532cd96e6dad9950b359f43bd308dc7e72b36c236875002b594d1eb5dc4d7639",
+    "BTCUSDT-5m-2025-09.zip": "5ff19de79c102825f41d85810660c2ea339c6c6ef407bae5991870741b975fd8",
+    "BTCUSDT-5m-2025-10.zip": "079e33529c01dfd219ce79428d3c5ff5ef9814005be6ccd091ffe73580607fd2",
+    "BTCUSDT-5m-2025-11.zip": "470e5eecf5c2fb18390f5234897f71d9cec61e2bf31d0152948ce985e0ae583d",
+    "BTCUSDT-5m-2025-12.zip": "5f1f3ad19c8f79fe1f5f8e009bf55fcef306c60990a18d0a75d3b568628c2083",
+    "BTCUSDT-5m-2026-01.zip": "0b95c0dd7a22e374604527581a896930058e6d5426e55d34c9ec3e118a6b979e",
+    "BTCUSDT-5m-2026-02.zip": "329314be85423f40b4ddcc77bde1c78c71bd8a7ff5915f342bf972b949e71e34",
+    "BTCUSDT-5m-2026-03.zip": "e4a615e1558cd80acff53593a4659d3addc933bdbed1149ed252b8588aaccb3c",
+    "BTCUSDT-5m-2026-04.zip": "396a694802d5ce56b78e770d534182ba2b0931932fdd0ced5d5ebbf18fa6398a",
+    "BTCUSDT-5m-2026-05.zip": "06525e8a806eb976d9a9e1e71ccd324033e7cb95f69c8c9b8adf8265ac1e0194",
+    "BTCUSDT-5m-2026-06.zip": "963dd95de6dc9c49727d1c3fb8c4746a22709b2f2abc014f088cdf4571be3b3b",
+    "BTCUSDT-5m-2026-07.zip": "425f6e1a0de85dc99d8a7f17924bcb210c8f92100fb71e5993e1d197577b7053",
+    "BTCUSDT-5m-2026-08.zip": "85b174d0c091ab904341f1cce2f31fd88ebd0f10631678238756aa72d5d9897a",
+    "BTCUSDT-5m-2026-09.zip": "4106fc73698fd1851b1821cd0293adc6304f86f0c2e72244e15c41f63c2bde08",
+    "BTCUSDT-5m-2026-10-01.zip": "958f85306dfcc19289027069a301f02c079a62bb480d9ae15123f95b69188082",
+    "BTCUSDT-5m-2026-10-02.zip": "0ec1b8ddd70e722b26d8db10e2db95e9e6387457c0585734a01c2083ae811286",
+    "BTCUSDT-5m-2026-10-03.zip": "d789ac6cde23ce2ce7d000cd0c903f8922517e74a23dbb0ffad5064d4474bd26",
+    "BTCUSDT-5m-2026-10-04.zip": "d66287ed789b6908be0deabc8dc2f1015f0de70b4c7e755c8fffdfeff3286fdb",
+    "BTCUSDT-5m-2026-10-05.zip": "f21f624db4209ca32f828c7574c99fa1c01a50a359e4d1bfc48f8d6db3d9f5e1",
+    "BTCUSDT-5m-2026-10-06.zip": "6d3720d906dcf9284293687e1f8c75f89ac8c4de3469ff179809de3301cb1df8",
+    "BTCUSDT-5m-2026-10-07.zip": "134280882625bbc6712b4e394fcfd33363a886e22303f960a5f299ad22f4f7d7",
+    "BTCUSDT-5m-2026-10-08.zip": "5460365808290ed5fa0307a3e203d83fee13764024fd736933042ee785190101",
+    "BTCUSDT-5m-2026-10-09.zip": "02ad7357a3257d929444d4f24598e86195db63431b58f4cebb052c8593746bdd",
+    "BTCUSDT-5m-2026-10-10.zip": "8bc79d92e373adf684bdcf494e0ecb51e504b34c563794a45e14873ce46af845",
+    "BTCUSDT-5m-2026-10-11.zip": "f4d308f171bd70e154ee94716bd00696823bef793e36c000f3586c5688a2ae5e",
+    "BTCUSDT-5m-2026-10-12.zip": "67f8475abd97bc99307e5f78c4ca9a196a515c9fbdb8bc4d529f8f98be732d35",
+    "BTCUSDT-5m-2026-10-13.zip": "015a161bbf4f617b0c70587411fce71da1af5ea6fbe1611166b9cfe985dd30e0",
+    "BTCUSDT-5m-2026-10-14.zip": "1bb6aed7fe3cf88d18cd7a71a4d95c5a549a52beff4f1da341d41124412aea06",
+    "BTCUSDT-5m-2026-10-15.zip": "f2d23d23a8b84991ed737e236a5a4d00a0f06dc8550ef05a4baea797f8807069",
+    "BTCUSDT-5m-2026-10-16.zip": "84715ddd1a1a0bb31f4ac08f8859272b682f57b19164bc68194acef837f5dea3",
+    "BTCUSDT-5m-2026-10-17.zip": "7184928ebcc82ca8bf8c74f557f1bc29b4294f6e1208a8ca528e97bd94b18870",
+    "BTCUSDT-5m-2026-10-18.zip": "199dbbf60eb466a0dd66eba4613c9ee934f155149a863d2ec1e41a8c3f7a9c53",
+    "BTCUSDT-5m-2026-10-19.zip": "467cf89fb3109370cccf8cd4be028fd14d3d2462d0a6dbd3345fed19ad375a3f"
+  },
+  "gap_count": 33,
+  "missing_5m_bars": 1703,
+  "gaps": [
+    {
+      "after_utc": "2017-09-06T15:55:00+00:00",
+      "delta_ms": 25500000,
+      "missing_bars": 84,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2017-12-18T10:00:00+00:00",
+      "delta_ms": 600000,
+      "missing_bars": 1,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2017-12-18T12:25:00+00:00",
+      "delta_ms": 3900000,
+      "missing_bars": 12,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2018-01-04T03:00:00+00:00",
+      "delta_ms": 7500000,
+      "missing_bars": 24,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2018-02-08T00:25:00+00:00",
+      "delta_ms": 120794789,
+      "missing_bars": 402,
+      "offset_ms": 194789
+    },
+    {
+      "after_utc": "2018-02-10T05:58:14.789000+00:00",
+      "delta_ms": 1005211,
+      "missing_bars": 2,
+      "offset_ms": 105211
+    },
+    {
+      "after_utc": "2018-02-11T04:00:00+00:00",
+      "delta_ms": 2100000,
+      "missing_bars": 6,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2018-06-26T01:55:00+00:00",
+      "delta_ms": 36300000,
+      "missing_bars": 120,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2018-06-27T12:55:00+00:00",
+      "delta_ms": 6600000,
+      "missing_bars": 21,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2018-07-04T00:20:00+00:00",
+      "delta_ms": 27600000,
+      "missing_bars": 91,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2018-10-19T05:55:00+00:00",
+      "delta_ms": 12900000,
+      "missing_bars": 42,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2018-11-14T01:55:00+00:00",
+      "delta_ms": 25500000,
+      "missing_bars": 84,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2019-03-12T01:55:00+00:00",
+      "delta_ms": 21900000,
+      "missing_bars": 72,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2019-05-15T02:55:00+00:00",
+      "delta_ms": 36300000,
+      "missing_bars": 120,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2019-06-07T21:10:00+00:00",
+      "delta_ms": 3900000,
+      "missing_bars": 12,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2019-08-15T01:55:00+00:00",
+      "delta_ms": 29100000,
+      "missing_bars": 96,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2019-11-13T01:55:00+00:00",
+      "delta_ms": 8700000,
+      "missing_bars": 28,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2019-11-25T01:55:00+00:00",
+      "delta_ms": 7500000,
+      "missing_bars": 24,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2020-02-09T01:55:00+00:00",
+      "delta_ms": 3900000,
+      "missing_bars": 12,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2020-02-19T11:35:00+00:00",
+      "delta_ms": 21300000,
+      "missing_bars": 70,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2020-03-04T09:20:00+00:00",
+      "delta_ms": 7800000,
+      "missing_bars": 25,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2020-04-25T01:55:00+00:00",
+      "delta_ms": 9300000,
+      "missing_bars": 30,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2020-06-28T01:55:00+00:00",
+      "delta_ms": 12900000,
+      "missing_bars": 42,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2020-11-30T05:55:00+00:00",
+      "delta_ms": 3900000,
+      "missing_bars": 12,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2020-12-21T14:05:00+00:00",
+      "delta_ms": 14100000,
+      "missing_bars": 46,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2020-12-25T01:55:00+00:00",
+      "delta_ms": 3900000,
+      "missing_bars": 12,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2021-02-11T03:40:00+00:00",
+      "delta_ms": 4800000,
+      "missing_bars": 15,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2021-03-06T01:55:00+00:00",
+      "delta_ms": 5700000,
+      "missing_bars": 18,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2021-04-20T01:55:00+00:00",
+      "delta_ms": 9300000,
+      "missing_bars": 30,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2021-04-25T04:00:00+00:00",
+      "delta_ms": 17100000,
+      "missing_bars": 56,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2021-08-13T01:55:00+00:00",
+      "delta_ms": 16500000,
+      "missing_bars": 54,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2021-09-29T06:55:00+00:00",
+      "delta_ms": 7500000,
+      "missing_bars": 24,
+      "offset_ms": 0
+    },
+    {
+      "after_utc": "2023-03-24T12:35:00+00:00",
+      "delta_ms": 5100000,
+      "missing_bars": 16,
+      "offset_ms": 0
+    }
+  ],
+  "incomplete_day_count": 34,
+  "incomplete_days": [
+    {
+      "date": "2017-08-17",
+      "bars": 240,
+      "returns": 239
+    },
+    {
+      "date": "2017-09-06",
+      "bars": 204,
+      "returns": 203
+    },
+    {
+      "date": "2017-12-18",
+      "bars": 275,
+      "returns": 273
+    },
+    {
+      "date": "2018-01-04",
+      "bars": 264,
+      "returns": 263
+    },
+    {
+      "date": "2018-02-08",
+      "bars": 6,
+      "returns": 6
+    },
+    {
+      "date": "2018-02-09",
+      "bars": 169,
+      "returns": 168
+    },
+    {
+      "date": "2018-02-10",
+      "bars": 285,
+      "returns": 284
+    },
+    {
+      "date": "2018-02-11",
+      "bars": 282,
+      "returns": 281
+    },
+    {
+      "date": "2018-06-26",
+      "bars": 168,
+      "returns": 167
+    },
+    {
+      "date": "2018-06-27",
+      "bars": 267,
+      "returns": 266
+    },
+    {
+      "date": "2018-07-04",
+      "bars": 197,
+      "returns": 196
+    },
+    {
+      "date": "2018-10-19",
+      "bars": 246,
+      "returns": 245
+    },
+    {
+      "date": "2018-11-14",
+      "bars": 204,
+      "returns": 203
+    },
+    {
+      "date": "2019-03-12",
+      "bars": 216,
+      "returns": 215
+    },
+    {
+      "date": "2019-05-15",
+      "bars": 168,
+      "returns": 167
+    },
+    {
+      "date": "2019-06-07",
+      "bars": 276,
+      "returns": 275
+    },
+    {
+      "date": "2019-08-15",
+      "bars": 192,
+      "returns": 191
+    },
+    {
+      "date": "2019-11-13",
+      "bars": 260,
+      "returns": 259
+    },
+    {
+      "date": "2019-11-25",
+      "bars": 264,
+      "returns": 263
+    },
+    {
+      "date": "2020-02-09",
+      "bars": 276,
+      "returns": 275
+    },
+    {
+      "date": "2020-02-19",
+      "bars": 218,
+      "returns": 217
+    },
+    {
+      "date": "2020-03-04",
+      "bars": 263,
+      "returns": 262
+    },
+    {
+      "date": "2020-04-25",
+      "bars": 258,
+      "returns": 257
+    },
+    {
+      "date": "2020-06-28",
+      "bars": 246,
+      "returns": 245
+    },
+    {
+      "date": "2020-11-30",
+      "bars": 276,
+      "returns": 275
+    },
+    {
+      "date": "2020-12-21",
+      "bars": 242,
+      "returns": 241
+    },
+    {
+      "date": "2020-12-25",
+      "bars": 276,
+      "returns": 275
+    },
+    {
+      "date": "2021-02-11",
+      "bars": 273,
+      "returns": 272
+    },
+    {
+      "date": "2021-03-06",
+      "bars": 270,
+      "returns": 269
+    },
+    {
+      "date": "2021-04-20",
+      "bars": 258,
+      "returns": 257
+    },
+    {
+      "date": "2021-04-25",
+      "bars": 232,
+      "returns": 231
+    },
+    {
+      "date": "2021-08-13",
+      "bars": 234,
+      "returns": 233
+    },
+    {
+      "date": "2021-09-29",
+      "bars": 264,
+      "returns": 263
+    },
+    {
+      "date": "2023-03-24",
+      "bars": 272,
+      "returns": 271
+    }
+  ],
+  "first_day_return_convention": "0; no prior Binance daily close is available",
+  "output_sha256": "7fc40a23e970d26111b2efdad49a8db878394dd110a2c7909fc6041f721c28af"
+}

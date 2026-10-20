@@ -328,6 +328,90 @@ Completed the [pre-committed protocol](fresh-study-protocol.md) and the
   Main cause: the paper's max-based input scaling squashes ordinary days after the 2020
   crash, plus one-day memory.
 
+## ETH quantum upgrade (20 Oct 2026)
+
+The user asked for a real forecast improvement over classical models, not just another
+paper comparison. The [protocol](eth-quantum-upgrade-protocol.md) was committed before
+ETH model scores. Binance ETHUSDT spot 5-minute archives are checksum-verified. The
+derived daily file covers 2017-08-17 to 2026-10-19 (3,351 days; 963,337 bars). The archive
+contains 33 timestamp gaps, 1,703 missing 5-minute intervals, and 34 affected days;
+2025-01-01 to 2026-10-19 has complete 288 bars per day. Gaps are recorded, never filled;
+observed close changes across gaps enter RV once. The builder and weekend circuit have
+focused unit tests, including timestamp unit conversion, offset handling, and exact
+statevector equivalence. Initial two-seed validation did not meet the goal: the weekend
+network scored 0.5303 and softmax-HAR hybrid 0.5160, versus 0.6076 for the selected direct
+quantum circuit and 0.5306 for the quantum-HAR hybrid. ETH test scores remain unopened.
+Protocol amendment 2 adds RY weekend encoding and alternating entangler direction; these
+variants were selected on validation before final training. RY depth 3 improved mean
+validation loss to 0.5711, alternating CNOT depth 3 to 0.6523. A third amendment tests an
+RY quantum expert on the HAR baseline because the existing RZ hybrid was close to the
+network. Amendment 4 applies validation-fitted scalar temperature calibration uniformly
+to all candidate families, selects by calibrated validation loss, and restricts final
+training to the selected quantum model plus fixed quantum and classical controls. The
+rescored winner is the depth-1 RY HAR hybrid (0.5195 calibrated validation log loss),
+behind the softmax-HAR hybrid (0.5125) and just behind the weekend network (0.5171).
+ETH final test (657 days, 20 seeds) is complete and documented in [eth-study.md](eth-study.md).
+The calibrated RY HAR hybrid scored 0.6480 log loss versus 0.6482 for the weekend network,
+a 0.03% difference. All paired 7/30-day intervals include zero, so the 5% marked-improvement
+threshold was missed. Two classical hybrid seed fits were ineligible and remain included.
+The user goal remains open; a fresh-market replication needs its own frozen protocol and
+untouched test data.
+
+BTCUSDT is the fixed-architecture replication target. Its protocol is committed in
+[btc-replication-protocol.md](btc-replication-protocol.md) before data download or scoring.
+BTC replication is complete and documented in [btc-study.md](btc-study.md). The RY HAR
+hybrid scored 0.5320 log loss versus 0.5309 for the best classical network; 97.5% paired
+intervals crossed zero. It did not meet the 5% improvement threshold. Across both tested
+markets there is no marked quantum advantage; the user goal remains active.
+An equal 20-seed probability ensemble was also checked on validation only. It remained
+behind classical on ETH and was about 1.1% ahead of the best classical model on BTC, below
+the 5% target. A validation-fitted blend of quantum plus weekend network assigned weight 0
+to quantum on ETH and 0.928 on BTC, so the signal did not transfer consistently. No test
+predictions were reused for these checks.
+The depth-1 quantum outcome-readout candidate also failed ETH validation: both unregularized
+25-parameter fits exhausted the 50,000-call budget, and calibrated loss (0.5236/0.5245)
+trailed the network (0.5171). Its protocol amendment applies the existing 0.001 L2 penalty;
+only ETH validation will be checked first, and BTC validation runs only if that gate passes.
+The regularized readout converged but averaged 0.5221 calibrated log loss, 0.96% worse
+than the same-seed network (0.5171). It failed the ETH gate; no BTC validation or test
+scoring was done for this candidate.
+
+The fixed SOL/DOGE replication data are built and pass coverage checks: SOL has 843 train,
+731 validation, and 657 test targets; DOGE has 1,246/731/657. Both test windows have 288
+5-minute bars every UTC day. The preregistered two-market panel has now been evaluated
+once; results follow.
+
+## SOL/DOGE fixed quantum replication (20 Oct 2026)
+
+Completed the preregistered [two-market protocol](sol-doge-replication-protocol.md)
+and results report ([sol-doge-study.md](sol-doge-study.md)). Both checksum-verified
+Binance panels cover the full 2025-01-01 to 2026-10-19 test period; the common test
+contains 657 targets per asset. Code, protocol, locked environment, datasets, fixed
+selection and all 20-seed model artifacts were sealed before either test was opened.
+Each test was evaluated once.
+
+- SOL quantum RY hybrid calibrated log loss .404973; classical comparators .424834,
+  .417410 and .424215. Its best classical comparison is a 2.98% gain, below the 5%
+  threshold. Paired 97.5% intervals cross zero against softmax and network.
+- DOGE quantum calibrated log loss .762719; comparators .763335, .772791 and .766459.
+  Best gain is 1.30%; all paired 97.5% intervals cross zero.
+- Every registered score, including RPS, extreme Brier and QLIKE, is reported. SOL has
+  one and DOGE three ineligible softmax-HAR hybrid fits; these remain included. All
+  quantum fits were eligible.
+- The two-market success rule failed. No marked quantum advantage is established.
+  The selected model version's preregistered replication panel is complete; do not add
+  assets to this panel after seeing the outcomes.
+- Final checks: 105 tests passed, 1 skipped; Ruff lint and format checks passed.
+
+
+## Validation-only quantum/network blend check (20 Oct 2026)
+
+A fixed 50/50 probability blend was checked on validation for the four existing markets,
+using per-seed calibrated quantum RY HAR and weekend-network predictions. The blend was
+0.87% lower loss than the network on BTC, 1.80% lower on SOL, 0.40% lower on DOGE, and
+0.95% higher on ETH. No market reached the 5% target. This exploratory result used no test
+labels and is documented in [validation-ensemble.md](validation-ensemble.md); it is not
+confirmatory evidence and does not establish the goal.
 ## Calendar and quantum-readout improvement: development in progress
 
 Inspected Nidhi's latest PR #8 at `341dc7e`, then branched from it. Her fresh-data study

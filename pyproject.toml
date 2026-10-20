@@ -29,4 +29,4 @@ line-length = 100
 extend-exclude = ["qvol"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/qcvol", "src/qcvol_v2", "src/qcvol_v3"]
+packages = ["src/qcvol", "src/qcvol_v2", "src/qcvol_v3", "src/qcvol_next"]
