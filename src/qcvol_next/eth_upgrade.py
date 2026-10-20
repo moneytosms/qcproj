@@ -15,7 +15,13 @@ from qcvol.fresh_models import FastBorn, Hybrid
 from qcvol.fresh_runner import FreshConfig
 from qcvol.fresh_study import fit_lbfgs, prepare_dates, split_dates
 from qcvol.metrics import forecast_scores, log_loss
-from qcvol_next.weekend_models import WeekendBorn, WeekendHAR, WeekendNetwork, WeekendSoftmax
+from qcvol_next.weekend_models import (
+    WeekendBorn,
+    WeekendHAR,
+    WeekendNetwork,
+    WeekendQuantumReadout,
+    WeekendSoftmax,
+)
 
 DEPTHS = (1, 2, 3)
 WEEKEND_QUANTUM = (
@@ -23,7 +29,11 @@ WEEKEND_QUANTUM = (
     "quantum-weekend-ry",
     "quantum-weekend-alternating",
 )
-HYBRID_QUANTUM = ("hybrid-quantum-weekend", "hybrid-quantum-weekend-ry")
+HYBRID_QUANTUM = (
+    "hybrid-quantum-weekend",
+    "hybrid-quantum-weekend-ry",
+    "hybrid-quantum-readout-ry",
+)
 QUANTUM = ("quantum-har", *WEEKEND_QUANTUM, *HYBRID_QUANTUM)
 VARIANT_MODELS = (*WEEKEND_QUANTUM[1:], "hybrid-quantum-weekend-ry")
 MODELS = (
@@ -36,6 +46,7 @@ MODELS = (
     "har-weekend",
     "hybrid-quantum-weekend",
     "hybrid-quantum-weekend-ry",
+    "hybrid-quantum-readout-ry",
     "hybrid-softmax-weekend",
 )
 
@@ -71,6 +82,8 @@ def model_for(name, depth, har):
         return Hybrid(har, WeekendBorn(depth))
     if name == "hybrid-quantum-weekend-ry":
         return Hybrid(har, WeekendBorn(depth, weekend_axis="y"))
+    if name == "hybrid-quantum-readout-ry":
+        return WeekendQuantumReadout(har, depth)
     if name == "hybrid-softmax-weekend":
         return Hybrid(har, WeekendSoftmax())
     raise ValueError(f"Unknown model: {name}")
@@ -122,6 +135,7 @@ def fit_one(name, depth, data, config, seed, har, base_train):
         "network-weekend",
         "hybrid-quantum-weekend",
         "hybrid-quantum-weekend-ry",
+        "hybrid-quantum-readout-ry",
         "hybrid-softmax-weekend",
     }
     width = 5 if uses_weekend else 4
@@ -265,6 +279,7 @@ def select(data, config, output):
                             "network-weekend",
                             "hybrid-quantum-weekend",
                             "hybrid-quantum-weekend-ry",
+                            "hybrid-quantum-readout-ry",
                             "hybrid-softmax-weekend",
                         }
                         else 4

@@ -13,6 +13,7 @@ from qcvol_next.weekend_models import (
     WeekendBorn,
     WeekendHAR,
     WeekendNetwork,
+    WeekendQuantumReadout,
     WeekendSoftmax,
 )
 
@@ -72,6 +73,21 @@ def test_classical_weekend_models_return_four_probabilities():
     p = WeekendNetwork().probabilities(x, rng.normal(size=27))
     assert p.shape == (12, 4)
     assert np.allclose(p.sum(axis=1), 1)
+
+
+def test_quantum_readout_starts_at_har_and_normalizes():
+    class Base:
+        def probabilities(self, x):
+            return np.tile([0.1, 0.2, 0.3, 0.4], (len(x), 1))
+
+    x = np.random.default_rng(12).normal(size=(8, 5))
+    model = WeekendQuantumReadout(Base())
+    parameters = np.zeros(model.n_params)
+    assert model.n_params == 25
+    assert np.allclose(model.probabilities(x, parameters), Base().probabilities(x))
+    fitted = model.probabilities(x, np.random.default_rng(13).normal(size=25))
+    assert fitted.shape == (8, 4)
+    assert np.allclose(fitted.sum(axis=1), 1)
 
 
 def test_temperature_calibration_preserves_probabilities_and_fit_bounds():

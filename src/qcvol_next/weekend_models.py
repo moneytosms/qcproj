@@ -92,6 +92,31 @@ class WeekendNetwork:
 
 
 @dataclass
+class WeekendQuantumReadout:
+    """Use quantum outcome probabilities as features for a trainable HAR correction."""
+
+    base: object
+    layers: int = 1
+
+    @property
+    def n_params(self):
+        return 10 * self.layers + 15
+
+    def pooled(self, base_probabilities, x, parameters):
+        parameters = np.asarray(parameters, float)
+        quantum_parameters = parameters[: 10 * self.layers]
+        readout = parameters[10 * self.layers :]
+        quantum = WeekendBorn(self.layers, weekend_axis="y").probabilities(x, quantum_parameters)
+        logits = np.column_stack(
+            [quantum @ readout[:12].reshape(4, 3) + readout[12:15], np.zeros(len(x))]
+        )
+        return softmax(np.log(np.clip(base_probabilities, 1e-12, 1)) + logits, axis=1)
+
+    def probabilities(self, x, parameters):
+        return self.pooled(self.base.probabilities(x), x, parameters)
+
+
+@dataclass
 class WeekendHAR:
     coefficients: np.ndarray
     residuals: np.ndarray
