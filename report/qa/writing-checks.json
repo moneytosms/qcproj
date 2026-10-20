@@ -1,0 +1,34 @@
+{
+  "standard": "QVRF-TWS-1.0",
+  "required_sections": [
+    "Title page",
+    "Abstract",
+    "Contents",
+    "Introduction",
+    "Literature review",
+    "Novelty",
+    "Methodology / system design",
+    "Implementation",
+    "Results and discussion",
+    "Conclusion and future work",
+    "Contributions",
+    "References",
+    "Appendices"
+  ],
+  "figures": 10,
+  "tables": 13,
+  "important_equations": 11,
+  "cross_references_resolved": true,
+  "bibliographic_keys_resolved": true,
+  "abstract_has_no_placeholder_text": true,
+  "pages": 17,
+  "sentences_over_35_words": [],
+  "page_edge_overflows": [],
+  "automated_checks_pass": true,
+  "manual_review_required": [
+    "scientific interpretation",
+    "mathematical layout",
+    "diagram truthfulness and label placement",
+    "all rendered pages"
+  ]
+}

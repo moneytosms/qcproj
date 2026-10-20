@@ -465,3 +465,15 @@ opened only after protocol, tuning, training, and hashes are frozen.
 **Gap handling:** retain timestamp gaps as observed, record them, and never synthesize bars.
 Use each actual adjacent close return once, even when it spans missing intervals. This
 avoids discarding an observed price move while keeping data quality visible.
+
+
+## Report source and evidence boundary
+
+The IEG 313 deliverable lives in `report/` and uses charged-ieee 0.1.4 as the
+underlying Typst style. University front matter and 13-section completeness take
+precedence over its conference masthead. CeTZ/Quill diagrams are editable Typst;
+Lilaq consumes saved interval rows, and SVG plots are rebuilt by
+`report/tools/build_evidence.py`. The evidence builder reads existing fits and
+results without retraining or mutating sealed artifacts. Compiled PDFs and page
+renders remain local build output. This adds a reporting layer, not a new model
+or production application architecture.

@@ -511,3 +511,18 @@ is a single-market signal, not evidence of a transferable or all-metric advantag
    No final training or benchmark scoring was done for this rejected candidate.
 - After syncing the branch with main: `uv run pytest -q` passes 146 tests (3 skipped);
    Ruff lint and format checks pass. No marked quantum advantage has been established.
+
+## IEG 313 implementation-based report — 20 October 2026
+
+Added `report/` with charged-ieee 0.1.4, the university's complete 13-part structure,
+an academic cover, two-column research body, 10 figures, 13 tables, and 11 numbered
+equations. The 17-page report and abstract state completed work and measured findings,
+including the latest cross-market v3 panels and validation-only BTC upgrade.
+
+Report verification independently rebuilt 40 per-seed daily-loss arrays, checked 30
+sealed training artifacts, and recomputed all 26 paired bootstrap rows. Repository
+verification recorded 154 passed / 2 skipped. The later aggregate v3 panels have no
+committed per-seed evidence and use 95% intervals despite registered 97.5% levels;
+these limits are explicit. The contribution section follows the user's balanced
+five-member research/development/report responsibility allocation while preserving
+original code credits. See `report/qa/REVIEW.md` for review scope and limitations.
