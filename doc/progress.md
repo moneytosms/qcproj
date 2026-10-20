@@ -356,3 +356,6 @@ a 0.03% difference. All paired 7/30-day intervals include zero, so the 5% marked
 threshold was missed. Two classical hybrid seed fits were ineligible and remain included.
 The user goal remains open; a fresh-market replication needs its own frozen protocol and
 untouched test data.
+
+BTCUSDT is the fixed-architecture replication target. Its protocol is committed in
+[btc-replication-protocol.md](btc-replication-protocol.md) before data download or scoring.
