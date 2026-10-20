@@ -365,4 +365,6 @@ intervals crossed zero. It did not meet the 5% improvement threshold. Across bot
 markets there is no marked quantum advantage; the user goal remains active.
 An equal 20-seed probability ensemble was also checked on validation only. It remained
 behind classical on ETH and was about 1.1% ahead of the best classical model on BTC, below
-the 5% target. No test predictions were reused for this check.
+the 5% target. A validation-fitted blend of quantum plus weekend network assigned weight 0
+to quantum on ETH and 0.928 on BTC, so the signal did not transfer consistently. No test
+predictions were reused for these checks.
