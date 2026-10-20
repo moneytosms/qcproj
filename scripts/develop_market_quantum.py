@@ -120,7 +120,7 @@ class MarketNetwork:
         x, p = np.atleast_2d(np.asarray(x, float)), np.asarray(parameters, float)
         hidden = np.tanh(x @ p[:12].reshape(6, 2) + p[12:14])
         logits = hidden @ p[14:20].reshape(2, 3) + p[20:23]
-        logits += x @ p[23:35].reshape(6, 2)
+        logits[:, :2] += x @ p[23:35].reshape(6, 2)
         return softmax(np.column_stack([logits, np.zeros(len(x))]), axis=1)
 
 
@@ -131,7 +131,25 @@ def score_asset(asset, config, output):
     base_train = base.probabilities(data.x[data.train])
     x_train, y_train = data.x[data.train], data.labels[data.train]
     x_val, y_val = data.x[data.validation], data.labels[data.validation]
-    records = []
+    output.mkdir(parents=True, exist_ok=True)
+    partial = output / f"{asset}-market-validation.partial.json"
+    records = json.loads(partial.read_text())["records"] if partial.exists() else []
+    completed = {(row["seed"], row["name"], row["depth"]) for row in records}
+
+    def save_partial():
+        partial.write_text(
+            json.dumps(
+                {
+                    "asset": asset,
+                    "validation_only": True,
+                    "feature_scaling": scaling,
+                    "records": records,
+                },
+                indent=2,
+                allow_nan=False,
+            )
+            + "\n"
+        )
 
     def fit_model(name, model, depth, seed, ridge=0.0, hybrid=False):
         def objective(parameters):
@@ -192,22 +210,26 @@ def score_asset(asset, config, output):
     for seed in config.development_seeds:
         base_p = base.probabilities(x_val)
         base_temperature = fit_temperature(base_p, y_val)
-        records.append(
-            {
-                "name": "market-har",
-                "depth": 0,
-                "seed": seed,
-                "eligible": True,
-                "temperature": base_temperature,
-                "validation_raw_log_loss": log_loss(base_p, y_val),
-                "validation_calibrated_log_loss": log_loss(
-                    calibrated_probabilities(base_p, base_temperature), y_val
-                ),
-                "validation_probabilities": calibrated_probabilities(
-                    base_p, base_temperature
-                ).tolist(),
-            }
-        )
+        key = (seed, "market-har", 0)
+        if key not in completed:
+            records.append(
+                {
+                    "name": "market-har",
+                    "depth": 0,
+                    "seed": seed,
+                    "eligible": True,
+                    "temperature": base_temperature,
+                    "validation_raw_log_loss": log_loss(base_p, y_val),
+                    "validation_calibrated_log_loss": log_loss(
+                        calibrated_probabilities(base_p, base_temperature), y_val
+                    ),
+                    "validation_probabilities": calibrated_probabilities(
+                        base_p, base_temperature
+                    ).tolist(),
+                }
+            )
+            completed.add(key)
+            save_partial()
         for name, model, depth, ridge, hybrid in (
             ("market-quantum", MarketBorn(1), 1, 0.0, True),
             ("market-quantum", MarketBorn(2), 2, 0.0, True),
@@ -215,15 +237,19 @@ def score_asset(asset, config, output):
             ("market-softmax", MarketSoftmax(), 0, 0.0, False),
             ("market-network", MarketNetwork(), 0, config.network_ridge, False),
         ):
+            key = (seed, name, depth)
+            if key in completed:
+                continue
             row = fit_model(name, model, depth, seed, ridge, hybrid)
             records.append(row)
+            completed.add(key)
+            save_partial()
             print(
                 f"asset={asset} seed={seed} model={name} depth={depth} "
                 f"validation={row['validation_calibrated_log_loss']:.6f} "
                 f"eligible={row['eligible']}",
                 flush=True,
             )
-    output.mkdir(parents=True, exist_ok=True)
     result = {
         "asset": asset,
         "validation_only": True,
@@ -237,6 +263,7 @@ def score_asset(asset, config, output):
     (output / f"{asset}-market-validation.json").write_text(
         json.dumps(result, indent=2, allow_nan=False) + "\n"
     )
+    partial.unlink(missing_ok=True)
 
 
 def main():

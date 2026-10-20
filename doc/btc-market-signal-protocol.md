@@ -37,3 +37,13 @@ an untouched test period before that test is opened.
 
 This protocol does not claim quantum advantage. Validation reuse makes any positive
 result exploratory until independently confirmed.
+
+## Amendment 1: network correction and checkpointing (20 Oct 2026)
+
+The first execution exposed a shape error in the classical network's direct skip path
+after the quantum depth sweep and softmax fit. No score file was written. Partial console
+scores are retained in session notes but excluded from selection; the registered panel
+will be rerun from scratch. The network now adds its two skip logits to the first two
+learned class logits, leaving the fourth class as reference. Each completed fit is saved
+to an ignored partial results file so interruption cannot discard earlier fits. No model,
+data split, seed, restart, budget or metric was changed.
