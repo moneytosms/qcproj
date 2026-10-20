@@ -82,3 +82,9 @@ Configuration: `configs/distribution-study.json`. Preserve failed runs in new di
 Package-source hashes freeze runnable code; raw artifacts remain ignored. Independent
 verification must reconstruct quantum probabilities with literal full matrices, redo
 selection, metrics and seeded rollouts, and fail on tampered artifacts.
+
+Optimizer option definitions were checked against the primary SciPy references:
+[L-BFGS-B](https://docs.scipy.org/doc/scipy/reference/optimize.minimize-lbfgsb.html)
+and [COBYLA](https://docs.scipy.org/doc/scipy/reference/optimize.minimize-cobyla.html).
+The call ceiling for numerical gradients is a requested ceiling, whereas COBYLA's
+`maxiter` is an objective-evaluation limit.

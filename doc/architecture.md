@@ -248,3 +248,40 @@ trust-region floor did not satisfy the independent 1e-5 gradient threshold. Expo
 optional optimizer tolerance while preserving the historical default. Repeat the
 full nested grid with floor 1e-7 for both controls, keeping the gradient check, alpha
 grid, starts and decision unchanged. Preserve and cost the inconclusive first attempt.
+
+## ADR 013 — Separate probability learning from realism selection
+
+**Decision:** add a dedicated validation-only D/A runner. Apply the B-selected short
+input policy inside every model, so it also controls recursively generated inputs.
+Keep the historical HAR-based runner unchanged for reproducibility. Reduce terminal
+quantum phases and the softmax shared-logit freedom. Give the small network the same
+information with an explicit new 24-coordinate architecture. Full HAR remains a
+separately labelled information-rich reference, alongside a short AR residual model.
+
+**Reason:** extending the old smoke run would mix changes in memory, circuit depth,
+loss and optimization. Fit NLL first with five starts and independent stationarity
+checks, choose depth on validation, freeze it, then add the realism loss. Preserve
+lambda zero as a fallback. There is no calibrated categorical observation law for the
+paper's point output, so keep its MSE in the earlier B panel instead of comparing it
+to probability NLL. This milestone tests D and A, without claiming B succeeded.
+
+**Optimization:** use L-BFGS-B central numerical gradients for smooth forecast NLL;
+count all numerical-gradient calls, including possible `maxfun` overshoot, and
+independent central-difference diagnostics. Use COBYLA for the discrete fixed-stream
+simulation loss. Its stopping-radius status is a finite-budget diagnostic, not a
+stationarity proof. Record each restart, actual elapsed work and the larger quantum
+depth search. Identical allowances do not imply identical total training effort.
+
+**Simulation:** four training paths, eight selection paths, then two fresh 32-path audit
+streams. Selection compares the mean moment vector; report individual-path distance
+spread too, because averaging can conceal poor paths. Freeze lambda before the audit;
+never promote a fresh-stream winner afterward. Reused validation is development data,
+not independent evidence of quantum advantage. This is a sequential depth/lambda
+selection, not a joint Cartesian sweep. The protocol is in
+[distribution-study-protocol.md](distribution-study-protocol.md).
+
+**Implementation detail:** fuse each local RY/RZ/RY/RZ block algebraically in the short
+Born simulator to reduce rollout overhead. Test it against both the historical simulator
+and independent dense Kronecker operators at all four depths. Artifact verification
+uses dense operators and independently reconstructs the full random draw schedule,
+recursive histories, scores and selection rules. Package hashes bind runs to source.

@@ -125,3 +125,26 @@ uv run python scripts/plot_nested_memory.py results/nested-memory-01
 
 The current main Born runner still uses HAR inputs. Its D comparison must explicitly
 implement the selected short-input policy before running the final study configuration.
+
+## Step 3: short-input D → A validation study
+
+Use this focused runner after the B follow-up. It applies previous-day inputs during
+fitting, validation and recursion, fits five starts per depth, selects D depth on
+validation, then tunes the A penalty at that frozen depth. Fresh simulation streams
+check the selected result; no test scores are calculated. The older `qcvol run` and
+`configs/study.json` still describe the original HAR-input pipeline and are not the
+entry point for this short-input comparison.
+
+Read the [fixed protocol](doc/distribution-study-protocol.md) before running:
+
+```bash
+uv run python scripts/run_distribution_study.py \
+  --author-data data/raw/author --output results/distribution-study-01
+uv run python scripts/verify_distribution_study.py results/distribution-study-01 \
+  --author-data data/raw/author
+uv run python scripts/plot_distribution_study.py results/distribution-study-01
+```
+
+The full configuration is `configs/distribution-study.json`. Source hashes must match
+when auditing. It is a development comparison, not the final 20-seed study, GARCH/HAR
+quantile comparison or project report. Generated output stays local and ignored.

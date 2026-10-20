@@ -157,3 +157,55 @@ def test_small_validation_only_study(tmp_path):
     for path in (tmp_path / "run").glob("*.npz"):
         with np.load(path, allow_pickle=False) as arrays:
             assert not any("test" in key for key in arrays.files)
+
+
+def test_independent_dense_gates_and_artifact_tampering(tmp_path):
+    import importlib.util
+    import json
+    from pathlib import Path
+
+    from qcvol.data import load_author_data, sha256
+
+    path = Path(__file__).resolve().parents[1] / "scripts/verify_distribution_study.py"
+    spec = importlib.util.spec_from_file_location("verify_distribution", path)
+    verifier = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(verifier)
+    rng = np.random.default_rng(6)
+    x = rng.normal(size=(23, 4))
+    for depth in range(1, 5):
+        model = ShortBorn(depth)
+        parameters = rng.normal(size=model.n_params)
+        np.testing.assert_allclose(
+            model.probabilities(x, parameters),
+            verifier.literal_born(x, parameters, depth),
+            atol=1e-14,
+        )
+    author_data = path.parents[1] / "qvol/data/takaishi"
+    data = prepare(load_author_data(author_data))
+    config = DistributionConfig(
+        starts=[0],
+        depths=[1],
+        lambdas=[0, 0.01],
+        realism_starts=1,
+        forecast_max_calls=80,
+        forecast_max_iterations=2,
+        realism_max_calls=32,
+        train_days=64,
+        train_paths=1,
+        selection_days=64,
+        selection_paths=1,
+        audit_days=64,
+        audit_paths=1,
+        burn_in=0,
+    )
+    source = {
+        "sha256": {name: sha256(author_data / name) for name in ("data-rstand", "data-ystand")}
+    }
+    root = tmp_path / "run"
+    run_distribution_study(data, config, root, source, progress=lambda *a, **kw: None)
+    assert verifier.verify(root, author_data)["verified"]
+    decisions = json.loads((root / "decision.json").read_text())
+    decisions["quantum"]["selected_id"] = "tampered"
+    (root / "decision.json").write_text(json.dumps(decisions))
+    with pytest.raises(AssertionError):
+        verifier.verify(root, author_data)
