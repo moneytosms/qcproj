@@ -412,3 +412,18 @@ using per-seed calibrated quantum RY HAR and weekend-network predictions. The bl
 0.95% higher on ETH. No market reached the 5% target. This exploratory result used no test
 labels and is documented in [validation-ensemble.md](validation-ensemble.md); it is not
 confirmatory evidence and does not establish the goal.
+
+
+## BTC market-volatility input experiment (20 Oct 2026)
+
+The preregistered validation-only candidate appended lagged 7-day BTC log-RV to a
+weekend-aware quantum hybrid and same-input softmax, network and HAR models. A first run
+found a classical output-shape bug and was discarded; the correction was committed before
+rerunning. The full two-seed SOL panel then selected quantum depth 1 at calibrated log
+loss .645391 versus .647917 for the network, a 0.39% edge; depths 2 and 3 were worse. It
+failed the 5% advancement gate. ETH's run was stopped partway through and DOGE was not
+run, since the required conjunction was already impossible. No test labels were used.
+Full partial and complete validation scores are in
+[btc-market-signal-study.md](btc-market-signal-study.md). This feature does not advance.
+Final repository checks after the prototype correction: 109 tests passed, 1 skipped;
+Ruff lint and format checks passed.

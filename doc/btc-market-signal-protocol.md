@@ -47,3 +47,13 @@ will be rerun from scratch. The network now adds its two skip logits to the firs
 learned class logits, leaving the fourth class as reference. Each completed fit is saved
 to an ignored partial results file so interruption cannot discard earlier fits. No model,
 data split, seed, restart, budget or metric was changed.
+
+## Amendment 2: stop after SOL fails advancement gate (20 Oct 2026)
+
+The complete two-seed SOL validation panel failed the registered 5% advancement margin:
+the best quantum depth averaged 0.645391 versus 0.647917 for the six-input network, a
+0.39% reduction. Since the cross-market gate is conjunctive, no result on another market
+can make this candidate eligible. The ETH run was stopped after seed 900's full panel and
+seed 901's quantum depths 1 and 2; depth 3, the second seed's classical fits, and DOGE
+were not run. Report these partial results explicitly and do not advance the candidate.
+No test data or scores were read.
