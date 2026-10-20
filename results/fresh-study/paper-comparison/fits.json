@@ -1,0 +1,1602 @@
+{
+  "0": {
+    "best": {
+      "restart": 3,
+      "parameters": [
+        1.761047966826997,
+        0.0,
+        1.7850164888677067
+      ],
+      "objective": 0.0013506335617540712,
+      "success": true,
+      "gradient_inf": 7.111183386934727e-08,
+      "eligible": true
+    },
+    "fits": [
+      {
+        "restart": 0,
+        "parameters": [
+          1.7289061014495561,
+          0.0,
+          1.3835845619448177
+        ],
+        "objective": 0.0013915786126695614,
+        "success": true,
+        "gradient_inf": 4.0378388566769674e-08,
+        "eligible": true
+      },
+      {
+        "restart": 1,
+        "parameters": [
+          -1.7288919505013733,
+          0.0,
+          -1.7580009239339895
+        ],
+        "objective": 0.001391578613507457,
+        "success": true,
+        "gradient_inf": 7.881273758614249e-08,
+        "eligible": true
+      },
+      {
+        "restart": 2,
+        "parameters": [
+          1.72891575423561,
+          0.0,
+          1.38357480741332
+        ],
+        "objective": 0.0013915786131258063,
+        "success": true,
+        "gradient_inf": 6.239188853063293e-08,
+        "eligible": true
+      },
+      {
+        "restart": 3,
+        "parameters": [
+          1.761047966826997,
+          0.0,
+          1.7850164888677067
+        ],
+        "objective": 0.0013506335617540712,
+        "success": true,
+        "gradient_inf": 7.111183386934727e-08,
+        "eligible": true
+      },
+      {
+        "restart": 4,
+        "parameters": [
+          1.7610440096078332,
+          0.0,
+          -4.498169820881389
+        ],
+        "objective": 0.001350633561814666,
+        "success": true,
+        "gradient_inf": 7.610124553095177e-08,
+        "eligible": true
+      }
+    ],
+    "scaling": {
+      "return_scale": 0.5927633516399999,
+      "rv_scale": 0.118259594688
+    }
+  },
+  "1": {
+    "best": {
+      "restart": 3,
+      "parameters": [
+        -1.7610483567584476,
+        0.0,
+        4.926611596232121
+      ],
+      "objective": 0.001350633561644036,
+      "success": true,
+      "gradient_inf": 2.3598603540037063e-08,
+      "eligible": true
+    },
+    "fits": [
+      {
+        "restart": 0,
+        "parameters": [
+          1.761046415139703,
+          0.0,
+          1.7850160223590419
+        ],
+        "objective": 0.001350633561768079,
+        "success": true,
+        "gradient_inf": 7.45336951879505e-08,
+        "eligible": true
+      },
+      {
+        "restart": 1,
+        "parameters": [
+          4.554278221124651,
+          0.0,
+          -1.7580082396918006
+        ],
+        "objective": 0.001391578612684502,
+        "success": true,
+        "gradient_inf": 4.3219572885833106e-08,
+        "eligible": true
+      },
+      {
+        "restart": 2,
+        "parameters": [
+          1.7289222658473664,
+          0.0,
+          1.3835747849304108
+        ],
+        "objective": 0.001391578613679701,
+        "success": true,
+        "gradient_inf": 1.1482457779737886e-07,
+        "eligible": true
+      },
+      {
+        "restart": 3,
+        "parameters": [
+          -1.7610483567584476,
+          0.0,
+          4.926611596232121
+        ],
+        "objective": 0.001350633561644036,
+        "success": true,
+        "gradient_inf": 2.3598603540037063e-08,
+        "eligible": true
+      },
+      {
+        "restart": 4,
+        "parameters": [
+          -1.7610523124935225,
+          0.0,
+          -1.3565734521750454
+        ],
+        "objective": 0.0013506335617543101,
+        "success": true,
+        "gradient_inf": 4.6597719172841716e-08,
+        "eligible": true
+      }
+    ],
+    "scaling": {
+      "return_scale": 0.5927633516399999,
+      "rv_scale": 0.118259594688
+    }
+  },
+  "2": {
+    "best": {
+      "restart": 3,
+      "parameters": [
+        -1.7610449177060754,
+        0.0,
+        -1.3565726484262457
+      ],
+      "objective": 0.0013506335616516477,
+      "success": true,
+      "gradient_inf": 2.1310600853419178e-08,
+      "eligible": true
+    },
+    "fits": [
+      {
+        "restart": 0,
+        "parameters": [
+          1.7288994235579629,
+          0.0,
+          1.3835789166897572
+        ],
+        "objective": 0.0013915786129799232,
+        "success": true,
+        "gradient_inf": 8.349637170904088e-08,
+        "eligible": true
+      },
+      {
+        "restart": 1,
+        "parameters": [
+          1.7610502581852947,
+          0.0,
+          1.7850205335356406
+        ],
+        "objective": 0.0013506335616606268,
+        "success": true,
+        "gradient_inf": 2.352217812889856e-08,
+        "eligible": true
+      },
+      {
+        "restart": 2,
+        "parameters": [
+          -1.7289178196585928,
+          0.0,
+          -1.7580191220532193
+        ],
+        "objective": 0.0013915786133375822,
+        "success": true,
+        "gradient_inf": 7.162073668506852e-08,
+        "eligible": true
+      },
+      {
+        "restart": 3,
+        "parameters": [
+          -1.7610449177060754,
+          0.0,
+          -1.3565726484262457
+        ],
+        "objective": 0.0013506335616516477,
+        "success": true,
+        "gradient_inf": 2.1310600853419178e-08,
+        "eligible": true
+      },
+      {
+        "restart": 4,
+        "parameters": [
+          -1.7610527811795342,
+          0.0,
+          -1.3565736088051563
+        ],
+        "objective": 0.0013506335617828773,
+        "success": true,
+        "gradient_inf": 5.130296144503776e-08,
+        "eligible": true
+      }
+    ],
+    "scaling": {
+      "return_scale": 0.5927633516399999,
+      "rv_scale": 0.118259594688
+    }
+  },
+  "3": {
+    "best": {
+      "restart": 0,
+      "parameters": [
+        -1.761051229034831,
+        0.0,
+        4.926611258794676
+      ],
+      "objective": 0.0013506335617300134,
+      "success": true,
+      "gradient_inf": 4.124334337593515e-08,
+      "eligible": true
+    },
+    "fits": [
+      {
+        "restart": 0,
+        "parameters": [
+          -1.761051229034831,
+          0.0,
+          4.926611258794676
+        ],
+        "objective": 0.0013506335617300134,
+        "success": true,
+        "gradient_inf": 4.124334337593515e-08,
+        "eligible": true
+      },
+      {
+        "restart": 1,
+        "parameters": [
+          4.554275419287734,
+          0.0,
+          -1.7580078746080225
+        ],
+        "objective": 0.0013915786128145837,
+        "success": true,
+        "gradient_inf": 6.367405517779257e-08,
+        "eligible": true
+      },
+      {
+        "restart": 2,
+        "parameters": [
+          1.7289055906221793,
+          0.0,
+          1.3835777660341615
+        ],
+        "objective": 0.001391578612768975,
+        "success": true,
+        "gradient_inf": 6.921270197593477e-08,
+        "eligible": true
+      },
+      {
+        "restart": 3,
+        "parameters": [
+          -1.7610603000889629,
+          0.0,
+          -1.3565649519833067
+        ],
+        "objective": 0.0013506335625854808,
+        "success": true,
+        "gradient_inf": 1.0595257310397342e-07,
+        "eligible": true
+      },
+      {
+        "restart": 4,
+        "parameters": [
+          -1.7610524490178021,
+          0.0,
+          -1.3565749280022188
+        ],
+        "objective": 0.0013506335618326405,
+        "success": true,
+        "gradient_inf": 6.343901098881943e-08,
+        "eligible": true
+      }
+    ],
+    "scaling": {
+      "return_scale": 0.5927633516399999,
+      "rv_scale": 0.118259594688
+    }
+  },
+  "4": {
+    "best": {
+      "restart": 1,
+      "parameters": [
+        -1.7610496638775257,
+        0.0,
+        4.926612508066351
+      ],
+      "objective": 0.0013506335616506277,
+      "success": true,
+      "gradient_inf": 2.0888466737561947e-08,
+      "eligible": true
+    },
+    "fits": [
+      {
+        "restart": 0,
+        "parameters": [
+          -1.728909562068076,
+          0.0,
+          -1.7580201021602082
+        ],
+        "objective": 0.001391578613216007,
+        "success": true,
+        "gradient_inf": 1.3039844811574275e-07,
+        "eligible": true
+      },
+      {
+        "restart": 1,
+        "parameters": [
+          -1.7610496638775257,
+          0.0,
+          4.926612508066351
+        ],
+        "objective": 0.0013506335616506277,
+        "success": true,
+        "gradient_inf": 2.0888466737561947e-08,
+        "eligible": true
+      },
+      {
+        "restart": 2,
+        "parameters": [
+          1.7610503574516998,
+          0.0,
+          1.7850162243559287
+        ],
+        "objective": 0.0013506335618459543,
+        "success": true,
+        "gradient_inf": 8.547130017633185e-08,
+        "eligible": true
+      },
+      {
+        "restart": 3,
+        "parameters": [
+          -1.7610512220210337,
+          0.0,
+          -1.356567917237899
+        ],
+        "objective": 0.0013506335618523031,
+        "success": true,
+        "gradient_inf": 8.120880270329199e-08,
+        "eligible": true
+      },
+      {
+        "restart": 4,
+        "parameters": [
+          -1.7289029781563259,
+          0.0,
+          4.525176465799381
+        ],
+        "objective": 0.0013915786126468383,
+        "success": true,
+        "gradient_inf": 1.5385273350460027e-08,
+        "eligible": true
+      }
+    ],
+    "scaling": {
+      "return_scale": 0.5927633516399999,
+      "rv_scale": 0.118259594688
+    }
+  },
+  "5": {
+    "best": {
+      "restart": 0,
+      "parameters": [
+        -1.7610468206060181,
+        0.0,
+        4.926609388183533
+      ],
+      "objective": 0.0013506335617224966,
+      "success": true,
+      "gradient_inf": 6.185270394823417e-08,
+      "eligible": true
+    },
+    "fits": [
+      {
+        "restart": 0,
+        "parameters": [
+          -1.7610468206060181,
+          0.0,
+          4.926609388183533
+        ],
+        "objective": 0.0013506335617224966,
+        "success": true,
+        "gradient_inf": 6.185270394823417e-08,
+        "eligible": true
+      },
+      {
+        "restart": 1,
+        "parameters": [
+          -1.7289048636133082,
+          0.0,
+          4.5251798526250715
+        ],
+        "objective": 0.0013915786127992314,
+        "success": true,
+        "gradient_inf": 7.53604427125576e-08,
+        "eligible": true
+      },
+      {
+        "restart": 2,
+        "parameters": [
+          -1.7289184211325226,
+          0.0,
+          -1.758021973438741
+        ],
+        "objective": 0.0013915786136388898,
+        "success": true,
+        "gradient_inf": 1.1332417209491962e-07,
+        "eligible": true
+      },
+      {
+        "restart": 3,
+        "parameters": [
+          -4.522143587746867,
+          0.0,
+          1.7850187905934463
+        ],
+        "objective": 0.0013506335617516712,
+        "success": true,
+        "gradient_inf": 4.4748980996406333e-08,
+        "eligible": true
+      },
+      {
+        "restart": 4,
+        "parameters": [
+          -1.761059449575668,
+          0.0,
+          4.926614916425116
+        ],
+        "objective": 0.0013506335622184382,
+        "success": true,
+        "gradient_inf": 9.756793897114367e-08,
+        "eligible": true
+      }
+    ],
+    "scaling": {
+      "return_scale": 0.5927633516399999,
+      "rv_scale": 0.118259594688
+    }
+  },
+  "6": {
+    "best": {
+      "restart": 2,
+      "parameters": [
+        1.7610423588121866,
+        0.0,
+        1.7850193019837655
+      ],
+      "objective": 0.0013506335617254899,
+      "success": true,
+      "gradient_inf": 4.108344523953699e-08,
+      "eligible": true
+    },
+    "fits": [
+      {
+        "restart": 0,
+        "parameters": [
+          1.7288971883213093,
+          0.0,
+          1.3835816768270077
+        ],
+        "objective": 0.0013915786129650273,
+        "success": true,
+        "gradient_inf": 7.991924179731602e-08,
+        "eligible": true
+      },
+      {
+        "restart": 1,
+        "parameters": [
+          4.522132824552058,
+          0.0,
+          -1.3565720907954153
+        ],
+        "objective": 0.0013506335617344404,
+        "success": true,
+        "gradient_inf": 4.292049571655298e-08,
+        "eligible": true
+      },
+      {
+        "restart": 2,
+        "parameters": [
+          1.7610423588121866,
+          0.0,
+          1.7850193019837655
+        ],
+        "objective": 0.0013506335617254899,
+        "success": true,
+        "gradient_inf": 4.108344523953699e-08,
+        "eligible": true
+      },
+      {
+        "restart": 3,
+        "parameters": [
+          -1.761029577690963,
+          0.0,
+          -1.3565794995877059
+        ],
+        "objective": 0.0013506335630067887,
+        "success": true,
+        "gradient_inf": 1.29830694806099e-07,
+        "eligible": true
+      },
+      {
+        "restart": 4,
+        "parameters": [
+          -1.7610423415356495,
+          0.0,
+          -1.3565732385943445
+        ],
+        "objective": 0.0013506335617270537,
+        "success": true,
+        "gradient_inf": 4.166419813322885e-08,
+        "eligible": true
+      }
+    ],
+    "scaling": {
+      "return_scale": 0.5927633516399999,
+      "rv_scale": 0.118259594688
+    }
+  },
+  "7": {
+    "best": {
+      "restart": 2,
+      "parameters": [
+        1.7610463253123692,
+        0.0,
+        1.7850208919826285
+      ],
+      "objective": 0.001350633561642917,
+      "success": true,
+      "gradient_inf": 2.303939374351249e-08,
+      "eligible": true
+    },
+    "fits": [
+      {
+        "restart": 0,
+        "parameters": [
+          -1.7610437257426457,
+          0.0,
+          4.926614629129906
+        ],
+        "objective": 0.0013506335617519897,
+        "success": true,
+        "gradient_inf": 5.454861822656864e-08,
+        "eligible": true
+      },
+      {
+        "restart": 1,
+        "parameters": [
+          1.7610329635042117,
+          0.0,
+          -4.498170207643471
+        ],
+        "objective": 0.0013506335624982346,
+        "success": true,
+        "gradient_inf": 1.07525273407294e-07,
+        "eligible": true
+      },
+      {
+        "restart": 2,
+        "parameters": [
+          1.7610463253123692,
+          0.0,
+          1.7850208919826285
+        ],
+        "objective": 0.001350633561642917,
+        "success": true,
+        "gradient_inf": 2.303939374351249e-08,
+        "eligible": true
+      },
+      {
+        "restart": 3,
+        "parameters": [
+          1.7288878769195124,
+          0.0,
+          1.3835945675477532
+        ],
+        "objective": 0.0013915786141171446,
+        "success": true,
+        "gradient_inf": 1.0205496387208356e-07,
+        "eligible": true
+      },
+      {
+        "restart": 4,
+        "parameters": [
+          1.7610525685878726,
+          0.0,
+          1.78502172102086
+        ],
+        "objective": 0.001350633561743162,
+        "success": true,
+        "gradient_inf": 3.927639463663368e-08,
+        "eligible": true
+      }
+    ],
+    "scaling": {
+      "return_scale": 0.5927633516399999,
+      "rv_scale": 0.118259594688
+    }
+  },
+  "8": {
+    "best": {
+      "restart": 4,
+      "parameters": [
+        1.7610482352908017,
+        0.0,
+        1.785021136084256
+      ],
+      "objective": 0.0013506335616398082,
+      "success": true,
+      "gradient_inf": 2.0660057865884426e-08,
+      "eligible": true
+    },
+    "fits": [
+      {
+        "restart": 0,
+        "parameters": [
+          1.7289028754318547,
+          0.0,
+          1.3835857641030982
+        ],
+        "objective": 0.0013915786127011705,
+        "success": true,
+        "gradient_inf": 4.234890433121862e-08,
+        "eligible": true
+      },
+      {
+        "restart": 1,
+        "parameters": [
+          -1.7610548856465529,
+          0.0,
+          -1.356563809091591
+        ],
+        "objective": 0.0013506335624147996,
+        "success": true,
+        "gradient_inf": 1.4933329095870307e-07,
+        "eligible": true
+      },
+      {
+        "restart": 2,
+        "parameters": [
+          1.7289202220219766,
+          0.0,
+          1.383573230007578
+        ],
+        "objective": 0.0013915786135443517,
+        "success": true,
+        "gradient_inf": 8.784187570040623e-08,
+        "eligible": true
+      },
+      {
+        "restart": 3,
+        "parameters": [
+          1.728908392196224,
+          0.0,
+          1.3835856923829226
+        ],
+        "objective": 0.0013915786128026841,
+        "success": true,
+        "gradient_inf": 7.018871161362794e-08,
+        "eligible": true
+      },
+      {
+        "restart": 4,
+        "parameters": [
+          1.7610482352908017,
+          0.0,
+          1.785021136084256
+        ],
+        "objective": 0.0013506335616398082,
+        "success": true,
+        "gradient_inf": 2.0660057865884426e-08,
+        "eligible": true
+      }
+    ],
+    "scaling": {
+      "return_scale": 0.5927633516399999,
+      "rv_scale": 0.118259594688
+    }
+  },
+  "9": {
+    "best": {
+      "restart": 3,
+      "parameters": [
+        1.7610488113194593,
+        0.0,
+        1.7850185982634201
+      ],
+      "objective": 0.0013506335616607075,
+      "success": true,
+      "gradient_inf": 3.2201032205275704e-08,
+      "eligible": true
+    },
+    "fits": [
+      {
+        "restart": 0,
+        "parameters": [
+          1.761047240217606,
+          0.0,
+          1.7850222551154973
+        ],
+        "objective": 0.0013506335616805202,
+        "success": true,
+        "gradient_inf": 4.678368152946643e-08,
+        "eligible": true
+      },
+      {
+        "restart": 1,
+        "parameters": [
+          1.728908349834267,
+          0.0,
+          1.3835856840214944
+        ],
+        "objective": 0.001391578612800229,
+        "success": true,
+        "gradient_inf": 6.983473044633315e-08,
+        "eligible": true
+      },
+      {
+        "restart": 2,
+        "parameters": [
+          -1.7610439187273845,
+          0.0,
+          -1.3565713502871153
+        ],
+        "objective": 0.0013506335617129168,
+        "success": true,
+        "gradient_inf": 4.0392483195011986e-08,
+        "eligible": true
+      },
+      {
+        "restart": 3,
+        "parameters": [
+          1.7610488113194593,
+          0.0,
+          1.7850185982634201
+        ],
+        "objective": 0.0013506335616607075,
+        "success": true,
+        "gradient_inf": 3.2201032205275704e-08,
+        "eligible": true
+      },
+      {
+        "restart": 4,
+        "parameters": [
+          -1.7289073514334807,
+          0.0,
+          -1.7580144483370541
+        ],
+        "objective": 0.0013915786127178015,
+        "success": true,
+        "gradient_inf": 5.305668014307651e-08,
+        "eligible": true
+      }
+    ],
+    "scaling": {
+      "return_scale": 0.5927633516399999,
+      "rv_scale": 0.118259594688
+    }
+  },
+  "10": {
+    "best": {
+      "restart": 2,
+      "parameters": [
+        -1.7610508292838285,
+        0.0,
+        -1.3565725256319232
+      ],
+      "objective": 0.0013506335616776308,
+      "success": true,
+      "gradient_inf": 3.007113872147138e-08,
+      "eligible": true
+    },
+    "fits": [
+      {
+        "restart": 0,
+        "parameters": [
+          -1.7289069218233644,
+          0.0,
+          -1.7580148415784203
+        ],
+        "objective": 0.0013915786127435732,
+        "success": true,
+        "gradient_inf": 6.149906972563457e-08,
+        "eligible": true
+      },
+      {
+        "restart": 1,
+        "parameters": [
+          1.728903309532729,
+          0.0,
+          1.383587064763755
+        ],
+        "objective": 0.001391578612770756,
+        "success": true,
+        "gradient_inf": 6.508790902082229e-08,
+        "eligible": true
+      },
+      {
+        "restart": 2,
+        "parameters": [
+          -1.7610508292838285,
+          0.0,
+          -1.3565725256319232
+        ],
+        "objective": 0.0013506335616776308,
+        "success": true,
+        "gradient_inf": 3.007113872147138e-08,
+        "eligible": true
+      },
+      {
+        "restart": 3,
+        "parameters": [
+          1.7610612682181113,
+          0.0,
+          1.785021156186747
+        ],
+        "objective": 0.001350633562429618,
+        "success": true,
+        "gradient_inf": 1.1771890970693753e-07,
+        "eligible": true
+      },
+      {
+        "restart": 4,
+        "parameters": [
+          -1.7610517709833933,
+          0.0,
+          -1.3565698982825765
+        ],
+        "objective": 0.0013506335617448613,
+        "success": true,
+        "gradient_inf": 3.9565974194882836e-08,
+        "eligible": true
+      }
+    ],
+    "scaling": {
+      "return_scale": 0.5927633516399999,
+      "rv_scale": 0.118259594688
+    }
+  },
+  "11": {
+    "best": {
+      "restart": 3,
+      "parameters": [
+        1.7610481202994615,
+        0.0,
+        1.7850198773795936
+      ],
+      "objective": 0.001350633561628733,
+      "success": true,
+      "gradient_inf": 7.263525718392837e-09,
+      "eligible": true
+    },
+    "fits": [
+      {
+        "restart": 0,
+        "parameters": [
+          4.5542766513682285,
+          0.0,
+          -1.7580130193351022
+        ],
+        "objective": 0.0013915786126697343,
+        "success": true,
+        "gradient_inf": 2.3726658658629326e-08,
+        "eligible": true
+      },
+      {
+        "restart": 1,
+        "parameters": [
+          1.761048273320681,
+          0.0,
+          -4.498165385073213
+        ],
+        "objective": 0.001350633561629761,
+        "success": true,
+        "gradient_inf": 8.435743423240716e-09,
+        "eligible": true
+      },
+      {
+        "restart": 2,
+        "parameters": [
+          -1.7610488287838717,
+          0.0,
+          -1.3565686990348196
+        ],
+        "objective": 0.0013506335617746014,
+        "success": true,
+        "gradient_inf": 7.468570033253297e-08,
+        "eligible": true
+      },
+      {
+        "restart": 3,
+        "parameters": [
+          1.7610481202994615,
+          0.0,
+          1.7850198773795936
+        ],
+        "objective": 0.001350633561628733,
+        "success": true,
+        "gradient_inf": 7.263525718392837e-09,
+        "eligible": true
+      },
+      {
+        "restart": 4,
+        "parameters": [
+          1.7610474066042041,
+          0.0,
+          1.785016473262688
+        ],
+        "objective": 0.0013506335617460023,
+        "success": true,
+        "gradient_inf": 6.929596870278165e-08,
+        "eligible": true
+      }
+    ],
+    "scaling": {
+      "return_scale": 0.5927633516399999,
+      "rv_scale": 0.118259594688
+    }
+  },
+  "12": {
+    "best": {
+      "restart": 2,
+      "parameters": [
+        -1.761047100670419,
+        0.0,
+        -1.3565734638416314
+      ],
+      "objective": 0.0013506335616307221,
+      "success": true,
+      "gradient_inf": 1.3894484521270732e-08,
+      "eligible": true
+    },
+    "fits": [
+      {
+        "restart": 0,
+        "parameters": [
+          1.7289115447626269,
+          0.0,
+          1.3835796308007515
+        ],
+        "objective": 0.0013915786127514165,
+        "success": true,
+        "gradient_inf": 4.154541294321134e-08,
+        "eligible": true
+      },
+      {
+        "restart": 1,
+        "parameters": [
+          -1.7289013324174607,
+          0.0,
+          -1.7580067822764467
+        ],
+        "objective": 0.0013915786127252769,
+        "success": true,
+        "gradient_inf": 3.593262840051459e-08,
+        "eligible": true
+      },
+      {
+        "restart": 2,
+        "parameters": [
+          -1.761047100670419,
+          0.0,
+          -1.3565734638416314
+        ],
+        "objective": 0.0013506335616307221,
+        "success": true,
+        "gradient_inf": 1.3894484521270732e-08,
+        "eligible": true
+      },
+      {
+        "restart": 3,
+        "parameters": [
+          1.7610459358772583,
+          0.0,
+          1.7850200984795594
+        ],
+        "objective": 0.001350633561635219,
+        "success": true,
+        "gradient_inf": 1.273489777173231e-08,
+        "eligible": true
+      },
+      {
+        "restart": 4,
+        "parameters": [
+          1.728909510710732,
+          0.0,
+          1.3835822093834516
+        ],
+        "objective": 0.001391578612688521,
+        "success": true,
+        "gradient_inf": 3.6354263783372476e-08,
+        "eligible": true
+      }
+    ],
+    "scaling": {
+      "return_scale": 0.5927633516399999,
+      "rv_scale": 0.118259594688
+    }
+  },
+  "13": {
+    "best": {
+      "restart": 1,
+      "parameters": [
+        -4.522139865695919,
+        0.0,
+        1.7850203759069676
+      ],
+      "objective": 0.001350633561646281,
+      "success": true,
+      "gradient_inf": 1.8124716137657426e-08,
+      "eligible": true
+    },
+    "fits": [
+      {
+        "restart": 0,
+        "parameters": [
+          1.7610578766136478,
+          0.0,
+          -4.4981674828419
+        ],
+        "objective": 0.0013506335622434484,
+        "success": true,
+        "gradient_inf": 1.0062401216079374e-07,
+        "eligible": true
+      },
+      {
+        "restart": 1,
+        "parameters": [
+          -4.522139865695919,
+          0.0,
+          1.7850203759069676
+        ],
+        "objective": 0.001350633561646281,
+        "success": true,
+        "gradient_inf": 1.8124716137657426e-08,
+        "eligible": true
+      },
+      {
+        "restart": 2,
+        "parameters": [
+          -1.761054249883324,
+          0.0,
+          -1.3565764730136083
+        ],
+        "objective": 0.0013506335620754443,
+        "success": true,
+        "gradient_inf": 1.0112529303524241e-07,
+        "eligible": true
+      },
+      {
+        "restart": 3,
+        "parameters": [
+          1.7289025095733521,
+          0.0,
+          -4.899606499968636
+        ],
+        "objective": 0.0013915786128034045,
+        "success": true,
+        "gradient_inf": 6.901230888839427e-08,
+        "eligible": true
+      },
+      {
+        "restart": 4,
+        "parameters": [
+          1.7288914820154904,
+          0.0,
+          1.383591094012172
+        ],
+        "objective": 0.0013915786134984143,
+        "success": true,
+        "gradient_inf": 8.301341385130721e-08,
+        "eligible": true
+      }
+    ],
+    "scaling": {
+      "return_scale": 0.5927633516399999,
+      "rv_scale": 0.118259594688
+    }
+  },
+  "14": {
+    "best": {
+      "restart": 4,
+      "parameters": [
+        1.7610522376461848,
+        0.0,
+        1.785020343207184
+      ],
+      "objective": 0.001350633561725985,
+      "success": true,
+      "gradient_inf": 4.160571626804498e-08,
+      "eligible": true
+    },
+    "fits": [
+      {
+        "restart": 0,
+        "parameters": [
+          1.7288924850136576,
+          0.0,
+          1.3835859743686685
+        ],
+        "objective": 0.0013915786132592304,
+        "success": true,
+        "gradient_inf": 1.006647347943923e-07,
+        "eligible": true
+      },
+      {
+        "restart": 1,
+        "parameters": [
+          1.7288854356569834,
+          0.0,
+          1.3835904986258094
+        ],
+        "objective": 0.001391578614150864,
+        "success": true,
+        "gradient_inf": 1.4182541859669717e-07,
+        "eligible": true
+      },
+      {
+        "restart": 2,
+        "parameters": [
+          4.554282930551096,
+          0.0,
+          -1.7580127921137703
+        ],
+        "objective": 0.0013915786127448534,
+        "success": true,
+        "gradient_inf": 5.31248547756824e-08,
+        "eligible": true
+      },
+      {
+        "restart": 3,
+        "parameters": [
+          1.7610475915455421,
+          0.0,
+          1.7850272083430785
+        ],
+        "objective": 0.001350633562147786,
+        "success": true,
+        "gradient_inf": 1.443590256014482e-07,
+        "eligible": true
+      },
+      {
+        "restart": 4,
+        "parameters": [
+          1.7610522376461848,
+          0.0,
+          1.785020343207184
+        ],
+        "objective": 0.001350633561725985,
+        "success": true,
+        "gradient_inf": 4.160571626804498e-08,
+        "eligible": true
+      }
+    ],
+    "scaling": {
+      "return_scale": 0.5927633516399999,
+      "rv_scale": 0.118259594688
+    }
+  },
+  "15": {
+    "best": {
+      "restart": 1,
+      "parameters": [
+        1.761051382501015,
+        0.0,
+        1.785020804738725
+      ],
+      "objective": 0.0013506335616924497,
+      "success": true,
+      "gradient_inf": 3.2353199980184044e-08,
+      "eligible": true
+    },
+    "fits": [
+      {
+        "restart": 0,
+        "parameters": [
+          1.7288979867946341,
+          0.0,
+          1.3835772916961102
+        ],
+        "objective": 0.001391578613264209,
+        "success": true,
+        "gradient_inf": 1.166069085907495e-07,
+        "eligible": true
+      },
+      {
+        "restart": 1,
+        "parameters": [
+          1.761051382501015,
+          0.0,
+          1.785020804738725
+        ],
+        "objective": 0.0013506335616924497,
+        "success": true,
+        "gradient_inf": 3.2353199980184044e-08,
+        "eligible": true
+      },
+      {
+        "restart": 2,
+        "parameters": [
+          1.7289112313555046,
+          0.0,
+          1.3835825437770017
+        ],
+        "objective": 0.001391578612775723,
+        "success": true,
+        "gradient_inf": 5.3954215227525186e-08,
+        "eligible": true
+      },
+      {
+        "restart": 3,
+        "parameters": [
+          -1.728908726532922,
+          0.0,
+          -1.7580152413028505
+        ],
+        "objective": 0.001391578612761536,
+        "success": true,
+        "gradient_inf": 5.8311081657658186e-08,
+        "eligible": true
+      },
+      {
+        "restart": 4,
+        "parameters": [
+          4.522131810285633,
+          0.0,
+          -1.3565673475726983
+        ],
+        "objective": 0.0013506335619560127,
+        "success": true,
+        "gradient_inf": 8.394592529784027e-08,
+        "eligible": true
+      }
+    ],
+    "scaling": {
+      "return_scale": 0.5927633516399999,
+      "rv_scale": 0.118259594688
+    }
+  },
+  "16": {
+    "best": {
+      "restart": 1,
+      "parameters": [
+        -1.7610471727506418,
+        0.0,
+        -1.3565718460952523
+      ],
+      "objective": 0.0013506335616340127,
+      "success": true,
+      "gradient_inf": 1.8134007750275627e-08,
+      "eligible": true
+    },
+    "fits": [
+      {
+        "restart": 0,
+        "parameters": [
+          -1.761054367591352,
+          0.0,
+          -1.3565700700657637
+        ],
+        "objective": 0.0013506335618432464,
+        "success": true,
+        "gradient_inf": 5.177956587804066e-08,
+        "eligible": true
+      },
+      {
+        "restart": 1,
+        "parameters": [
+          -1.7610471727506418,
+          0.0,
+          -1.3565718460952523
+        ],
+        "objective": 0.0013506335616340127,
+        "success": true,
+        "gradient_inf": 1.8134007750275627e-08,
+        "eligible": true
+      },
+      {
+        "restart": 2,
+        "parameters": [
+          -1.7289011738822184,
+          0.0,
+          4.525178415023926
+        ],
+        "objective": 0.0013915786127247575,
+        "success": true,
+        "gradient_inf": 3.337167781697348e-08,
+        "eligible": true
+      },
+      {
+        "restart": 3,
+        "parameters": [
+          4.522132536661848,
+          0.0,
+          -1.3565697417184261
+        ],
+        "objective": 0.0013506335617834281,
+        "success": true,
+        "gradient_inf": 3.889681545604651e-08,
+        "eligible": true
+      },
+      {
+        "restart": 4,
+        "parameters": [
+          4.522147609077671,
+          0.0,
+          -1.3565731120412585
+        ],
+        "objective": 0.0013506335620185616,
+        "success": true,
+        "gradient_inf": 8.287223988642788e-08,
+        "eligible": true
+      }
+    ],
+    "scaling": {
+      "return_scale": 0.5927633516399999,
+      "rv_scale": 0.118259594688
+    }
+  },
+  "17": {
+    "best": {
+      "restart": 3,
+      "parameters": [
+        -1.7610470429569456,
+        0.0,
+        4.926616361338678
+      ],
+      "objective": 0.0013506335617726707,
+      "success": true,
+      "gradient_inf": 7.653938247087488e-08,
+      "eligible": true
+    },
+    "fits": [
+      {
+        "restart": 0,
+        "parameters": [
+          -1.7289073327764275,
+          0.0,
+          -1.75801297247691
+        ],
+        "objective": 0.0013915786126565783,
+        "success": true,
+        "gradient_inf": 2.993665428399628e-08,
+        "eligible": true
+      },
+      {
+        "restart": 1,
+        "parameters": [
+          1.761048318484395,
+          0.0,
+          1.7850252699842928
+        ],
+        "objective": 0.0013506335618948294,
+        "success": true,
+        "gradient_inf": 1.028910246933523e-07,
+        "eligible": true
+      },
+      {
+        "restart": 2,
+        "parameters": [
+          -1.7610515133962186,
+          0.0,
+          -1.3565750642723338
+        ],
+        "objective": 0.001350633561794864,
+        "success": true,
+        "gradient_inf": 6.26071893980451e-08,
+        "eligible": true
+      },
+      {
+        "restart": 3,
+        "parameters": [
+          -1.7610470429569456,
+          0.0,
+          4.926616361338678
+        ],
+        "objective": 0.0013506335617726707,
+        "success": true,
+        "gradient_inf": 7.653938247087488e-08,
+        "eligible": true
+      },
+      {
+        "restart": 4,
+        "parameters": [
+          -1.7610596910487541,
+          0.0,
+          -1.356567410448328
+        ],
+        "objective": 0.0013506335623299098,
+        "success": true,
+        "gradient_inf": 8.837085794036191e-08,
+        "eligible": true
+      }
+    ],
+    "scaling": {
+      "return_scale": 0.5927633516399999,
+      "rv_scale": 0.118259594688
+    }
+  },
+  "18": {
+    "best": {
+      "restart": 0,
+      "parameters": [
+        1.7610472340349457,
+        0.0,
+        1.7850205507801569
+      ],
+      "objective": 0.0013506335616298125,
+      "success": true,
+      "gradient_inf": 1.277529514467912e-08,
+      "eligible": true
+    },
+    "fits": [
+      {
+        "restart": 0,
+        "parameters": [
+          1.7610472340349457,
+          0.0,
+          1.7850205507801569
+        ],
+        "objective": 0.0013506335616298125,
+        "success": true,
+        "gradient_inf": 1.277529514467912e-08,
+        "eligible": true
+      },
+      {
+        "restart": 1,
+        "parameters": [
+          -1.7289233511949458,
+          0.0,
+          -1.7580170097075665
+        ],
+        "objective": 0.0013915786137959213,
+        "success": true,
+        "gradient_inf": 1.2932745152571812e-07,
+        "eligible": true
+      },
+      {
+        "restart": 2,
+        "parameters": [
+          1.7288931662579277,
+          0.0,
+          1.3835841564990108
+        ],
+        "objective": 0.0013915786132284692,
+        "success": true,
+        "gradient_inf": 1.039382338877126e-07,
+        "eligible": true
+      },
+      {
+        "restart": 3,
+        "parameters": [
+          -1.7610512509796272,
+          0.0,
+          -1.3565651626698811
+        ],
+        "objective": 0.0013506335621519087,
+        "success": true,
+        "gradient_inf": 1.3610481014794673e-07,
+        "eligible": true
+      },
+      {
+        "restart": 4,
+        "parameters": [
+          -1.7610398131071363,
+          0.0,
+          -1.3565719517133628
+        ],
+        "objective": 0.0013506335619004862,
+        "success": true,
+        "gradient_inf": 6.872884423039793e-08,
+        "eligible": true
+      }
+    ],
+    "scaling": {
+      "return_scale": 0.5927633516399999,
+      "rv_scale": 0.118259594688
+    }
+  },
+  "19": {
+    "best": {
+      "restart": 4,
+      "parameters": [
+        -1.7610492073668955,
+        0.0,
+        -1.3565751002291806
+      ],
+      "objective": 0.0013506335617147198,
+      "success": true,
+      "gradient_inf": 5.456842660025995e-08,
+      "eligible": true
+    },
+    "fits": [
+      {
+        "restart": 0,
+        "parameters": [
+          -4.554283379036576,
+          0.0,
+          1.38358511314903
+        ],
+        "objective": 0.0013915786126900628,
+        "success": true,
+        "gradient_inf": 2.7134707241555086e-08,
+        "eligible": true
+      },
+      {
+        "restart": 1,
+        "parameters": [
+          4.55427891543765,
+          0.0,
+          -1.7580152127032325
+        ],
+        "objective": 0.001391578612775411,
+        "success": true,
+        "gradient_inf": 7.012117666030382e-08,
+        "eligible": true
+      },
+      {
+        "restart": 2,
+        "parameters": [
+          -1.7610493047213496,
+          0.0,
+          -1.3565763059017892
+        ],
+        "objective": 0.0013506335617980108,
+        "success": true,
+        "gradient_inf": 7.901124416190286e-08,
+        "eligible": true
+      },
+      {
+        "restart": 3,
+        "parameters": [
+          1.761051475753359,
+          0.0,
+          1.7850270192906557
+        ],
+        "objective": 0.0013506335620918713,
+        "success": true,
+        "gradient_inf": 1.258331438179494e-07,
+        "eligible": true
+      },
+      {
+        "restart": 4,
+        "parameters": [
+          -1.7610492073668955,
+          0.0,
+          -1.3565751002291806
+        ],
+        "objective": 0.0013506335617147198,
+        "success": true,
+        "gradient_inf": 5.456842660025995e-08,
+        "eligible": true
+      }
+    ],
+    "scaling": {
+      "return_scale": 0.5927633516399999,
+      "rv_scale": 0.118259594688
+    }
+  }
+}

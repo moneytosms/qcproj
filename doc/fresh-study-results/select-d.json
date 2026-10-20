@@ -1,0 +1,56 @@
+{
+  "quantum-har": {
+    "depth": 3,
+    "mean_validation_log_loss_by_depth": {
+      "1": 0.8163400667132298,
+      "2": 0.8020851243577508,
+      "3": 0.7134965854219573
+    }
+  },
+  "softmax-har": {
+    "depth": 0,
+    "mean_validation_log_loss_by_depth": {
+      "0": 0.6799847993802486
+    }
+  },
+  "network-har": {
+    "depth": 0,
+    "mean_validation_log_loss_by_depth": {
+      "0": 0.6800371244303987
+    }
+  },
+  "quantum-short": {
+    "depth": 3,
+    "mean_validation_log_loss_by_depth": {
+      "1": 0.817242869009932,
+      "2": 0.7494407926085054,
+      "3": 0.7323937453608071
+    }
+  },
+  "softmax-short": {
+    "depth": 0,
+    "mean_validation_log_loss_by_depth": {
+      "0": 0.7300338861166228
+    }
+  },
+  "network-short": {
+    "depth": 0,
+    "mean_validation_log_loss_by_depth": {
+      "0": 0.7244837069679919
+    }
+  },
+  "hybrid-quantum": {
+    "depth": 2,
+    "mean_validation_log_loss_by_depth": {
+      "1": 0.6767394571438055,
+      "2": 0.674969048992289,
+      "3": 0.6815842176778757
+    }
+  },
+  "hybrid-softmax": {
+    "depth": 0,
+    "mean_validation_log_loss_by_depth": {
+      "0": 0.6855363347851482
+    }
+  }
+}

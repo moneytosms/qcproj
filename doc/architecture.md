@@ -354,3 +354,33 @@ scaling diagnostics remain unavailable or weak rather than manufactured evidence
 all training costs and inactive-coordinate limits; different information/capacity/gradient
 implementations preclude a matched-cost quantum-advantage claim. The protocol is in
 [final-study-protocol.md](final-study-protocol.md).
+
+## ADR 016 — Fresh data, memory with realism, same-length targets and hybrids
+
+**Decision:** add a separate fresh-data study (`fresh_models.py`, `fresh_study.py`,
+`fresh_runner.py`, `scripts/run_fresh_study.py`) on Bitstamp daily RV built from
+1-minute candles, split by date (train to 2022, validation 2023-2024, test 2025-01-01 to
+2026-10-19). Reuse the existing circuit, classical models, finance baselines, generator and
+metrics unchanged. Protocol: [fresh-study-protocol.md](fresh-study-protocol.md).
+
+**Reason:** the frozen study tested realism training only on previous-day inputs, compared
+128-day simulated paths with full-sample moments (biasing the 30-day target upward), and
+reused an inspected test block. Matching the author's series to the Bitstamp file shows
+the paper covers 2020-08-30 to 2023-02-28, so a test period after 2024 is genuinely unseen.
+
+**Same-length targets:** every realism comparison uses real windows of the simulated path
+length (`window_reference`): 256-day training windows during A training, the 731-day
+validation series for selection, and the 657-day test series for reporting.
+
+**FastBorn:** identical probabilities to `BornCircuit` (tested to 1e-12, all depths), with
+batched 2x2 algebra for small batches so recursive simulation is about 2.7x faster; large
+batches delegate to `BornCircuit`. The Qiskit construction in `scripts/run_ibm_hardware.py`
+matches it to 9e-16 including bit order.
+
+**Hybrid:** `log p = log p_HAR-quantile + gamma (expert - 1/4)`, renormalized, so gamma = 0
+is exactly the best classical forecaster and training measures only what the expert adds.
+The product form `base x expert^gamma` was tried first and abandoned in development because
+its fits failed stationarity checks (amendment 1 in the protocol).
+
+**Sealing:** the evaluation function is in the sealed package, so test scoring cannot change
+after training; development, selection and training artifacts are hashed into `seal.json`.

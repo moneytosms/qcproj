@@ -303,3 +303,27 @@ hyperparameters or restarts were selected against test results.
 The final study is complete for this protocol. Physical-unit risk, novelty review,
 unseen-market replication and optional hardware/transfer are not thereby completed.
 The project report and slides remain paused at the user's request.
+
+## Fresh-data study: memory + realism, hybrids (20 Oct 2026, branch `nidhi/memory-realism-fresh-data`)
+
+Completed the [pre-committed protocol](fresh-study-protocol.md) and the
+[measured results](fresh-study.md) on Bitstamp daily RV, test 2025-01-01 to 2026-10-19
+(657 days, unused by any earlier study). The paper's data was identified as Bitstamp
+2020-08-30 to 2023-02-28.
+
+- Memory helps: quantum-har D beats quantum-short D by 0.051 test log loss (interval
+  −0.071 to −0.030); classical models gain similarly.
+- With memory and same-length targets, realism training improves test-period realism for
+  every family (15-20 of 20 seeds) but costs forecast log loss (quantum +0.035).
+- No quantum advantage: softmax-har D 0.518 vs quantum-har D 0.570. HAR + quantum and
+  HAR + softmax hybrids are both slightly worse than HAR quantile alone on test.
+- Calm test regime (no extreme days by training cut-offs) and a strong weekend effect are
+  recorded as limits; a weekday input is the clearest next step.
+- 155/160 forecast fits and 120/120 realism fits pass checks; seal committed before scoring;
+  independent recomputation matches. 93 tests pass (1 skipped).
+- Follow-up ([protocol](paper-comparison-protocol.md), [results](paper-comparison.md)):
+  the paper's exact 1-qubit model, refitted on the same training years (20 seeds, all fits
+  pass), loses to our quantum-har D on log loss (1.196 vs 0.570), QLIKE (0.840 vs 0.504),
+  squared error and realism (215 vs 34); all 95% date-bootstrap intervals exclude zero.
+  Main cause: the paper's max-based input scaling squashes ordinary days after the 2020
+  crash, plus one-day memory.

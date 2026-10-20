@@ -1,0 +1,11 @@
+{
+  "first_day": "2016-12-01",
+  "last_day": "2026-10-19",
+  "days": 3610,
+  "source_sha256": {
+    "data/historical/btcusd_bitstamp_1min_2012-2025.csv.gz": "1be152060b39327b669cbed236eeb283191fadaf3862f76c1e974be54ceb1a20",
+    "data/updates/btcusd_bitstamp_1min_latest.csv": "9cef4d828037f6a4d4466dbbeabd41b8d0803ec2dce429fc7075bcbdec0dbc91"
+  },
+  "max_zero_volume_fraction": 0.16666666666666666,
+  "output_sha256": "bff1209621cd2ac95880b789668b950caec1b3198bf73d22e3d3b4767037f17a"
+}
