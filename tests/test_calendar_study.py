@@ -1,4 +1,6 @@
+import importlib.util
 import json
+from pathlib import Path
 
 import numpy as np
 import pytest
@@ -14,10 +16,12 @@ from qcvol.calendar_models import (
 from qcvol.calendar_study import (
     CalendarConfig,
     check_seal,
+    develop,
     fit_model,
     generate_calendar,
     initialize,
     seal,
+    train,
 )
 from qcvol.data import sha256, synthetic_data
 from qcvol.fresh_study import prepare_dates
@@ -172,3 +176,80 @@ def test_final_requires_twenty_fresh_seeds():
         CalendarConfig(final_seeds=[0])
     with pytest.raises(ValueError, match="must differ"):
         CalendarConfig(development_seeds=[0])
+
+
+def independent_verifier():
+    path = Path(__file__).parents[1] / "scripts/verify_calendar_study.py"
+    spec = importlib.util.spec_from_file_location("calendar_verifier", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+@pytest.mark.parametrize("kind", ["linear", "quantum", "quantum-shared", "tanh", "sine"])
+def test_dense_gate_readout_and_directional_gradient(kind):
+    audit = independent_verifier()
+    rng = np.random.default_rng(112)
+    m = CalendarReadout(kind, 3)
+    x = rng.normal(size=(8, 10))
+    p = rng.normal(0, 0.4, m.n_params)
+    labels = rng.integers(0, 4, len(x))
+    weights = np.full(len(x), 1 / len(x))
+    np.testing.assert_allclose(
+        m.probabilities(x, p), audit.dense_probabilities(vars(m), x, p), atol=1e-13
+    )
+    _, g = m.loss_gradient(x, labels, p, weights)
+    for _ in range(4):
+        direction = rng.normal(size=len(p))
+        direction /= np.linalg.norm(direction)
+
+        def loss(q):
+            prob = audit.dense_probabilities(vars(m), x, q)
+            return -np.mean(np.log(prob[np.arange(len(x)), labels]))
+
+        delta = (loss(p + 1e-5 * direction) - loss(p - 1e-5 * direction)) / 2e-5
+        assert delta == pytest.approx(np.dot(g, direction), abs=1e-8)
+
+
+def test_small_study_pipeline_and_independent_replay(tmp_path):
+    out = tmp_path / "integration"
+    config = CalendarConfig(
+        kind="integration",
+        development_seeds=[910],
+        final_seeds=[0],
+        calendars=[True],
+        half_lives=[365],
+        base_ridges=[0.001],
+        depths=[1],
+        feature_ridges=[0.01],
+        restarts=1,
+        max_calls=120,
+        max_iterations=100,
+    )
+    data = prepared()
+    initialize(data, config, out)
+    quiet = lambda *args, **kwargs: None
+    develop(data, out, quiet)
+    train(data, out, quiet)
+    seal(data, out)
+    result = independent_verifier().verify(data, out)
+    assert result["verified"] and result["final_seeds"] == [0]
+    assert result["fits_replayed"] == 9
+    assert result["max_dense_error"] < 1e-12
+    spec = importlib.util.spec_from_file_location(
+        "calendar_evaluator", Path(__file__).parents[1] / "scripts/evaluate_calendar_study.py"
+    )
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    module.evaluate(data, out, integration=True, progress=quiet)
+    audit = independent_verifier()
+    verified = audit.verify_evaluation(data, out)
+    assert verified["verified"] and verified["new_model_probability_rows"] == 5 * len(
+        data.y[data.test]
+    )
+    summary_path = out / "evaluation/summary.json"
+    summary = json.loads(summary_path.read_text())
+    summary["bootstrap"][0]["lower"] += 0.01
+    summary_path.write_text(json.dumps(summary))
+    with pytest.raises(AssertionError):
+        audit.verify_evaluation(data, out)

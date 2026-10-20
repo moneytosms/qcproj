@@ -476,3 +476,24 @@ held-out test moment comparison. Its earlier validation gains did not generalize
 this period. All selected training checks pass, so preserve this negative result.
 Read the date-bootstrap intervals and coverage limits before interpreting rankings:
 twenty seeds are not twenty market periods. The project report stays paused.
+
+## Follow-up: what the two weak spots mean
+
+The original two-qubit circuit gives yesterday's volatility directly to qubit 0.
+Qubit 1 directly receives monthly volatility and yesterday's return; entanglement lets
+information pass between them, but that is different from giving qubit 1 its own daily
+input. The new shared-day variant adds that input explicitly, with zero added weights
+recovering the old routing. It must be tested: more direct inputs need not generalize better.
+
+The weekday of tomorrow is already known when making today's forecast. Giving that
+calendar information to all candidates can represent recurring weekend dips without
+using future prices. The simulator must also advance the weekday as it generates each
+day, otherwise forecast and simulation models would differ.
+
+Read [improvement-plan.md](improvement-plan.md), then `calendar_models.py` for those
+features and the learned readout. The readout combines circuit probabilities with
+ordinary linear HAR/calendar effects; it is a hybrid. `calendar_study.py` fits the
+calendar/recency grid first, then controlled quantum/tanh/sine heads. The separate
+dense-matrix verifier checks saved objectives, selection, forecasts and new recursive
+paths. Interpret any gain against the updated classical controls, not only the older
+models that lacked calendar information. Development results are not final evidence.

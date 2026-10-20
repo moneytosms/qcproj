@@ -204,3 +204,25 @@ The completed run favors HAR forecasts on test NLL. Quantum realism training wor
 both test NLL and test moment distance; its validation gains do not carry over. All
 selected fits pass training checks, and independent replay verifies the complete run.
 No quantum advantage is demonstrated. The report/slides remain paused.
+
+## Calendar and quantum-readout follow-up
+
+The [improvement plan](doc/improvement-plan.md) builds on Nidhi's fresh-data PR #8.
+It tests target-weekday inputs, recent-training weights, and a learned quantum feature
+readout against the same-input linear/tanh/sine controls. A separate quantum variant
+gives the second qubit a direct yesterday-volatility input; the original routing remains
+an ablation. These are hybrid models, and the previously scored 2025–2026 period is
+an exposed benchmark. Development is currently in progress; no new advantage is claimed.
+
+```bash
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 uv run python scripts/run_calendar_study.py initialize --output results/calendar-study-repeat
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 uv run python scripts/run_calendar_study.py develop --output results/calendar-study-repeat
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 uv run python scripts/verify_calendar_study.py results/calendar-study-repeat
+```
+
+Inspect validation and convergence evidence before the final stages. With fixed choices,
+run `train`, then `seal` using the same training runner/output. Score with
+`scripts/evaluate_calendar_study.py OUTPUT --reference results/fresh-study`; verify using
+`scripts/verify_calendar_study.py OUTPUT --evaluation`, then export figures with
+`scripts/plot_calendar_study.py OUTPUT`. Output directories cannot be overwritten by
+initialization/evaluation. All new experiment output stays ignored.
