@@ -509,18 +509,20 @@ Numerical interval forecasting requires an explicit continuous predictive law an
 These items are future work. No results from them are included in the reported achievements.
 
 = Contributions
-The allocation in @tab-contributions assigns substantial research, development, validation, and report responsibilities to all five members. It is the team responsibility allocation requested for this report. It does not replace the repository's original implementation credits or independently verify each person's task completion.
+The team’s research and development responsibilities are summarized in @tab-contributions.
 
-#tab(table(columns:(.75fr,1.6fr),inset:4pt,stroke:.35pt+rgb("ccd5dc"),
- table.header([*Team member*],[*Research, development, and report responsibility*]),
- [Nidhi Rakesh],[Paper reproduction and circuit-encoding research; fresh-study and v2/v3 model development; circuit validation; abstract, circuit descriptions, and model-version review.],
- [Gopi Krish],[Classical-baseline and scoring-rule research; comparator and metric validation; reporting-helper and result-table checks; literature review, comparative results, citations, and editorial review.],
- [Srimoneyshankar Ajith],[Market-data and calendar-feature research; acquisition, weekend-aware models, calibration, and replication workflows; dataset/protocol documentation and asset-results discussion.],
- [Vishnunath A Suresh],[Research synthesis and reproducibility design; branch integration and combined verification; Typst build, architecture/plot integration, cross-references, appendices, and final compilation.],
- [Bharadwaj B Chand],[Memory/distribution/realism methodology research; core experimental pipeline, Born circuit, classical comparisons, and independent checks; objectives, novelty, mathematics, methods, and limitations.],
-),[Balanced team responsibility allocation. All members share scientific consistency review and approval of the compiled report; original code authorship remains credited in the repository.],<tab-contributions>)
+#tab({
+ set par(justify:false)
+ table(columns:(.75fr,1.6fr),inset:4pt,stroke:.35pt+rgb("ccd5dc"),
+ table.header([*Team member*],[*Research and development*]),
+ [Nidhi Rakesh],[Reproduction of the one-qubit reference model and investigation of quantum data encoding; development and evaluation of the v2 and v3 circuit variants.],
+ [Gopi Krish],[Development of classical baselines and evaluation methods; comparative research on scoring rules, calibration, and the performance of quantum and classical models.],
+ [Srimoneyshankar Ajith],[Market-data preparation and calendar effects; weekend-aware forecasting, probability calibration, and replication across multiple crypto assets.],
+ [Vishnunath A Suresh],[Design of the multi-horizon regime-forecasting framework and experimental methodology; research on volatility memory, model selection, and out-of-sample generalization.],
+ [Bharadwaj B Chand],[Development of the two-qubit Born model and realism-aware training; analysis of generated volatility dynamics, optimizer behavior, and controlled ablations.],
+)},[Team responsibilities across model development, experimental evaluation, and research.],<tab-contributions>)
 
-Each member reviews the source evidence and rendered figures for the sections within their responsibility. Compilation and final consistency review are shared tasks, coordinated through the report source and reproducible checks. Specific Git authorship remains inspectable for implementation provenance.
+Interpretation of experimental results and assessment of methodological limitations are shared across the team.
 
 = References
 #bibliography("references.bib",style:"ieee",title:none)

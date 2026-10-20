@@ -526,3 +526,11 @@ committed per-seed evidence and use 95% intervals despite registered 97.5% level
 these limits are explicit. The contribution section follows the user's balanced
 five-member research/development/report responsibility allocation while preserving
 original code credits. See `report/qa/REVIEW.md` for review scope and limitations.
+
+
+### Contribution-section wording refinement
+
+Replaced document-production duties with concise research and development areas
+for all five members. Removed assignment commentary from the submitted section.
+The report was recompiled, writing checks passed, and the affected pages were
+rendered and inspected. Experimental results and implementation files are unchanged.
