@@ -372,3 +372,6 @@ The depth-1 quantum outcome-readout candidate also failed ETH validation: both u
 25-parameter fits exhausted the 50,000-call budget, and calibrated loss (0.5236/0.5245)
 trailed the network (0.5171). Its protocol amendment applies the existing 0.001 L2 penalty;
 only ETH validation will be checked first, and BTC validation runs only if that gate passes.
+The regularized readout converged but averaged 0.5221 calibrated log loss, 0.96% worse
+than the same-seed network (0.5171). It failed the ETH gate; no BTC validation or test
+scoring was done for this candidate.

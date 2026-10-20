@@ -45,3 +45,8 @@ and 901 on ETH training data only, compare against the already fitted same-seed 
 validation baselines, and advance to BTC validation only if it is eligible and clears the
 same 5% margin over the best classical model on ETH. Both prior test periods remain
 untouched by this development step.
+
+The regularized readout converged on both ETH seeds (5,610 and 7,293 objective calls),
+but calibrated losses were 0.522087 and 0.522088. The same-seed network mean was 0.517134;
+the readout is about 0.96% worse. It fails the ETH gate, so BTC validation was not run for
+this candidate and no test period was opened.
