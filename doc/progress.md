@@ -378,5 +378,27 @@ scoring was done for this candidate.
 
 The fixed SOL/DOGE replication data are built and pass coverage checks: SOL has 843 train,
 731 validation, and 657 test targets; DOGE has 1,246/731/657. Both test windows have 288
-5-minute bars every UTC day. Their tests remain unopened; results will be evaluated as a
-single precommitted two-market panel.
+5-minute bars every UTC day. The preregistered two-market panel has now been evaluated
+once; results follow.
+
+## SOL/DOGE fixed quantum replication (20 Oct 2026)
+
+Completed the preregistered [two-market protocol](sol-doge-replication-protocol.md)
+and results report ([sol-doge-study.md](sol-doge-study.md)). Both checksum-verified
+Binance panels cover the full 2025-01-01 to 2026-10-19 test period; the common test
+contains 657 targets per asset. Code, protocol, locked environment, datasets, fixed
+selection and all 20-seed model artifacts were sealed before either test was opened.
+Each test was evaluated once.
+
+- SOL quantum RY hybrid calibrated log loss .404973; classical comparators .424834,
+  .417410 and .424215. Its best classical comparison is a 2.98% gain, below the 5%
+  threshold. Paired 97.5% intervals cross zero against softmax and network.
+- DOGE quantum calibrated log loss .762719; comparators .763335, .772791 and .766459.
+  Best gain is 1.30%; all paired 97.5% intervals cross zero.
+- Every registered score, including RPS, extreme Brier and QLIKE, is reported. SOL has
+  one and DOGE three ineligible softmax-HAR hybrid fits; these remain included. All
+  quantum fits were eligible.
+- The two-market success rule failed. No marked quantum advantage is established.
+  The selected model version's preregistered replication panel is complete; do not add
+  assets to this panel after seeing the outcomes.
+- Final checks: 105 tests passed, 1 skipped; Ruff lint and format checks passed.
