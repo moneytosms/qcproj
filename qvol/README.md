@@ -2,11 +2,11 @@
 
 SQC course project, IIIT Kottayam.
 
-> **What is in this folder right now: only Phase 1, the reproduction of the base paper.**
+> **This `qvol/` folder contains only Phase 1, the reproduction of the base paper.**
 > All code here rebuilds Takaishi's one-qubit model from the paper's equations and runs it on the
 > data the author published in his repository ([takaishi-physics/QCL-volatility](https://github.com/takaishi-physics/QCL-volatility)).
 > The two check scripts (`02_closed_form_check.py`, `03_plot_phase1.py`) only analyse that same paper model.
-> **None of our improvements (A, B, D below) are implemented yet.** They start in Phase 2.
+> Later forecasting models and studies live in the repository-root `src/qcvol*` packages; this folder's scope does not describe the whole repository.
 
 The project goal is to improve Takaishi's one-qubit Bitcoin volatility model
 ([Fractal and Fractional 10(7):442, 2026](https://www.mdpi.com/2504-3110/10/7/442), arXiv 2609.04569) with:
@@ -100,8 +100,11 @@ matches the circuit to 3e-16 on all 913 days. The model has 2 working parameters
 2. **Exact training setup** (data period, restarts, fitted values) is not in the text we could access. Our fitted values: θ = −4.557, φ = 0.360 (no effect), λ = 1.700.
 3. **Closest related work:** HQCS (Zhang et al., arXiv 2610.15083) generates VIX windows by sequential circuit sampling. Not a forecaster; cite it.
 
-## Next: Phase 2 (weeks 3 to 4)
+## Later phases in the repository root
 
-1. Add HAR inputs to the 1-qubit model (part B alone) and measure the memory gain.
-2. Build the 2-qubit, 4-level circuit (part D), log-loss training, 1 to 4 layers.
-3. Write `src/qvol/range_model.py` and `experiments/04_ablation_b_d.py` using the same metrics.
+The B/D/A forecasting pipeline and its later models are implemented outside this package.
+Use the root [README](../README.md), [project guide](../doc/project-guide.md),
+[implementation plan](../doc/implementation.md), and
+[research ledger](../doc/research-ledger.md) for their current status. The task list and
+quick results above describe the historical Phase 1 plan, not work still awaiting
+implementation in the repository.

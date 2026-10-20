@@ -1,0 +1,33 @@
+{
+  "protocol": "doc/calibrated-v3-protocol.md",
+  "protocol_sha256": "7d703174953e40d427feb15ca54a3740c8f0891c17a60634857892f8e5adfba3",
+  "data": {
+    "data/linkusdt_daily.csv": "ed61ff7ee46bbed91b7098261cbcd444787e3a8523914530a05e922a9bd2f6c1",
+    "data/linkusdt_daily.json": "887755ed358ca9d160ee70337281d7356a676304751627b0d7474f028847603b",
+    "data/dotusdt_daily.csv": "9d75c69562b8588b6d41e542c6c2cd1d9d68e5db88c77a41d7425b825431725b",
+    "data/dotusdt_daily.json": "1ed8c3333a5db5853e22bfc67a7356a1a70b511d94ce6f8e17fc5ce40d22cd97",
+    "data/avaxusdt_daily.csv": "098d4e62413573418a661d0e9921f271acae1dfd513fd7816b25f2113b64cbd7",
+    "data/avaxusdt_daily.json": "dceec2bd9ba99b9a5f3a666971e57258ad309590477ae1bfcfe52f43c8515f8e"
+  },
+  "code_sha256": {
+    "scripts/run_v2_study.py": "0f3cf7c6d3298690e0e6e57fd32dfc942f5cb051669b0709cdcbc7357d67b2be",
+    "scripts/run_v3_study.py": "8124bb9e383eacd1e776ba25f512bc6fefaf60288028c82b895943ce2e71935b",
+    "scripts/evaluate_calibrated_v3.py": "b4635ae7947ef905b34ab8f25a1c0a8a58d26bdb258baa442b3ba138ce466c74",
+    "src/qcvol/data.py": "c8ebc61e7da5e259b3d84dfa829e9edced14a650e85aa93c6a0443bb48a57ec0",
+    "src/qcvol/fresh_study.py": "1d952a6f48346968d4e33d53a2ecff44a74e5da25659371f5ba6103ce5e2c425",
+    "src/qcvol_v2/models.py": "ebf02ec415b04292c7a91e4db3587cbb0b507c938694c9a7d79abf0c249e6098",
+    "src/qcvol_v3/models.py": "2b53ccb557e814dbee91656c794428827a10bdc965252da3432ba20d82a97287",
+    "src/qcvol_next/binance_data.py": "3b1aec24428950d85580061ff7e143f37935149a5a94e49f55839a60e702bb1f"
+  },
+  "models": {
+    "quantum": "Born v3, six inputs, depth 3, ridge 0.01, ten restarts, 20 seeds",
+    "controls": "softmax-v2 (28 parameters) and network-v2 (26 parameters), 20 seeds",
+    "calibration": "fit one temperature per model/seed on 2023 validation log loss, bounded [0.2, 5.0]",
+    "splits": {
+      "train": "through 2022-12-31",
+      "temperature": "2023-01-01 through 2023-12-31",
+      "validation": "2024-01-01 through 2024-12-31",
+      "test": "2025-01-01 through 2026-10-19"
+    }
+  }
+}
