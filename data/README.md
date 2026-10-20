@@ -35,6 +35,9 @@ The builder also accepts `--symbol BTCUSDT`; by default this writes
 `data/btcusdt_daily.csv` and uses a symbol-specific ignored cache. The same checksum,
 timestamp, gap, and daily RV rules apply.
 
+For later-listed symbols, set `--archive-start YYYY-MM-01` to the first available monthly
+archive and `--last-date YYYY-MM-DD` for the final daily archive date.
+
 `btcusdt_daily.csv` was rebuilt from checksum-verified Binance BTCUSDT spot 5-minute
 klines for 2017-08-17 to 2026-10-19 (3,351 UTC days). Its metadata records all archive
 hashes, 33 timestamp gaps, 34 incomplete historical days, and output hash. The test dates

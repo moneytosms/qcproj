@@ -1,4 +1,5 @@
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
+from pathlib import Path
 
 import numpy as np
 
@@ -6,6 +7,7 @@ from qcvol_next.binance_data import (
     FIVE_MIN_MS,
     archive_url,
     build_daily,
+    source_archives,
     timestamp_ms,
 )
 
@@ -32,6 +34,25 @@ def test_archive_url_supports_a_second_spot_symbol():
     assert archive_url(datetime(2024, 1, 1).date(), True, "BTCUSDT").endswith(
         "/BTCUSDT/5m/BTCUSDT-5m-2024-01.zip"
     )
+
+
+def test_source_archives_respects_symbol_and_date_window(tmp_path, monkeypatch):
+    calls = []
+
+    def download(url, cache):
+        calls.append(url)
+        return Path(url.rsplit("/", 1)[-1])
+
+    monkeypatch.setattr("qcvol_next.binance_data.download_checked", download)
+    paths = source_archives(
+        tmp_path,
+        "SOLUSDT",
+        date(2020, 8, 1),
+        date(2020, 9, 1),
+    )
+    assert len(paths) == 2
+    assert any("SOLUSDT-5m-2020-08.zip" in url for url in calls)
+    assert any("SOLUSDT-5m-2020-09-01.zip" in url for url in calls)
 
 
 def test_build_daily_uses_utc_5m_returns_and_reports_gaps():

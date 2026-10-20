@@ -72,17 +72,17 @@ def download_checked(url, cache):
     return archive
 
 
-def source_archives(cache, symbol=SYMBOL):
+def source_archives(cache, symbol=SYMBOL, first=FIRST, last=LAST):
     archives = []
-    month = date(FIRST.year, FIRST.month, 1)
-    last_month = date(LAST.year, LAST.month, 1)
+    month = date(first.year, first.month, 1)
+    last_month = date(last.year, last.month, 1)
     while month <= last_month:
-        if month.year == LAST.year and month.month == LAST.month:
+        if month.year == last.year and month.month == last.month:
             break
         archives.append(download_checked(archive_url(month, True, symbol), cache))
         month = date(month.year + (month.month == 12), month.month % 12 + 1, 1)
-    day = max(FIRST, last_month)
-    while day <= LAST:
+    day = max(first, last_month)
+    while day <= last:
         archives.append(download_checked(archive_url(day, False, symbol), cache))
         day += timedelta(days=1)
     return archives
@@ -181,17 +181,19 @@ def build_daily(bars):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--symbol", default=SYMBOL)
+    parser.add_argument("--archive-start", type=date.fromisoformat, default=FIRST)
+    parser.add_argument("--last-date", type=date.fromisoformat, default=LAST)
     parser.add_argument("--cache", type=Path)
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
     args.cache = args.cache or Path(f".cache/binance-{args.symbol.lower()}-5m")
     args.output = args.output or Path(f"data/{args.symbol.lower()}_daily.csv")
-    paths = source_archives(args.cache, args.symbol)
+    paths = source_archives(args.cache, args.symbol, args.archive_start, args.last_date)
     bars, source_hashes = parse_archives(paths)
     rows, gaps, incomplete_days = build_daily(bars)
-    if rows[0]["date"] != FIRST.isoformat() or rows[-1]["date"] != LAST.isoformat():
+    if rows[-1]["date"] != args.last_date.isoformat():
         raise ValueError(
-            f"Expected daily coverage {FIRST} through {LAST}; got {rows[0]['date']} to {rows[-1]['date']}"
+            f"Expected daily coverage through {args.last_date}; got {rows[0]['date']} to {rows[-1]['date']}"
         )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("w", newline="") as stream:
