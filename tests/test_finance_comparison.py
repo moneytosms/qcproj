@@ -183,3 +183,64 @@ def test_prior_on_actual_artifacts_if_present():
     manifest, records, decisions = load_prior(prior, data)
     assert len(records) == 60 and manifest["test_scored"] is False
     assert decisions["quantum"]["depth"] == 2
+
+
+def test_full_comparison_and_independent_tamper_checks(tmp_path):
+    import importlib.util
+
+    pytest.importorskip("arch")
+    from qcvol.comparison_study import run_comparison
+    from qcvol.data import sha256
+    from qcvol.distribution_study import DistributionConfig, run_distribution_study
+
+    root = Path(__file__).resolve().parents[1]
+    author = root / "qvol/data/takaishi"
+    data = prepare(load_author_data(author))
+    prior = tmp_path / "prior"
+    small = DistributionConfig(
+        starts=[0],
+        depths=[1],
+        lambdas=[0, 0.01],
+        forecast_max_calls=50,
+        forecast_max_iterations=2,
+        realism_starts=1,
+        realism_max_calls=32,
+        train_days=64,
+        train_paths=1,
+        selection_days=64,
+        selection_paths=1,
+        audit_days=64,
+        audit_paths=1,
+        burn_in=0,
+    )
+    run_distribution_study(data, small, prior, progress=lambda *a, **kw: None)
+    output = tmp_path / "comparison"
+    config = ComparisonConfig(
+        ridge_penalties=[0.01],
+        network_max_calls=20,
+        network_max_iterations=2,
+        audit_days=64,
+        audit_paths=1,
+        burn_in=0,
+    )
+    source = {"sha256": {name: sha256(author / name) for name in ("data-rstand", "data-ystand")}}
+    run_comparison(data, prior, output, config, source, progress=lambda *a, **kw: None)
+    path = root / "scripts/verify_classical_comparison.py"
+    spec = importlib.util.spec_from_file_location("verify_classical", path)
+    verifier = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(verifier)
+    assert verifier.verify(output, author)["verified"]
+    record_path = output / "records.json"
+    original = record_path.read_text()
+    records = json.loads(original)
+    row = next(r for r in records if r["id"] == "har-quantile")
+    row["fit"]["quantile_fits"][0]["dual"][0] += 1
+    record_path.write_text(json.dumps(records))
+    with pytest.raises(AssertionError):
+        verifier.verify(output, author)
+    record_path.write_text(original)
+    decision = json.loads((output / "decision.json").read_text())
+    decision["selected_lambda"] = 999
+    (output / "decision.json").write_text(json.dumps(decision))
+    with pytest.raises(AssertionError):
+        verifier.verify(output, author)

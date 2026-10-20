@@ -55,7 +55,7 @@ completion above does not establish a benefit from memory.
       discrete sampling still makes the objective nonsmooth.
 - [x] Warm-start realism fits from forecast-only parameters. Sweep lambda in
       {0, .01, .05, .2}; select D depth first, then lambda at frozen depth on validation only.
-- [ ] Add frequency and softmax baselines, an exactly 24-parameter tiny neural network,
+- [x] Add frequency and softmax baselines, an exactly 24-parameter tiny neural network,
       HAR residual/quantile baseline, and GARCH(1,1). Record effective as well as nominal
       parameter counts and compute budgets.
 - [ ] Forecast scores: NLL, explicitly normalized ranked probability score, calibration.
@@ -163,3 +163,24 @@ This is completed development evidence, not final 20-seed or independent test ev
 Gate 3's complete classical/realism scorecard remains open. Next is Step 4: GARCH,
 dedicated HAR quantile regression, training-effort controls and remaining comparator
 optimization. Keep the project report paused.
+
+## Step 4 development checkpoint (20 October 2026)
+
+- [x] Direct HAR quantile regression and short-input control, independent LP certificates,
+      native quantile scoring and declared CDF conversion.
+- [x] Five-start Gaussian GARCH(1,1), training-only RV observation calibration, recursive
+      state alignment, constrained-gradient checks and native/shared-law generation.
+- [x] Continue all five capped network starts with analytic derivatives; preserve failures,
+      add a declared finite-norm baseline and repeat A at the chosen penalty.
+- [x] Report inactive quantum phases, local sensitivity rank, full-model coefficient/residual
+      counts and inherited/new/failed-attempt training costs.
+- [x] Run independent probability/quantile/score/selection/path verification and inspect plots.
+
+The [measured comparison](classical-comparison.md) favors HAR quantile regression on
+validation NLL/RPS and gives a stable regularized network competitive with softmax.
+GARCH is weaker on these data. Quantum retains a small extreme-bin Brier advantage;
+there is no demonstrated overall advantage. All 20 regularized network fits pass,
+while failed old unregularized continuations remain explicit historical diagnostics.
+The forecast-comparator portion of Gate 3 is now measured; full tail/MFDFA/risk and
+final-study uncertainty claims remain open. Integrate/freeze a new full-study protocol
+before running 20+ seeds; the old `configs/study.json` is not that validated protocol.

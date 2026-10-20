@@ -236,3 +236,38 @@ limits. Step 4 comparisons and the 20-seed final study remain pending; report/sl
 paused. Use `scripts/run_distribution_study.py`, not the old `configs/study.json`, for
 this short-input D/A protocol. Raw measured arrays/plots stay ignored under
 `results/distribution-study-2026-10-20`.
+
+## Step 4 classical comparison and conditioning follow-up
+
+Completed the [protocol/amendment](classical-comparison-protocol.md) and
+[measured comparison](classical-comparison.md), preserving both complete attempts.
+
+- Full/short HAR quantile regression uses direct pinball LPs: all 30 quantile solves
+  per attempt pass independent primal/dual checks. Full HAR QR validation NLL .917290,
+  RPS .105597; short QR NLL .983815. Native/full-bin quantiles are scored separately.
+- Gaussian zero-mean GARCH uses five starts and a training-only RV calibration. Chosen
+  KKT residual 1.23e−6; variance alignment agrees with the library. Validation NLL
+  1.050928 and weak realism remain negative results. Native paths are separately labelled.
+- Analytic continuation resolves the best old network start but leaves four alternatives
+  iteration-limited. Preserve those failures. A declared four-alpha ridge grid gives
+  **20/20 eligible fits**; validation chooses alpha .001. Network D NLL .979798,
+  competitive with softmax .979151 and better than quantum .997917.
+- Repeating A with the fixed ridge penalty selects lambda .05; network NLL worsens to
+  1.011488 while mean moment distance improves 14.8233 →7.0698 on the audit streams.
+- Shared-law HAR QR audit moment distance 6.7645, compared with quantum A 12.8106.
+  Quantum's extreme-bin Brier is slightly better; the metric ranking is not universal.
+- Both attempts together use 94,896 new iterative objective calls plus 60 LP solves,
+  155.642 summed fit seconds and separately reported diagnostics. Prior Step 3 costs
+  remain charged. Parameter/information/search/thread differences prevent matched-cost claims.
+- Independent verification passes: first attempt 2,478 probability rows /491,520 audit days;
+  refined 2,655 rows /524,288 audit days, max dense-gate error 4.44e−16. Both figures inspected.
+
+Native quantile assumptions, unknown source units, reused validation and reused audit
+streams across the two documented attempts remain visible limits. No new test scores
+or 20-seed study were produced. Next freeze/integrate the final-study runner rather than
+launching the historical config unchanged. The project report and slides remain paused.
+
+Current branch checks: **68 tests pass**, including finance gradient/certificate checks,
+an end-to-end comparison with independent verification, deliberate LP-certificate and
+selection tampering, and the original `qvol/` suite. Ruff lint/format and whitespace
+checks pass. Raw measured output remains ignored.
