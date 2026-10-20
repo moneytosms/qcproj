@@ -218,3 +218,33 @@ measure optimizer sensitivity, not uncertainty across independent datasets or a 
 smoke results, use the new runner to diagnose them, and keep the final test comparison
 and recursive-realism claims open. The measured findings and repeat instructions are in
 [memory-fit-investigation.md](memory-fit-investigation.md).
+
+## ADR 012 — Nest the paper inside a regularized two-weight memory extension
+
+**Decision:** keep the original encoded state and readout, inserting weekly RY and
+monthly RZ before U3. Set both added weights to zero to recover the paper exactly.
+Warm-start from a training-fitted paper model, penalize only these two weights and
+select their penalty on validation. A short-memory control repeats yesterday's
+standardized log RV in both added gate slots. Keep the previous re-uploading model
+and historical experiment unchanged.
+
+**Reason:** the earlier B ansatz changed both inputs and circuit family. This small
+extension gives an explicit zero-memory reference inside the same family, makes
+initialization reproducible, and tests whether adding history helps beyond adding
+flexibility. Fix the unobservable paper phi; optimize four meaningful coordinates
+rather than carrying an inactive angle. No additional qubits are required.
+
+**Controls and decision:** compare with a training-only paper fit and a raw-RV HAR
+OLS forecaster on 1/7/30 horizons. Use five starts, explicit budgets, optimizer status
+and finite-difference stationarity. A failed training-selected setting leaves the
+memory decision inconclusive. The prespecified 1% validation improvement requirement
+is a development rule, not a statistical test. Full details are frozen in
+[nested-memory-protocol.md](nested-memory-protocol.md). Validation reuse, different
+feature maps and total search work remain visible limitations. This milestone
+selects a policy for D/A; it does not claim the final study has passed.
+
+The initial nested sweep exposed a precision mismatch at alpha=1: COBYLA's 1e-5
+trust-region floor did not satisfy the independent 1e-5 gradient threshold. Expose an
+optional optimizer tolerance while preserving the historical default. Repeat the
+full nested grid with floor 1e-7 for both controls, keeping the gradient check, alpha
+grid, starts and decision unchanged. Preserve and cost the inconclusive first attempt.

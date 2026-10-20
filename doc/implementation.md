@@ -129,3 +129,18 @@ all 913-day/365-step rolling windows, 20 shuffles, q-step .02 spectra, 200 Gauss
 and a measured report. Original data/source hashes and 150,000 recurrence steps were
 verified. Use the PR's report for measured results and remaining normalization/zero-return
 gaps. The code becomes available in the combined checkout when that PR is merged.
+
+## Baseline preserving B decision
+
+- [x] Add a two-weight extension containing the exact original paper at zero weights.
+- [x] Warm-start from the training-fitted baseline, regularize only new weights and
+      select the penalty using validation after training-only restart selection.
+- [x] Compare with the paper, an identical-circuit short-memory control and raw-RV HAR.
+- [x] Complete the focused comparison with convergence/stationarity checks and record
+      the decision in [nested-memory-followup.md](nested-memory-followup.md).
+
+The fixed follow-up retains previous-day inputs for D. B has not demonstrated a
+longer-memory gain. This closes the focused B decision; Gate 2 overall remains open
+until D is properly evaluated. Implement the short-input policy in the D runner, then
+validate its probability forecasts before testing A. Keep the quantum/classical controls.
+Do not mark the 20-seed final study complete or launch it before those gates pass.

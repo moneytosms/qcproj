@@ -169,3 +169,40 @@ Next use stable training-informed point fits and the short-memory control as ref
 then investigate regularization or a nested ansatz before accepting the deeper B model.
 The full B/D/A study, independent test comparison and 20-seed uncertainty analysis remain
 pending. The project report remains paused at the user's request.
+
+## Baseline preserving memory follow-up
+
+The [measured follow-up](nested-memory-followup.md) completes the focused B decision
+under the [fixed protocol and precision amendment](nested-memory-protocol.md). The
+new four-coordinate circuit contains the paper exactly at zero added weights. Every
+fit starts from the training-fitted paper; five starts and six penalties are compared
+for full and short inputs. The paper is an explicit zero-weight fallback. A separate
+raw-RV HAR OLS control uses the same 1/7/30 crypto horizons.
+
+The first 65-fit attempt reported optimizer success but failed independent stationarity
+checks at the strongest penalty, so its decision remains recorded as inconclusive.
+Repeating the identical grid with a tighter trust-region floor gives 65/65 fits passing
+both checks; no penalty, seed, split or validation acceptance rule was changed. Across
+both attempts, 130 fits used 82558 objective/gradient-check calls and 138.724 summed
+optimization seconds on this local setup. One HAR linear solve per attempt is reported
+separately; these timings are not evidence of hardware advantage.
+
+Training-selected, validation-tuned RV MSEs are .00071891 for the weekly/monthly
+extension (alpha .1), .00064040 for its short-memory control (alpha .001), .00072042
+for the paper, .00061033 for classical HAR and .00057420 for persistence. Longer
+memory is 12.3% worse than its matched short-input control on this validation block.
+**Retain previous-day inputs for D; this B extension has not demonstrated a benefit.**
+Keep the paper, short-memory quantum, HAR and persistence references in later work.
+
+Each attempt's verifier recomputes 48008 predictions using literal matrices, checks
+penalties, central gradients, warm starts and both selection stages, and reconstructs
+HAR independently. Maximum prediction discrepancy is 2.78e-16 and zero-weight identity
+discrepancy is zero. No test scores were computed. The 47 current-branch tests pass
+(42 root and five legacy qvol), along with lint/format and whitespace checks; two final
+plots were visually inspected. Raw results remain local and ignored.
+
+This conclusion is exploratory and limited to the current architecture and reused
+validation block. Before D's next sweep, implement its selected short-input policy;
+the existing main Born runner still defaults to HAR inputs. Then evaluate D's forecast
+distribution, followed by A's realism effect. The full 20-seed study and independent
+test comparison remain pending; the project report remains paused.
