@@ -1,9 +1,12 @@
+from pathlib import Path
+
 import numpy as np
 
 from qcvol.data import synthetic_data
 from qcvol.fresh_runner import FreshConfig
 from qcvol_next.eth_upgrade import (
     calibrated_probabilities,
+    code_hashes,
     final_models,
     fit_one,
     fit_temperature,
@@ -108,6 +111,12 @@ def test_fixed_replication_panel_uses_preregistered_models():
         "hybrid-softmax-weekend",
     ]
     assert final_models({"final_model_panel": panel}) == tuple(panel)
+
+
+def test_replication_seal_hashes_sources_and_locked_environment():
+    hashes = code_hashes()
+    assert {str(path) for path in Path("src/qcvol").rglob("*.py")} <= hashes.keys()
+    assert {"pyproject.toml", "uv.lock"} <= hashes.keys()
 
 
 def test_weekend_feature_scaling_uses_training_targets_only():

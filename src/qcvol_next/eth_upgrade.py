@@ -359,15 +359,14 @@ def files_to_seal(config, output):
 
 
 def code_hashes():
-    return {
-        path: sha256(Path(path))
-        for path in (
-            "src/qcvol_next/eth_upgrade.py",
-            "src/qcvol_next/weekend_models.py",
-            "src/qcvol_next/binance_data.py",
-            "scripts/run_eth_quantum_upgrade.py",
-        )
-    }
+    source_files = [
+        *Path("src/qcvol").rglob("*.py"),
+        *Path("src/qcvol_next").rglob("*.py"),
+        Path("scripts/run_eth_quantum_upgrade.py"),
+        Path("scripts/build_binance_daily.py"),
+    ]
+    environment_files = [Path("pyproject.toml"), Path("uv.lock")]
+    return {str(path): sha256(path) for path in sorted(source_files + environment_files)}
 
 
 def seal(data_path, config_path, output, config):
@@ -386,7 +385,7 @@ def seal(data_path, config_path, output, config):
         "test_scores_computed": False,
     }
     write_json(output / "upgrade-seal.json", record)
-    print("Sealed ETH upgrade models; test scores not computed")
+    print("Sealed forecast models; test scores not computed")
 
 
 def check_seal(data_path, config_path, output, config):
