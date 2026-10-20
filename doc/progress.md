@@ -412,6 +412,21 @@ using per-seed calibrated quantum RY HAR and weekend-network predictions. The bl
 0.95% higher on ETH. No market reached the 5% target. This exploratory result used no test
 labels and is documented in [validation-ensemble.md](validation-ensemble.md); it is not
 confirmatory evidence and does not establish the goal.
+## BTC market-volatility input experiment (20 Oct 2026)
+
+The preregistered validation-only candidate appended lagged 7-day BTC log-RV to a
+weekend-aware quantum hybrid and same-input softmax, network and HAR models. A first run
+found a classical output-shape bug and was discarded; the correction was committed before
+rerunning. The full two-seed SOL panel then selected quantum depth 1 at calibrated log
+loss .645391 versus .647917 for the network, a 0.39% edge; depths 2 and 3 were worse. It
+failed the 5% advancement gate. ETH's run was stopped partway through and DOGE was not
+run, since the required conjunction was already impossible. No test labels were used.
+Full partial and complete validation scores are in
+[btc-market-signal-study.md](btc-market-signal-study.md). This feature does not advance.
+Final repository checks after the prototype correction: 109 tests passed, 1 skipped;
+Ruff lint and format checks passed.
+
+
 ## Calendar and quantum-readout improvement: development in progress
 
 Inspected Nidhi's latest PR #8 at `341dc7e`, then branched from it. Her fresh-data study
@@ -454,3 +469,12 @@ and all mixture KKT residuals are below 1.354e-8. A numerical tie correction is 
    qubits, squashed inputs and weekend/Monday flags, chosen on validation. Post-hoc test log
    loss 0.529 vs v1 0.570 (−0.041, interval −0.059 to −0.021); weekend input worth 0.027.
    Same-input softmax still better (0.496; gap 0.033, was 0.051). No quantum advantage.
+
+- Quantum v3 ([results](v3-study.md)): a 10-restart ensemble improves the v2 quantum
+   test loss from .5288 to .5145, but remains behind softmax-v2 (.4962) and network-v2
+   (.5042). This test is post-hoc because v2 already opened it.
+- The controlled calendar ensemble ([results](ensemble-results.md)) assigns zero weight
+   to both quantum members; its classical linear+sine mixture scores .604802 on validation.
+   No final training or benchmark scoring was done for this rejected candidate.
+- After syncing the branch with main: `uv run pytest -q` passes 146 tests (3 skipped);
+   Ruff lint and format checks pass. No marked quantum advantage has been established.
