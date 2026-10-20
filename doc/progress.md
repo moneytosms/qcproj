@@ -327,3 +327,17 @@ Completed the [pre-committed protocol](fresh-study-protocol.md) and the
   squared error and realism (215 vs 34); all 95% date-bootstrap intervals exclude zero.
   Main cause: the paper's max-based input scaling squashes ordinary days after the 2020
   crash, plus one-day memory.
+
+## Calendar and quantum-readout improvement: development in progress
+
+Inspected Nidhi's latest PR #8 at `341dc7e`, then branched from it. Her fresh-data study
+supersedes the earlier limited memory conclusion: memory helps on the larger dataset,
+and matched-horizon realism helps simulation at a forecast cost. Classical forecasts
+still lead. The original branch passes 94 tests in this environment.
+
+The [new plan](improvement-plan.md) was committed before empirical fitting. It targets
+weekend inputs, training-regime weighting, direct yesterday-volatility encoding on the
+second qubit, and a learned quantum readout with classical skips. Calendar/recency and
+similar-capacity classical nonlinear controls are included. Source data and prior study
+artifacts remain unchanged. The new model/gradient/calendar/leakage/seal tests pass;
+no improved empirical score or quantum advantage has yet been established.

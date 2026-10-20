@@ -44,6 +44,15 @@ The report/slides remain paused.
 
 ## Fixed first experiment
 
+**User clarification before fitting:** the second qubit has no direct yesterday-volatility
+input, and the weekend dip is large. Add a `quantum-shared` candidate that changes its
+local RY angle from bias to bias + learned-weight × atan(yesterday's standardized log RV)
+in every layer. Both qubits then receive yesterday directly. The original routing remains
+an explicit ablation. Zero added weights recover the original circuit. This adds one
+parameter per layer, so shared-readout extra counts are 25/34 versus original 23/31
+and classical 24/32. Compare matched depth/penalty development rows as well as each
+family's independently selected final model. This amendment precedes all empirical fits.
+
 - Reuse PR #8's daily series unchanged: training through 2022, validation 2023/2024.
   Fit transformations/bins/pools using training only. No new data/output is committed.
 - First select the linear reference-logit baseline over calendar off/on, half-life

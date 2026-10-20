@@ -1,0 +1,14 @@
+{
+  "kind": "final",
+  "development_seeds": [910, 911],
+  "final_seeds": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
+  "calendars": [false, true],
+  "half_lives": [0, 730, 365],
+  "base_ridges": [0, 0.0001, 0.001],
+  "depths": [2, 3],
+  "feature_ridges": [0.001, 0.01],
+  "restarts": 3,
+  "max_calls": 10000,
+  "max_iterations": 5000,
+  "gradient_tolerance": 0.0001
+}
