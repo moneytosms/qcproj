@@ -1,0 +1,124 @@
+{
+  "config": {
+    "development_seeds": [
+      900,
+      901
+    ],
+    "final_seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "depths": [
+      1,
+      2,
+      3
+    ],
+    "lambdas": [
+      0.01,
+      0.05,
+      0.2,
+      1.0
+    ],
+    "restarts": 5,
+    "network_ridge": 0.001,
+    "forecast_max_calls": 50000,
+    "forecast_max_iterations": 2000,
+    "realism_starts": 3,
+    "realism_max_calls": 600,
+    "realism_tolerance": 0.002,
+    "train_days": 256,
+    "train_paths": 4,
+    "burn_in": 60,
+    "selection_paths": 8,
+    "selection_weight": 0.01,
+    "evaluation_paths": 32,
+    "evaluation_burn_in": 100,
+    "bootstrap_replicates": 2000,
+    "bootstrap_blocks": [
+      7,
+      30
+    ]
+  },
+  "splits": {
+    "train": [
+      "2016-12-31",
+      "2022-12-31",
+      2192
+    ],
+    "validation": [
+      "2023-01-01",
+      "2024-12-31",
+      731
+    ],
+    "test": [
+      "2025-01-01",
+      "2026-10-19",
+      657
+    ]
+  },
+  "data_fingerprint": "f6fc4a19f9faca2a2b82a0cacead28c75b5434b2ce23f479b5b1116d52374b09",
+  "source": {
+    "data_sha256": "bff1209621cd2ac95880b789668b950caec1b3198bf73d22e3d3b4767037f17a",
+    "data_info": {
+      "first_day": "2016-12-01",
+      "last_day": "2026-10-19",
+      "days": 3610,
+      "source_sha256": {
+        "data/historical/btcusd_bitstamp_1min_2012-2025.csv.gz": "1be152060b39327b669cbed236eeb283191fadaf3862f76c1e974be54ceb1a20",
+        "data/updates/btcusd_bitstamp_1min_latest.csv": "9cef4d828037f6a4d4466dbbeabd41b8d0803ec2dce429fc7075bcbdec0dbc91"
+      },
+      "max_zero_volume_fraction": 0.16666666666666666,
+      "output_sha256": "bff1209621cd2ac95880b789668b950caec1b3198bf73d22e3d3b4767037f17a"
+    },
+    "config_sha256": "28977e14c5b5f30d28eebd322ac4787726a32b601b7c3c25e02acad396bc48e7"
+  },
+  "code": {
+    "head": "e81f0e82863c96b3957a751e3cb41e95e0470402",
+    "dirty": false,
+    "status": [],
+    "package_source_sha256": {
+      "cli.py": "df4fcf26b7bca104aea0c8cfbbddca2085fb12087f4265c62a834b6bc6cee4b5",
+      "fresh_runner.py": "fe5850eae245bbe2ef63fa44c623b293b53ad2401b4b165249fba628eeabe29b",
+      "final_study.py": "f8710c58aa3dde56d903f6d1a1f3b4eec9a64d6ac0310f583fcb9a4011b19cd0",
+      "classical_training.py": "242428b43112e0d7fe01dd4ef1e127beaee20d69959bf673a084eaff4c7c4f1a",
+      "nested_study.py": "9f3d42dec34074743986e0df37c0fa31c0c50bb6e859e92453191aeea047a21b",
+      "distribution_models.py": "81e71dbd9ee2f574edd148c0bc4e984295b30af6325141cfef4bd339fe7d6517",
+      "generation.py": "e53e897d805446a9c6aee37e2e762d9a509680626b51a3136c5e524be856b879",
+      "classical.py": "326fe059be85ee3980ea4d9ad9ecf234f1ac48f1a9ab4b5fdeb1f4c01d50fae3",
+      "fresh_models.py": "2f28793334217f67b99443e5d55ed933b15b6e03355900d4423aadfeaba7cae9",
+      "__init__.py": "e6f51c35d0e42a140b2f79a4600433f12f2e8302830a7badab969d3893cc6183",
+      "metrics.py": "04c2f2232a574cadae8eead9e2c96defcf6801db4d827a7701aea18ce69095c6",
+      "fresh_study.py": "1d952a6f48346968d4e33d53a2ecff44a74e5da25659371f5ba6103ce5e2c425",
+      "training.py": "58a4a20df2fc4c4f5a831f3518e668cddb003be25799e16ee4081874d62b37aa",
+      "memory_diagnostics.py": "8070d950960491cc83dcabf60bb997ca66182cfdffb991f975b4603a36d52e01",
+      "comparison_study.py": "0c7b6b88167b5f19ed1ced6791dcbeb87d86247ec40ed22c3f0ea65188e66ac8",
+      "experiment.py": "3b4bc6b0c9fee10d71494fda6d100553008f18e18bab165233bfe9edfd0f3d92",
+      "data.py": "c8ebc61e7da5e259b3d84dfa829e9edced14a650e85aa93c6a0443bb48a57ec0",
+      "distribution_study.py": "8040d21ef950efa258efb7cb1a21ac521b08b0184cf7c9b0fbcc98e53675df64",
+      "final_evaluation.py": "fdd31ef5140942b9254f212da137fc9da19c3ddaa794f8147c1683139c23199a",
+      "finance_baselines.py": "6cef2e2f3a3bdbb3ab0b517bc9f693629d9f4671c8e05b08dd15919183fde85b",
+      "nested_memory.py": "3c46d5ffa1afff64c1d4326eb764930b85f403820d6997c0722b27bd81ca1523",
+      "quantum.py": "3c765dbf3d3a7d5654e53d5e437249bb03df7f2af96b5f2e50e33d5f3578f4d8"
+    }
+  },
+  "python": "3.13.16",
+  "test_scores_computed": false
+}
