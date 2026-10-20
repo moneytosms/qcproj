@@ -1,0 +1,386 @@
+{
+  "post_hoc": true,
+  "summary": {
+    "quantum-v2": {
+      "log_loss": {
+        "count": 20,
+        "valid": 20,
+        "mean": 0.5288225249651748,
+        "sd": 0.007981156587106266,
+        "min": 0.5152336831049715,
+        "max": 0.5457293039388293
+      },
+      "brier": {
+        "count": 20,
+        "valid": 20,
+        "mean": 0.29154118626369663,
+        "sd": 0.004218625138912953,
+        "min": 0.28529793115583507,
+        "max": 0.3015357264643268
+      },
+      "qlike": {
+        "count": 20,
+        "valid": 20,
+        "mean": 0.4485864743177867,
+        "sd": 0.028401787502022293,
+        "min": 0.38704018491250164,
+        "max": 0.49787337931531644
+      }
+    },
+    "quantum-v2-nocal": {
+      "log_loss": {
+        "count": 20,
+        "valid": 20,
+        "mean": 0.5555366303838519,
+        "sd": 0.008969862237411582,
+        "min": 0.5411319312211408,
+        "max": 0.5721607824625753
+      },
+      "brier": {
+        "count": 20,
+        "valid": 20,
+        "mean": 0.30729290502180606,
+        "sd": 0.00447164414480722,
+        "min": 0.29821995081271757,
+        "max": 0.3148437021314409
+      },
+      "qlike": {
+        "count": 20,
+        "valid": 20,
+        "mean": 0.4450200379556323,
+        "sd": 0.02700231401603462,
+        "min": 0.40152214265056957,
+        "max": 0.49999689353065785
+      }
+    },
+    "softmax-v2": {
+      "log_loss": {
+        "count": 20,
+        "valid": 20,
+        "mean": 0.4961651477283554,
+        "sd": 2.1715245566521997e-06,
+        "min": 0.49616111914139993,
+        "max": 0.4961696818386654
+      },
+      "brier": {
+        "count": 20,
+        "valid": 20,
+        "mean": 0.2875585999781016,
+        "sd": 1.3310088937088787e-06,
+        "min": 0.2875562334775708,
+        "max": 0.2875620493159379
+      },
+      "qlike": {
+        "count": 20,
+        "valid": 20,
+        "mean": 0.2887962503974251,
+        "sd": 1.7316723185546148e-06,
+        "min": 0.28879316387585385,
+        "max": 0.28879912853214923
+      }
+    },
+    "network-v2": {
+      "log_loss": {
+        "count": 20,
+        "valid": 20,
+        "mean": 0.5041961689823926,
+        "sd": 0.00046121339515317627,
+        "min": 0.5033986958527116,
+        "max": 0.504973278163555
+      },
+      "brier": {
+        "count": 20,
+        "valid": 20,
+        "mean": 0.28722995636382714,
+        "sd": 0.00011191007259343634,
+        "min": 0.2869474726703646,
+        "max": 0.2874932218639724
+      },
+      "qlike": {
+        "count": 20,
+        "valid": 20,
+        "mean": 0.3360588112887529,
+        "sd": 0.00333358361478504,
+        "min": 0.3304559159392169,
+        "max": 0.3413839521486116
+      }
+    },
+    "quantum-har-D": {
+      "log_loss": {
+        "count": 20,
+        "valid": 20,
+        "mean": 0.5694974095569203,
+        "sd": 0.00629107570446693,
+        "min": 0.5573848839077776,
+        "max": 0.5752737729211823
+      },
+      "brier": {
+        "count": 20,
+        "valid": 20,
+        "mean": 0.31253516097916345,
+        "sd": 0.0021454984397872865,
+        "min": 0.3061258468350662,
+        "max": 0.31571700331758773
+      },
+      "qlike": {
+        "count": 20,
+        "valid": 20,
+        "mean": 0.504426184220401,
+        "sd": 0.03323677871368156,
+        "min": 0.4571111660883884,
+        "max": 0.5555592717782716
+      }
+    },
+    "softmax-har-D": {
+      "log_loss": {
+        "count": 20,
+        "valid": 20,
+        "mean": 0.5184120398073497,
+        "sd": 1.351870449359694e-07,
+        "min": 0.5184117184200642,
+        "max": 0.5184122916051597
+      },
+      "brier": {
+        "count": 20,
+        "valid": 20,
+        "mean": 0.29900989654049165,
+        "sd": 8.705953019712245e-08,
+        "min": 0.29900970375395197,
+        "max": 0.2990100317887276
+      },
+      "qlike": {
+        "count": 20,
+        "valid": 20,
+        "mean": 0.3017057212872985,
+        "sd": 2.0972668223695034e-07,
+        "min": 0.3017053358813784,
+        "max": 0.30170604029061954
+      }
+    }
+  },
+  "intervals": [
+    {
+      "left": "quantum-v2",
+      "right": "quantum-har-D",
+      "metric": "log_loss",
+      "block": 7,
+      "mean_difference": -0.04067488459174558,
+      "lower": -0.05852276927330015,
+      "upper": -0.022996882583035866
+    },
+    {
+      "left": "quantum-v2",
+      "right": "quantum-har-D",
+      "metric": "brier",
+      "block": 7,
+      "mean_difference": -0.02099397471546685,
+      "lower": -0.03029371027451461,
+      "upper": -0.011580027720947062
+    },
+    {
+      "left": "quantum-v2",
+      "right": "quantum-har-D",
+      "metric": "qlike",
+      "block": 7,
+      "mean_difference": -0.05583970990261418,
+      "lower": -0.07293103214677787,
+      "upper": -0.039930069341370826
+    },
+    {
+      "left": "quantum-v2",
+      "right": "softmax-v2",
+      "metric": "log_loss",
+      "block": 7,
+      "mean_difference": 0.032657377236819406,
+      "lower": 0.02094008897463968,
+      "upper": 0.044171262168492584
+    },
+    {
+      "left": "quantum-v2",
+      "right": "softmax-v2",
+      "metric": "brier",
+      "block": 7,
+      "mean_difference": 0.00398258628559496,
+      "lower": -0.0006430794965137467,
+      "upper": 0.0087262046217532
+    },
+    {
+      "left": "quantum-v2",
+      "right": "softmax-v2",
+      "metric": "qlike",
+      "block": 7,
+      "mean_difference": 0.15979022392036157,
+      "lower": 0.1317412173696785,
+      "upper": 0.1882303163973555
+    },
+    {
+      "left": "quantum-v2",
+      "right": "network-v2",
+      "metric": "log_loss",
+      "block": 7,
+      "mean_difference": 0.02462635598278204,
+      "lower": 0.015018582143436697,
+      "upper": 0.03518573936678407
+    },
+    {
+      "left": "quantum-v2",
+      "right": "network-v2",
+      "metric": "brier",
+      "block": 7,
+      "mean_difference": 0.004311229899869416,
+      "lower": -0.0007941841225043261,
+      "upper": 0.009518159142661653
+    },
+    {
+      "left": "quantum-v2",
+      "right": "network-v2",
+      "metric": "qlike",
+      "block": 7,
+      "mean_difference": 0.11252766302903368,
+      "lower": 0.09049756572342803,
+      "upper": 0.1353968132482536
+    },
+    {
+      "left": "quantum-v2",
+      "right": "quantum-v2-nocal",
+      "metric": "log_loss",
+      "block": 7,
+      "mean_difference": -0.02671410541867724,
+      "lower": -0.039399230589372766,
+      "upper": -0.014202426614198928
+    },
+    {
+      "left": "quantum-v2",
+      "right": "quantum-v2-nocal",
+      "metric": "brier",
+      "block": 7,
+      "mean_difference": -0.015751718758109434,
+      "lower": -0.023032162211910834,
+      "upper": -0.008775919904989507
+    },
+    {
+      "left": "quantum-v2",
+      "right": "quantum-v2-nocal",
+      "metric": "qlike",
+      "block": 7,
+      "mean_difference": 0.0035664363621544185,
+      "lower": -0.0026214257096564397,
+      "upper": 0.010187343080899896
+    },
+    {
+      "left": "quantum-v2",
+      "right": "quantum-har-D",
+      "metric": "log_loss",
+      "block": 30,
+      "mean_difference": -0.04067488459174558,
+      "lower": -0.05867349976245281,
+      "upper": -0.021386309171645707
+    },
+    {
+      "left": "quantum-v2",
+      "right": "quantum-har-D",
+      "metric": "brier",
+      "block": 30,
+      "mean_difference": -0.02099397471546685,
+      "lower": -0.03095792616961632,
+      "upper": -0.010647544914454476
+    },
+    {
+      "left": "quantum-v2",
+      "right": "quantum-har-D",
+      "metric": "qlike",
+      "block": 30,
+      "mean_difference": -0.05583970990261418,
+      "lower": -0.07587843243303509,
+      "upper": -0.03598587954600524
+    },
+    {
+      "left": "quantum-v2",
+      "right": "softmax-v2",
+      "metric": "log_loss",
+      "block": 30,
+      "mean_difference": 0.032657377236819406,
+      "lower": 0.02335669918248921,
+      "upper": 0.04282140710766978
+    },
+    {
+      "left": "quantum-v2",
+      "right": "softmax-v2",
+      "metric": "brier",
+      "block": 30,
+      "mean_difference": 0.00398258628559496,
+      "lower": -0.00017967833070850725,
+      "upper": 0.008076282805890506
+    },
+    {
+      "left": "quantum-v2",
+      "right": "softmax-v2",
+      "metric": "qlike",
+      "block": 30,
+      "mean_difference": 0.15979022392036157,
+      "lower": 0.11352636075076568,
+      "upper": 0.2057893610561796
+    },
+    {
+      "left": "quantum-v2",
+      "right": "network-v2",
+      "metric": "log_loss",
+      "block": 30,
+      "mean_difference": 0.02462635598278204,
+      "lower": 0.014954084673562894,
+      "upper": 0.03522377388017546
+    },
+    {
+      "left": "quantum-v2",
+      "right": "network-v2",
+      "metric": "brier",
+      "block": 30,
+      "mean_difference": 0.004311229899869416,
+      "lower": -0.0002343562918432536,
+      "upper": 0.009008489006464223
+    },
+    {
+      "left": "quantum-v2",
+      "right": "network-v2",
+      "metric": "qlike",
+      "block": 30,
+      "mean_difference": 0.11252766302903368,
+      "lower": 0.07537187099682556,
+      "upper": 0.15007620032265434
+    },
+    {
+      "left": "quantum-v2",
+      "right": "quantum-v2-nocal",
+      "metric": "log_loss",
+      "block": 30,
+      "mean_difference": -0.02671410541867724,
+      "lower": -0.03956156817446436,
+      "upper": -0.01381873356247445
+    },
+    {
+      "left": "quantum-v2",
+      "right": "quantum-v2-nocal",
+      "metric": "brier",
+      "block": 30,
+      "mean_difference": -0.015751718758109434,
+      "lower": -0.02432165548203392,
+      "upper": -0.008180666842970781
+    },
+    {
+      "left": "quantum-v2",
+      "right": "quantum-v2-nocal",
+      "metric": "qlike",
+      "block": 30,
+      "mean_difference": 0.0035664363621544185,
+      "lower": -0.005066959245662629,
+      "upper": 0.013206676802248083
+    }
+  ],
+  "eligible_fits_of_20": {
+    "quantum-v2": 20,
+    "quantum-v2-nocal": 20,
+    "softmax-v2": 20,
+    "network-v2": 11
+  },
+  "test_days": 657
+}

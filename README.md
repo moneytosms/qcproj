@@ -204,3 +204,35 @@ The completed run favors HAR forecasts on test NLL. Quantum realism training wor
 both test NLL and test moment distance; its validation gains do not carry over. All
 selected fits pass training checks, and independent replay verifies the complete run.
 No quantum advantage is demonstrated. The report/slides remain paused.
+
+## Calendar and quantum-readout follow-up
+
+The [improvement plan](doc/improvement-plan.md) builds on Nidhi's fresh-data PR #8.
+It tests target-weekday inputs, recent-training weights, and a learned quantum feature
+readout against the same-input linear/tanh/sine controls. A separate quantum variant
+gives the second qubit a direct yesterday-volatility input; the original routing remains
+an ablation. These are hybrid models, and the previously scored 2025–2026 period is
+an exposed benchmark. The [completed development sweep](doc/calendar-development.md)
+improves forecasts with calendar/readout changes, but updated classical controls still
+lead. No new quantum advantage is claimed; final fitting/scoring remains pending.
+
+```bash
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 uv run python scripts/run_calendar_study.py initialize --output results/calendar-study-repeat
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 uv run python scripts/run_calendar_study.py develop --output results/calendar-study-repeat
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 uv run python scripts/verify_calendar_study.py results/calendar-study-repeat
+```
+
+Inspect validation and convergence evidence before the final stages. With fixed choices,
+run `train`, then `seal` using the same training runner/output. Score with
+`scripts/evaluate_calendar_study.py OUTPUT --reference results/fresh-study`; verify using
+`scripts/verify_calendar_study.py OUTPUT --evaluation`, then export figures with
+`scripts/plot_calendar_study.py OUTPUT`. Output directories cannot be overwritten by
+initialization/evaluation. All new experiment output stays ignored.
+
+The subsequent [matched ensemble experiment](doc/ensemble-results.md) rejects the
+quantum-complementarity hypothesis in this development grid. Both classical and quantum
+ensembles choose only calendar-linear and sine forecasts (validation NLL .604802).
+Follow [its protocol](doc/ensemble-protocol.md) and reproduce it with
+`scripts/ensemble_complementarity.py --source OUTPUT --output NEW_OUTPUT`.
+Its progression gate fails, so no twenty-seed run or new benchmark scores are claimed
+for that ensemble candidate.

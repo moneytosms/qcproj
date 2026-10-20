@@ -42,7 +42,35 @@ python -m pytest -q tests        # 5 tests, about 1 second
 
 Run the experiments in order: `python experiments/01_reproduce_paper.py`, then 02, then 03 (about 30 seconds in total).
 
-## Phase 1 results (19 Oct 2026)
+## Audited full-protocol reproduction
+
+The current measured baseline report is [doc/paper-reproduction.md](../doc/paper-reproduction.md).
+It runs ten converged full-sample fits, three 50,000-step histories, every overlapping
+913-day/365-step window, 20 shuffles per window, full spectra, independent MFDFA checks,
+and 200 Gaussian finite-size controls. It reproduces the central behavior and explicitly
+records numerical differences from the paper. Method decisions are in
+[doc/reproduction-decisions.md](../doc/reproduction-decisions.md).
+
+From the **repository root**, use the pinned environment and a fresh output directory:
+
+```bash
+uv venv qvol/.venv --python 3.12
+uv pip install --python qvol/.venv/bin/python -r qvol/requirements-reproduction.txt
+qvol/.venv/bin/python -m pytest -q qvol/tests
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 qvol/.venv/bin/python qvol/experiments/04_reproduce_audit.py --output qvol/reproduction-runs/my-run
+OPENBLAS_NUM_THREADS=1 qvol/.venv/bin/python qvol/experiments/05_verify_reproduction.py qvol/reproduction-runs/my-run
+```
+
+The 04/05 commands supplement the historical 01–03 scripts. All new output is ignored
+by Git and the scripts preserve existing results. Full details and result interpretation
+are in the report above.
+
+## Earlier exploratory Phase 1 results (19 Oct 2026)
+
+**Historical quick diagnostics:** the table below used a different scaling grid and only
+20 non-overlapping generated windows, without the audited shuffled/control protocol.
+Preserved for attribution; use the audited report for current comparisons.
+
 
 **Reproduction.** Our NumPy rebuild, trained on all 913 days, comes close to the author's published generated series on the paper's own measures:
 
