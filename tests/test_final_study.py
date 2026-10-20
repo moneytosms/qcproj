@@ -138,3 +138,54 @@ def test_sealed_two_stage_evaluation_and_tamper_guards(tmp_path):
         evaluate_final(data, output)
     # Phase-two execution never changes the frozen training artifacts.
     check_seal(output, data)
+
+
+def final_verifier():
+    import importlib.util
+    from pathlib import Path
+
+    path = Path(__file__).resolve().parents[1] / "scripts/verify_final_study.py"
+    spec = importlib.util.spec_from_file_location("verify_final", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def test_independent_mfdfa_matches_saved_conventions():
+    from qcvol.metrics import mfdfa
+
+    verifier = final_verifier()
+    rng = np.random.default_rng(50)
+    for values in (rng.normal(size=1024), np.diff(np.cumsum(rng.normal(size=1025)))):
+        expected = verifier.independent_mfdfa(values)
+        actual = mfdfa(values)
+        assert actual["available"]
+        for name, value in expected.items():
+            np.testing.assert_allclose(actual[name], value, atol=1e-8)
+
+
+def test_independent_final_replay_and_corrupt_bootstrap(tmp_path):
+    from qcvol.data import load_author_data, sha256
+
+    pytest.importorskip("arch")
+    raw = tmp_path / "author"
+    raw.mkdir()
+    daily = synthetic_data(220)
+    for name, values in [("data-rstand", daily.returns), ("data-ystand", daily.rv)]:
+        np.savetxt(raw / name, np.c_[np.arange(len(values)), values])
+    data = prepare(load_author_data(raw))
+    output = tmp_path / "run"
+    source = {"sha256": {name: sha256(raw / name) for name in ("data-rstand", "data-ystand")}}
+    train_final(data, small_config(), output, source, progress=lambda *a, **kw: None)
+    evaluate_final(data, output, progress=lambda *a, **kw: None)
+    verifier = final_verifier()
+    assert verifier.verify(output, raw, allow_integration=True)["verified"]
+    with pytest.raises(AssertionError):
+        verifier.verify(output, raw)
+    path = output / "evaluation/summary.json"
+    original = path.read_text()
+    summary = json.loads(original)
+    summary["bootstrap_nll"][0]["lower"] += 1
+    path.write_text(json.dumps(summary))
+    with pytest.raises(AssertionError):
+        verifier.verify(output, raw, allow_integration=True)

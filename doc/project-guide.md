@@ -442,3 +442,31 @@ verifier and `tests/test_finance_comparison.py`. Trace native quantiles and comm
 quantiles separately. The results show classical NLL/RPS wins, a modest quantum Brier
 advantage, and no demonstrated quantum advantage. The next work is freezing/integrating
 the final 20-seed protocol, with these limits intact; the report remains paused.
+
+## Reading the frozen full study
+
+Start with [final-study-protocol.md](final-study-protocol.md). The settings are fixed:
+short-input quantum depth two, quantum realism weight .05, softmax .2, and network
+ridge .001/realism .05. Twenty seed labels change initialization and simulated draws,
+not the historical market data. Five starts are chosen on training loss for D; three
+warm starts are chosen on training loss for A. Do not pick the best test seed.
+
+Read `final_study.py`: `train_final → fit_baselines → training_seed → seal_training`.
+Each seed retains all fits, and the original paper's point model keeps two observable
+angles with its stored phi zero. Deterministic classical models are fitted once.
+Then read `final_evaluation.py`: `check_seal → forecasts → recursive paths → metrics
+→ paired_bootstrap`. The seal binds source/config/data and training artifacts before
+scoring. Changing any training parameter or data row causes evaluation to stop.
+
+The main scorecard averages losses across twenty trained models. This is not the NLL
+of a probability ensemble. Seed SD shows training variability; paired date-block
+intervals answer a separate question about the observed test dates. The paper's MSE
+panel is separate from four-class probability NLL. GARCH's native paths and quantiles
+remain distinct from the shared empirical-bin observation law.
+
+Read `scripts/verify_final_study.py` for dense circuit replay, LP checks, all seeded
+paths, independent polynomial MFDFA, and paired bootstrap reconstruction. Tests in
+`test_final_study.py` cover future-data isolation, sealing, integration-vs-final labels,
+independent MFDFA and corrupted uncertainty artifacts. The plotter exports scorecards,
+ablations, calibration, path diagnostics, forecast curves, training effort and CSV.
+The measured study note will record actual completion; the project report stays paused.
