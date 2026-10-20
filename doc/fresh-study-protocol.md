@@ -96,3 +96,19 @@ hybrid-softmax.
 
 All results are reported, including unfavourable ones. No setting is changed after test
 scores are seen.
+
+## Amendment 1 (20 Oct 2026, during development, before any test score)
+
+In the first development run, every hybrid fit (quantum and classical expert, all depths,
+both development seeds) failed the stationarity check: L-BFGS stopped on relative function
+change with remaining gradients of 0.03 to 0.7, and restarts reached different objectives.
+All 64 non-hybrid fits passed. Cause: the product form `base x expert^gamma` is badly
+posed. For the softmax expert gamma and the expert weights only appear as a product (a flat
+valley); for the circuit, small fitted gamma (0.01 to 0.06) needs expert probabilities near
+zero, which reach the 1e-12 log clip and make the loss non-smooth.
+
+Change: `log p = log base + gamma x (expert - 1/4)`, renormalized. gamma = 0 is still exactly
+HAR quantile; expert probabilities now enter bounded and linearly. Only the two hybrid
+models are re-developed (`develop-h-seed*.json`, which replace the hybrid rows of
+`develop-d-seed*.json` in depth selection). Nothing else changes. The test period has not
+been read. The manifest's code record predates this change; the seal records the final code.

@@ -30,6 +30,7 @@ def main():
         choices=[
             "manifest",
             "develop-d",
+            "develop-hybrid",
             "select-d",
             "develop-a",
             "select-a",
@@ -52,6 +53,9 @@ def main():
     elif args.stage == "develop-d":
         for seed in args.seed:
             fr.develop_d(data, config, seed, args.output)
+    elif args.stage == "develop-hybrid":
+        for seed in args.seed:
+            fr.develop_d(data, config, seed, args.output, names=fr.HYBRIDS, prefix="develop-h")
     elif args.stage == "select-d":
         print(json.dumps(fr.select_d(config, args.output), indent=2))
     elif args.stage == "develop-a":

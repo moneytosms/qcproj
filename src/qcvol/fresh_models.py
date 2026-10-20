@@ -79,10 +79,14 @@ class FastBorn:
 
 @dataclass
 class Hybrid:
-    """p(x) proportional to base(x) * expert(x)**gamma; parameter 0 is gamma.
+    """log p(x) = log base(x) + gamma * (expert(x) - 1/4), renormalized; parameter 0 is gamma.
 
     gamma = 0 gives the base forecaster exactly, so training can only add what the
     expert contributes on top of it. The base model is fixed (fitted beforehand).
+    The expert's probabilities enter linearly and are bounded, so gamma and the expert's
+    parameters are identifiable. (The first version used base * expert**gamma; in
+    development its fits failed convergence checks: gamma traded off against the expert's
+    scale and tiny probabilities hit the log clip. See the protocol amendment.)
     """
 
     base: object
@@ -94,8 +98,8 @@ class Hybrid:
 
     def pooled(self, base_probabilities, x, parameters):
         p = np.asarray(parameters, float)
-        q = np.clip(self.expert.probabilities(x, p[1:]), 1e-12, 1)
-        logits = np.log(np.clip(base_probabilities, 1e-12, 1)) + p[0] * np.log(q)
+        q = self.expert.probabilities(x, p[1:])
+        logits = np.log(np.clip(base_probabilities, 1e-12, 1)) + p[0] * (q - 0.25)
         return softmax(logits, axis=1)
 
     def probabilities(self, x, parameters):

@@ -135,12 +135,12 @@ def baseline_bundle(data):
     return bundle, models
 
 
-def develop_d(data, config, seed, output, progress=print):
+def develop_d(data, config, seed, output, progress=print, names=None, prefix="develop-d"):
     _, base_models = baseline_bundle(data)
     base = base_models["har-quantile"]
     base_train = base.probabilities(data.x[data.train])
     rows = []
-    for name in FAMILIES + HYBRIDS:
+    for name in names or FAMILIES + HYBRIDS:
         quantum = name.startswith("quantum") or name == "hybrid-quantum"
         for depth in config.depths if quantum else [0]:
             model, best, fits = fit_forecast_restarts(
@@ -161,15 +161,18 @@ def develop_d(data, config, seed, output, progress=print):
                 f"val {row['validation']['log_loss']:.4f} ok={best['eligible']}",
                 flush=True,
             )
-    write_json(Path(output) / f"develop-d-seed{seed}.json", {"seed": seed, "rows": rows})
+    write_json(Path(output) / f"{prefix}-seed{seed}.json", {"seed": seed, "rows": rows})
 
 
 def select_d(config, output):
-    rows = [
-        r
-        for s in config.development_seeds
-        for r in json.loads((Path(output) / f"develop-d-seed{s}.json").read_text())["rows"]
-    ]
+    rows = []
+    for s in config.development_seeds:
+        rows += json.loads((Path(output) / f"develop-d-seed{s}.json").read_text())["rows"]
+        amended = Path(output) / f"develop-h-seed{s}.json"
+        if amended.is_file():
+            # Protocol amendment: hybrids re-developed with the bounded correction.
+            rows = [r for r in rows if not (r["name"] in HYBRIDS and r["seed"] == s)]
+            rows += json.loads(amended.read_text())["rows"]
     decisions = {}
     for name in FAMILIES + HYBRIDS:
         group = [r for r in rows if r["name"] == name]
@@ -313,6 +316,11 @@ def seal(config, output):
     names = ["manifest.json", "baselines.json", "select-d.json", "select-a.json"]
     names += [f"develop-d-seed{s}.json" for s in config.development_seeds]
     names += [f"develop-a-seed{s}.json" for s in config.development_seeds]
+    names += [
+        f"develop-h-seed{s}.json"
+        for s in config.development_seeds
+        if (out / f"develop-h-seed{s}.json").is_file()
+    ]
     names += [f"train-seed{s}.json" for s in config.final_seeds]
     missing = [n for n in names if not (out / n).is_file()]
     if missing:
