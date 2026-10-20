@@ -89,6 +89,23 @@ win that fails on test remains a failed headline result.
 - Binance documents that daily files appear the next day and monthly files on the first
   Monday of the month in the public-data README above.
 
+## Amendment 2: validation-only circuit variants (20 Oct 2026)
+
+The first validation sweep did not meet the goal: the best direct quantum weekend model
+had mean log loss 0.6076, while the weekend network had 0.5303; the quantum-HAR hybrid
+had 0.5306 versus 0.5160 for the softmax-HAR hybrid. The ETH test remains unopened.
+
+Add two quantum variants to the same development selection, using the same inputs, 10
+weights per layer, depths 1-3, seeds, restarts, training rows, and validation rule:
+
+1. Replace each weekend-conditioned RZ with RY.
+2. Keep the weekend-conditioned RZ but alternate CNOT direction between layers.
+
+Retain all original candidates. Select the best direct weekend quantum architecture and
+depth by mean validation log loss, then compare that fixed selection with all classical
+models after final training. This amendment does not change the test set, metrics, or
+success threshold. No new test score has been computed.
+
 ## Amendment 1: archive gap handling (20 Oct 2026, before model evaluation)
 
 The checksum-verified archive contains 33 timestamp gaps affecting 34 UTC dates. After a

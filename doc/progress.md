@@ -338,6 +338,8 @@ contains 33 timestamp gaps, 1,703 missing 5-minute intervals, and 34 affected da
 2025-01-01 to 2026-10-19 has complete 288 bars per day. Gaps are recorded, never filled;
 observed close changes across gaps enter RV once. The builder and weekend circuit have
 focused unit tests, including timestamp unit conversion, offset handling, and exact
-statevector equivalence. No ETH validation or test
-scores have been computed yet. Next: run frozen development and selection stages, finalize
-the candidate, seal artifacts, then score the ETH test once.
+statevector equivalence. Initial two-seed validation did not meet the goal: the weekend
+network scored 0.5303 and softmax-HAR hybrid 0.5160, versus 0.6076 for the selected direct
+quantum circuit and 0.5306 for the quantum-HAR hybrid. ETH test scores remain unopened.
+Protocol amendment 2 adds RY weekend encoding and alternating entangler direction; these
+variants will be selected on validation before final training.

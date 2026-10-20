@@ -25,13 +25,17 @@ def _single(a, b, c, d):
 
 @dataclass(frozen=True)
 class WeekendBorn:
-    """Two-qubit HAR circuit with a learned weekend phase on both qubits per layer."""
+    """Two-qubit HAR circuit with learned weekend rotations on both qubits per layer."""
 
     layers: int = 2
+    weekend_axis: str = "z"
+    alternate_entangler: bool = False
 
     def __post_init__(self):
         if type(self.layers) is not int or self.layers not in (1, 2, 3, 4):
             raise ValueError("Choose 1-4 layers")
+        if self.weekend_axis not in ("y", "z"):
+            raise ValueError("Weekend rotation axis must be y or z")
 
     @property
     def n_params(self):
@@ -44,16 +48,20 @@ class WeekendBorn:
         w = np.asarray(parameters, float).reshape(self.layers, 10)
         state = np.zeros((len(x), 2, 2), complex)
         state[:, 0, 0] = 1
-        for layer in w:
+        for index, layer in enumerate(w):
             ones = np.ones(len(x))
-            u0 = _rz(layer[8] * x[:, 4]) @ _single(
+            weekend_rotation = _ry if self.weekend_axis == "y" else _rz
+            u0 = weekend_rotation(layer[8] * x[:, 4]) @ _single(
                 layer[0] * x[:, 0], layer[1] * x[:, 1], layer[4] * ones, layer[5] * ones
             )
-            u1 = _rz(layer[9] * x[:, 4]) @ _single(
+            u1 = weekend_rotation(layer[9] * x[:, 4]) @ _single(
                 layer[2] * x[:, 2], layer[3] * x[:, 3], layer[6] * ones, layer[7] * ones
             )
             state = u0 @ state @ np.swapaxes(u1, 1, 2)
-            state[:, 1, :] = state[:, 1, ::-1].copy()
+            if self.alternate_entangler and index % 2:
+                state[:, :, 1] = state[:, ::-1, 1].copy()
+            else:
+                state[:, 1, :] = state[:, 1, ::-1].copy()
         p = (np.abs(state) ** 2).reshape(len(x), 4)
         return p / p.sum(axis=1, keepdims=True)
 

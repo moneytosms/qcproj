@@ -17,10 +17,15 @@ from qcvol.metrics import forecast_scores, log_loss
 from qcvol_next.weekend_models import WeekendBorn, WeekendHAR, WeekendNetwork, WeekendSoftmax
 
 DEPTHS = (1, 2, 3)
-QUANTUM = ("quantum-har", "quantum-weekend", "hybrid-quantum-weekend")
+WEEKEND_QUANTUM = (
+    "quantum-weekend",
+    "quantum-weekend-ry",
+    "quantum-weekend-alternating",
+)
+QUANTUM = ("quantum-har", *WEEKEND_QUANTUM, "hybrid-quantum-weekend")
 MODELS = (
     "quantum-har",
-    "quantum-weekend",
+    *WEEKEND_QUANTUM,
     "softmax-har",
     "softmax-weekend",
     "network-har",
@@ -46,6 +51,10 @@ def model_for(name, depth, har):
         return FastBorn(depth)
     if name == "quantum-weekend":
         return WeekendBorn(depth)
+    if name == "quantum-weekend-ry":
+        return WeekendBorn(depth, weekend_axis="y")
+    if name == "quantum-weekend-alternating":
+        return WeekendBorn(depth, alternate_entangler=True)
     if name == "softmax-har":
         return SoftmaxModel()
     if name == "softmax-weekend":
@@ -67,7 +76,15 @@ def model_depths(name):
 
 def fit_one(name, depth, data, config, seed, har, base_train):
     model = model_for(name, depth, har)
-    x, labels = data.x[data.train], data.labels[data.train]
+    uses_weekend = name in {
+        *WEEKEND_QUANTUM,
+        "softmax-weekend",
+        "network-weekend",
+        "hybrid-quantum-weekend",
+        "hybrid-softmax-weekend",
+    }
+    width = 5 if uses_weekend else 4
+    x, labels = data.x[data.train, :width], data.labels[data.train]
     ridge = config.network_ridge if name.startswith("network") else 0.0
     hybrid = name.startswith("hybrid-")
 
@@ -98,7 +115,7 @@ def fit_one(name, depth, data, config, seed, har, base_train):
         fits.append(fit)
     best = min(fits, key=lambda row: (row["objective"], row["restart"]))
     base_validation = har.probabilities(data.x[data.validation])
-    validation_x = data.x[data.validation]
+    validation_x = data.x[data.validation, :width]
     validation_p = (
         model.pooled(base_validation, validation_x, np.asarray(best["parameters"]))
         if hybrid
@@ -134,6 +151,24 @@ def develop(data, config, seed, output):
     write_json(output / f"upgrade-develop-seed{seed}.json", {"seed": seed, "rows": rows})
 
 
+def develop_variants(data, config, seed, output):
+    har = WeekendHAR.fit(data.x[data.train], data.y[data.train], data.bins.edges)
+    base_train = har.probabilities(data.x[data.train])
+    rows = []
+    for name in WEEKEND_QUANTUM[1:]:
+        for depth in DEPTHS:
+            row = fit_one(name, depth, data, config, seed, har, base_train)
+            rows.append(row)
+            print(
+                f"dev variant seed={seed} model={name} depth={depth} "
+                f"train={row['fit']['objective']:.5f} "
+                f"validation={row['validation']['log_loss']:.5f} "
+                f"eligible={row['fit']['eligible']}",
+                flush=True,
+            )
+    write_json(output / f"upgrade-variants-seed{seed}.json", {"seed": seed, "rows": rows})
+
+
 def write_json(path, value):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(value, indent=2, allow_nan=False) + "\n")
@@ -143,6 +178,7 @@ def select(config, output):
     rows = []
     for seed in config.development_seeds:
         rows.extend(json.loads((output / f"upgrade-develop-seed{seed}.json").read_text())["rows"])
+        rows.extend(json.loads((output / f"upgrade-variants-seed{seed}.json").read_text())["rows"])
     selection = {}
     for name in MODELS:
         if name == "har-weekend":
@@ -165,6 +201,13 @@ def select(config, output):
             "depth": min(depths, key=lambda depth: (means[depth], depth)),
             "mean_validation_log_loss_by_depth": means,
         }
+    selection["best_quantum_weekend"] = min(
+        WEEKEND_QUANTUM,
+        key=lambda name: (
+            selection[name]["mean_validation_log_loss_by_depth"][selection[name]["depth"]],
+            selection[name]["depth"],
+        ),
+    )
     write_json(output / "upgrade-selection.json", selection)
     return selection
 
@@ -187,6 +230,7 @@ def train_seed(data, config, seed, output):
 def files_to_seal(config, output):
     names = ["upgrade-manifest.json", "upgrade-selection.json"]
     names += [f"upgrade-develop-seed{s}.json" for s in config.development_seeds]
+    names += [f"upgrade-variants-seed{s}.json" for s in config.development_seeds]
     names += [f"upgrade-train-seed{s}.json" for s in config.final_seeds]
     return names
 
@@ -272,7 +316,21 @@ def evaluate(data, data_path, config_path, output, config):
             else:
                 entry = record[name]
                 model = model_for(name, entry["depth"], har)
-                probabilities = model.probabilities(x, np.asarray(entry["fit"]["parameters"]))
+                width = (
+                    5
+                    if name
+                    in {
+                        *WEEKEND_QUANTUM,
+                        "softmax-weekend",
+                        "network-weekend",
+                        "hybrid-quantum-weekend",
+                        "hybrid-softmax-weekend",
+                    }
+                    else 4
+                )
+                probabilities = model.probabilities(
+                    x[:, :width], np.asarray(entry["fit"]["parameters"])
+                )
             for metric, values in daily_losses(probabilities, labels, rv, level_means).items():
                 all_losses[name][metric].append(values)
 
@@ -289,16 +347,17 @@ def evaluate(data, data_path, config_path, output, config):
         }
     rng = np.random.default_rng(604221)
     intervals = []
+    selected_quantum = selection["best_quantum_weekend"]
     for baseline in ("softmax-weekend", "network-weekend", "har-weekend"):
         for block in config.bootstrap_blocks:
-            delta = np.mean(all_losses["quantum-weekend"]["log_loss"], axis=0) - np.mean(
+            delta = np.mean(all_losses[selected_quantum]["log_loss"], axis=0) - np.mean(
                 all_losses[baseline]["log_loss"], axis=0
             )
             indices = block_indices(len(delta), block, config.bootstrap_replicates, rng)
             boot = delta[indices].mean(axis=1)
             intervals.append(
                 {
-                    "left": "quantum-weekend",
+                    "left": selected_quantum,
                     "right": baseline,
                     "block": block,
                     "mean_difference": float(delta.mean()),
@@ -308,11 +367,12 @@ def evaluate(data, data_path, config_path, output, config):
             )
     result = {
         "split_dates": split_dates(data),
-        "quantum_selected_depth": selection["quantum-weekend"]["depth"],
+        "selected_quantum_weekend": selected_quantum,
+        "quantum_selected_depth": selection[selected_quantum]["depth"],
         "summary": summary,
         "intervals": intervals,
         "marked_improvement": bool(
-            summary["quantum-weekend"]["log_loss"]["mean"]
+            summary[selected_quantum]["log_loss"]["mean"]
             <= 0.95
             * min(
                 summary["softmax-weekend"]["log_loss"]["mean"],
@@ -322,7 +382,7 @@ def evaluate(data, data_path, config_path, output, config):
         ),
         "quantum_seed_daily_losses": {
             metric: [np.asarray(rows).tolist() for rows in values]
-            for metric, values in all_losses["quantum-weekend"].items()
+            for metric, values in all_losses[selected_quantum].items()
         },
     }
     write_json(output / "upgrade-evaluation.json", result)
@@ -332,7 +392,16 @@ def evaluate(data, data_path, config_path, output, config):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "stage", choices=("manifest", "develop", "select", "train", "seal", "evaluate")
+        "stage",
+        choices=(
+            "manifest",
+            "develop",
+            "develop-variants",
+            "select",
+            "train",
+            "seal",
+            "evaluate",
+        ),
     )
     parser.add_argument("--data", type=Path, default=Path("data/ethusdt_daily.csv"))
     parser.add_argument("--config", type=Path, default=Path("configs/fresh-study.json"))
@@ -362,6 +431,11 @@ def main():
             if seed not in config.development_seeds:
                 raise ValueError(f"Development seed {seed} is not in config")
             develop(data, config, seed, args.output)
+    elif args.stage == "develop-variants":
+        for seed in args.seed:
+            if seed not in config.development_seeds:
+                raise ValueError(f"Development seed {seed} is not in config")
+            develop_variants(data, config, seed, args.output)
     elif args.stage == "select":
         select(config, args.output)
     elif args.stage == "train":

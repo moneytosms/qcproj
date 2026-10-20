@@ -20,27 +20,30 @@ def rz(angle):
     return np.diag([np.exp(-0.5j * angle), np.exp(0.5j * angle)])
 
 
-def reference(x, parameters, layers):
+def reference(x, parameters, layers, axis="z", alternating=False):
     cnot = np.eye(4, dtype=complex)[[0, 1, 3, 2]]
+    reverse_cnot = np.eye(4, dtype=complex)[[0, 3, 2, 1]]
+    weekend_rotation = ry if axis == "y" else rz
     out = []
     for row in x:
         state = np.array([1, 0, 0, 0], dtype=complex)
-        for layer in np.asarray(parameters).reshape(layers, 10):
+        for index, layer in enumerate(np.asarray(parameters).reshape(layers, 10)):
             u0 = (
-                rz(layer[8] * row[4])
+                weekend_rotation(layer[8] * row[4])
                 @ rz(layer[5])
                 @ ry(layer[4])
                 @ rz(layer[1] * row[1])
                 @ ry(layer[0] * row[0])
             )
             u1 = (
-                rz(layer[9] * row[4])
+                weekend_rotation(layer[9] * row[4])
                 @ rz(layer[7])
                 @ ry(layer[6])
                 @ rz(layer[3] * row[3])
                 @ ry(layer[2] * row[2])
             )
-            state = cnot @ np.kron(u0, u1) @ state
+            entangler = reverse_cnot if alternating and index % 2 else cnot
+            state = entangler @ np.kron(u0, u1) @ state
         out.append(np.abs(state) ** 2)
     return np.asarray(out)
 
@@ -50,9 +53,10 @@ def test_weekend_born_matches_independent_statevector():
     x = rng.normal(size=(7, 5))
     for layers in (1, 3):
         p = rng.normal(size=10 * layers)
-        assert np.allclose(
-            WeekendBorn(layers).probabilities(x, p), reference(x, p, layers), atol=1e-12
-        )
+        for axis, alternating in (("z", False), ("y", False), ("z", True)):
+            model = WeekendBorn(layers, axis, alternating)
+            expected = reference(x, p, layers, axis, alternating)
+            assert np.allclose(model.probabilities(x, p), expected, atol=1e-12)
 
 
 def test_classical_weekend_models_return_four_probabilities():
@@ -90,6 +94,13 @@ def test_weekend_quantum_forecast_fit_runs_on_synthetic_history():
     )
     har = WeekendHAR.fit(data.x[data.train], data.y[data.train], data.bins.edges)
     base = har.probabilities(data.x[data.train])
-    row = fit_one("quantum-weekend", 1, data, config, 900, har, base)
-    assert row["fit"]["parameters"]
-    assert np.isfinite(row["validation"]["log_loss"])
+    for name in (
+        "quantum-weekend",
+        "quantum-weekend-ry",
+        "quantum-weekend-alternating",
+    ):
+        row = fit_one(name, 1, data, config, 900, har, base)
+        assert row["fit"]["parameters"]
+        assert np.isfinite(row["validation"]["log_loss"])
+    control = fit_one("quantum-har", 1, data, config, 900, har, base)
+    assert np.isfinite(control["validation"]["log_loss"])
