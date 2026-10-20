@@ -61,6 +61,7 @@ class FreshConfig:
     evaluation_burn_in: int = 100
     bootstrap_replicates: int = 2000
     bootstrap_blocks: list[int] = field(default_factory=lambda: [7, 30])
+    bootstrap_confidence: float = 0.95
 
     def realism(self):
         return {

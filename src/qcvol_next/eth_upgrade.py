@@ -98,6 +98,8 @@ def fit_temperature(probabilities, labels):
 
 
 def final_models(selection):
+    if "final_model_panel" in selection:
+        return tuple(selection["final_model_panel"])
     return tuple(
         dict.fromkeys(
             (
@@ -329,8 +331,10 @@ def train_seed(data, config, seed, output):
 
 def files_to_seal(config, output):
     names = ["upgrade-manifest.json", "upgrade-selection.json"]
-    names += [f"upgrade-develop-seed{s}.json" for s in config.development_seeds]
-    names += [f"upgrade-variants-seed{s}.json" for s in config.development_seeds]
+    manifest = json.loads((output / "upgrade-manifest.json").read_text())
+    if not manifest.get("fixed_replication", False):
+        names += [f"upgrade-develop-seed{s}.json" for s in config.development_seeds]
+        names += [f"upgrade-variants-seed{s}.json" for s in config.development_seeds]
     names += [f"upgrade-train-seed{s}.json" for s in config.final_seeds]
     return names
 
@@ -466,8 +470,8 @@ def evaluate(data, data_path, config_path, output, config):
                     "right": baseline,
                     "block": block,
                     "mean_difference": float(delta.mean()),
-                    "lower": float(np.quantile(boot, 0.025)),
-                    "upper": float(np.quantile(boot, 0.975)),
+                    "lower": float(np.quantile(boot, (1 - config.bootstrap_confidence) / 2)),
+                    "upper": float(np.quantile(boot, 1 - (1 - config.bootstrap_confidence) / 2)),
                 }
             )
     result = {
@@ -516,6 +520,7 @@ def main():
     parser.add_argument("--config", type=Path, default=Path("configs/fresh-study.json"))
     parser.add_argument("--output", type=Path, default=Path("results/eth-study/upgrade"))
     parser.add_argument("--seed", type=int, action="append", default=[])
+    parser.add_argument("--fixed-replication", action="store_true")
     args = parser.parse_args()
     config = FreshConfig(**json.loads(args.config.read_text()))
     daily = load_daily_csv(args.data)
@@ -530,7 +535,12 @@ def main():
                 "config": config.__dict__,
                 "splits": split_dates(data),
                 "weekend_standardization": weekend_scaling,
-                "models": MODELS,
+                "models": (
+                    final_models(json.loads((args.output / "upgrade-selection.json").read_text()))
+                    if args.fixed_replication
+                    else MODELS
+                ),
+                "fixed_replication": args.fixed_replication,
                 "depths": DEPTHS,
                 "test_scores_computed": False,
             },

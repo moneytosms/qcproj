@@ -4,6 +4,7 @@ from qcvol.data import synthetic_data
 from qcvol.fresh_runner import FreshConfig
 from qcvol_next.eth_upgrade import (
     calibrated_probabilities,
+    final_models,
     fit_one,
     fit_temperature,
     weekend_data,
@@ -81,6 +82,16 @@ def test_temperature_calibration_preserves_probabilities_and_fit_bounds():
     assert 0.2 <= temperature <= 5
     calibrated = calibrated_probabilities(probabilities, temperature)
     assert np.allclose(calibrated.sum(axis=1), 1)
+
+
+def test_fixed_replication_panel_uses_preregistered_models():
+    panel = [
+        "hybrid-quantum-weekend-ry",
+        "softmax-weekend",
+        "network-weekend",
+        "hybrid-softmax-weekend",
+    ]
+    assert final_models({"final_model_panel": panel}) == tuple(panel)
 
 
 def test_weekend_feature_scaling_uses_training_targets_only():
