@@ -32,16 +32,19 @@ renaming the columns. Preserve this limitation in every result manifest.
 
 ### 2. Memory and range (weeks 3–4)
 
-- [ ] Add a one-qubit re-uploading point model on HAR inputs (B); document the chosen
+- [x] Add a one-qubit re-uploading point model on HAR inputs (B); document the chosen
       ansatz because the PDFs do not fully specify this intermediate model.
-- [ ] Implement two-qubit Born probabilities (B+D), 3 layers × 8 parameters = 24.
+- [x] Implement two-qubit Born probabilities (B+D), 3 layers × 8 parameters = 24.
       Generalize to layers 1–4; compare against a 3-qubit/eight-level variant later.
 - [x] Fit 30/70/95-percentile log-RV bins on training targets only. Forecast all four
       probabilities; sample a bin, then an empirical training value within that bin.
 - [x] Generate paths recursively using generated returns and log RV after initialization.
 - [x] Verify gate order, normalization, indexing, training-only bins, and seeded rollouts.
 
-**Gate 2:** B and B+D have comparable held-out scores; no feature leakage.
+**Gate 2 remains open:** B and B+D need comparable held-out scores and adequate
+training. The [memory-fit investigation](memory-fit-investigation.md) tests initialization,
+budgets, depths and a short-memory control on training/validation only. Software
+completion above does not establish a benefit from memory.
 
 ### 3. Realism and fair comparisons (weeks 5–6)
 

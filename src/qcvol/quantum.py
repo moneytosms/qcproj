@@ -112,13 +112,24 @@ class MemoryCircuit:
     """Explicit B-only design: four data rotations then RY/RZ each layer, point P0."""
 
     layers: int = 3
+    short_memory: bool = False
+
+    def __post_init__(self):
+        if type(self.layers) is not int or self.layers not in (1, 2, 3, 4):
+            raise ValueError("Choose 1–4 memory circuit layers")
 
     @property
     def n_params(self):
         return 6 * self.layers
 
     def predict(self, x, parameters):
-        x = np.atleast_2d(x)
+        x = np.atleast_2d(np.asarray(x, float))
+        if x.shape[1] != 4 or not np.all(np.isfinite(x)):
+            raise ValueError("Memory circuit needs four finite HAR inputs per row")
+        if self.short_memory:
+            # Repeat standardized yesterday log RV in the same gate slots. This
+            # preserves the ansatz and nominal budget without 7/30-day information.
+            x = x[:, [0, 0, 0, 3]]
         state = np.zeros((len(x), 2), complex)
         state[:, 0] = 1
         for w in np.asarray(parameters).reshape(self.layers, 6):

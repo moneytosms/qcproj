@@ -183,3 +183,38 @@ The root guide links to both entry points. Consolidation can be a later reviewed
 - [Matplotlib subplots](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html)
   and [savefig](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.savefig.html)
   for optional local figures.
+
+## ADR 011 — Investigate point training before claiming a memory improvement
+
+**Decision:** keep the historical point-training defaults reproducible, and add explicit
+`rv_prior` initialization, optional inactive-angle removal, and a separate training/validation
+investigation runner. Do not change the Born distribution or realism loss in this milestone.
+
+**Reason:** the legacy memory circuit starts near P0 = 1 whereas author RV targets are
+mostly much smaller. At the training feature center, setting its last RY to
+`2 arccos(sqrt(mean(training RV / rv_scale)))` gives the training mean readout. Small
+seeded input weights allow learning around that prior. All other free rotations start at
+zero. No validation or test targets enter the initialization. This changes optimization,
+not the circuit family or target units. The legacy and prior starts are compared at the
+same budgets; merely increasing a budget can overfit or converge to a poor local solution.
+
+**Controls:** use the same 1- and 3-layer ansatz with yesterday's standardized log RV
+repeated in the day/week/month slots. Keep the previous return input. This removes
+multi-horizon information without changing nominal parameter counts. It does not prove
+identical effective capacity. Independently compare the matrix circuit, confirm raw-RV
+target alignment, and test terminal-phase invariance. Optional phase removal optimizes
+2 paper angles or at most `6L-1` memory angles; saved parameters retain the full public
+representation with the removed angle fixed to zero.
+
+**Protocol:** each budget starts afresh. Choose the best restart by training MSE, then
+compare those winners on validation MSE. Save all restarts, actual objective calls
+(including the extra initial check), histories, convergence flags, parameters, predictions,
+source hashes and elapsed fit times. Short-memory and full-memory candidates receive the
+same grid. The investigation never scores test targets. Repeated use of validation is
+exploratory model development, not evidence of out-of-sample superiority. Three starts
+measure optimizer sensitivity, not uncertainty across independent datasets or a 20-seed study.
+
+**Consequence:** a smaller training loss is not sufficient to accept B. Preserve the old
+smoke results, use the new runner to diagnose them, and keep the final test comparison
+and recursive-realism claims open. The measured findings and repeat instructions are in
+[memory-fit-investigation.md](memory-fit-investigation.md).

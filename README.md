@@ -87,3 +87,22 @@ or online service credentials are required to train or run the models.
 Complete each major change on a topic branch, run the relevant checks, update the docs,
 and open a pull request to `moneytosms/qcproj`. See [AGENTS.md](AGENTS.md) for the
 project workflow.
+
+## Investigating the memory point model
+
+The [measured investigation](doc/memory-fit-investigation.md) checks the poor B-only
+smoke fit with independent circuit/target audits, multiple starts, larger budgets,
+training-informed initialization, and a short-memory control. It does not score the test
+split or establish a final memory benefit. The historical smoke defaults remain available.
+
+```bash
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 uv run python scripts/investigate_memory.py \
+  --author-data data/raw/author --output results/memory-investigation-01
+uv run python scripts/verify_memory_investigation.py results/memory-investigation-01 \
+  --author-data data/raw/author
+uv run python scripts/plot_memory_investigation.py results/memory-investigation-01
+```
+
+The declared grid is in `configs/memory-investigation.json`. Each output directory must
+be new. Parameters, every restart, convergence histories, train/validation predictions,
+search costs and source provenance stay in the ignored run folder.

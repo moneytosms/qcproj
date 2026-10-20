@@ -138,3 +138,34 @@ and the unpublished exact scale grid. This verifies the original-paper compariso
 milestone while preserving uncertainty about exact numerical replication. It does not
 change the earlier held-out smoke scores above. Source PDFs and historical results
 remain unchanged. The PR is open for review; it has not been merged automatically.
+
+## Memory point-fit investigation
+
+The [measured investigation](memory-fit-investigation.md) completes the requested
+training diagnosis without evaluating the held-out test split. It preserves all earlier
+smoke scores. On the fixed author-data split, 102 point-model fits compare three starts,
+one/three layers, full/short memory, legacy/training-informed initialization, budgets
+40/500/3000 and phase-free 12000-evaluation attempts.
+
+- Independent memory matrix and target-alignment checks pass; RV targets already fit
+  the readout range. No gate-order or target-unit correction is indicated.
+- Legacy three-layer initial predictions average .7766–.9577 versus training mean RV
+  .035745. Training-informed starts average .0365–.0391 and greatly reduce small-budget
+  failures. The new start is explicit; historical defaults remain reproducible.
+- Phase-free one-layer prior fits converge for all three starts. Their training-selected
+  validation MSE is .00053164 with full HAR and .00051614 with short-memory inputs.
+  The paper training-only comparator gives .00072042. These are validation, not test scores.
+- Deeper fits lower training error but can worsen validation; all six three-layer
+  12000-evaluation attempts remain budget-limited. The short-memory control stays
+  competitive, so the longer-memory benefit remains unproven and Gate 2 stays open.
+- Total measured fitting work: 169383 objective calls and about 547.6 seconds on this
+  CPU setup. The verifier reproduces 72012 predictions exactly and checks losses,
+  provenance and selection. Both generated diagnostic plots were visually inspected.
+- Current branch checks: 40 tests pass (35 root, five legacy qvol), plus Ruff lint/format
+  and whitespace checks. These counts differ from the earlier combined reproduction
+  milestone because the additional paper-audit tests live on the separate PR #2 branch.
+
+Next use stable training-informed point fits and the short-memory control as references,
+then investigate regularization or a nested ansatz before accepting the deeper B model.
+The full B/D/A study, independent test comparison and 20-seed uncertainty analysis remain
+pending. The project report remains paused at the user's request.
