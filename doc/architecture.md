@@ -385,23 +385,6 @@ its fits failed stationarity checks (amendment 1 in the protocol).
 **Sealing:** the evaluation function is in the sealed package, so test scoring cannot change
 after training; development, selection and training artifacts are hashed into `seal.json`.
 
-## ADR 020 — Test a weekend-aware quantum forecast across markets
-
-Keep the sealed `qcvol` package unchanged. Place the follow-up circuit, matching classical
-models, Binance data builder, and training runner in `qcvol_next` and `scripts/`. The new
-2-qubit ansatz applies one learned weekend-conditioned Z rotation per qubit per layer
-before entanglement. Depths 1-3 keep the depth-3 circuit near the small network's parameter
-count. The weekend flag is standardized from training target dates and is supplied to the
-softmax, network, HAR residual, and classical hybrid controls as well.
-
-**Reason:** the Bitstamp test showed a weekday effect while the model received no calendar
-input. This experiment tests that concrete omission on ETH, then checks whether the
-quantum circuit benefits more than equally informed classical forecasters. The ETH test is
-opened only after protocol, tuning, training, and hashes are frozen.
-
-**Gap handling:** retain timestamp gaps as observed, record them, and never synthesize bars.
-Use each actual adjacent close return once, even when it spans missing intervals. This
-avoids discarding an observed price move while keeping data quality visible.
 ## ADR 017 — Calendar inputs, direct day encoding and learned quantum readout
 
 **Evidence:** Nidhi's PR #8 finds useful HAR memory but persistent classical forecast
@@ -448,3 +431,37 @@ The [protocol](ensemble-protocol.md) stops before final-seed training when the q
 mixture fails either validation comparison. The [result](ensemble-results.md) selects
 only linear and sine members, so the gate prevents an unjustified larger run. Equal
 parameter counts do not establish equal computation or effective model capacity.
+
+## ADR 019 — Quantum v2 in a separate package
+
+**Context:** the fresh-study circuit lost to same-input classical models. A validation-only
+search showed one qubit never received yesterday's volatility, the trigonometric response
+extrapolated badly into the calm 2023-2026 regime, and no model saw the weekday.
+
+**Decision:** v2 makes every rotation angle an affine function of all inputs on both qubits,
+squashes the HAR inputs with 2·tanh(x/2), and adds centered weekend and Monday flags of the
+target day. The same inputs go to the softmax and network comparators. Code lives in
+`src/qcvol_v2` (JAX for exact gradients, optional extra `v2`) because the fresh-study seal
+hashes every file in `src/qcvol`; v2 has its own seal over its artifacts and source.
+
+**Consequence:** the weekend idea was noticed in the already-scored test period, so v2 test
+scores are post-hoc by protocol ([v2-protocol.md](v2-protocol.md)); a new market is the
+clean check.
+
+## ADR 020 — Test a weekend-aware quantum forecast across markets
+
+Keep the sealed `qcvol` package unchanged. Place the follow-up circuit, matching classical
+models, Binance data builder, and training runner in `qcvol_next` and `scripts/`. The new
+2-qubit ansatz applies one learned weekend-conditioned Z rotation per qubit per layer
+before entanglement. Depths 1-3 keep the depth-3 circuit near the small network's parameter
+count. The weekend flag is standardized from training target dates and is supplied to the
+softmax, network, HAR residual, and classical hybrid controls as well.
+
+**Reason:** the Bitstamp test showed a weekday effect while the model received no calendar
+input. This experiment tests that concrete omission on ETH, then checks whether the
+quantum circuit benefits more than equally informed classical forecasters. The ETH test is
+opened only after protocol, tuning, training, and hashes are frozen.
+
+**Gap handling:** retain timestamp gaps as observed, record them, and never synthesize bars.
+Use each actual adjacent close return once, even when it spans missing intervals. This
+avoids discarding an observed price move while keeping data quality visible.
