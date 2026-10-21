@@ -300,9 +300,9 @@ Table: Step 5: quantum vs best classical model on ten coins (test log loss)
 
 | Member | Responsibilities and tasks |
 |---|---|
+| **Nidhi Rakesh** (2024BCD0006) | Packaging the paper rebuild (`qvol`); quantum v2 models; fresh Bitstamp memory and realism study; paper-vs-ours comparison; sealed results; IBM hardware script |
 | **Srimoneyshankar Ajith** (2024BCS0055) | Project coordination; Binance data pipeline with checksum verification; ETH, BTC, SOL and DOGE replication studies and their pre-written rules; $R_Y$ HAR hybrid quantum model; research log |
 | **Bharadwaj B Chand** (2024BCS0059) | Checking the paper rebuild and multifractal analysis; memory experiments; realism-training study; classical baselines (HAR, GARCH); verification scripts and comparison figures |
-| **Nidhi Rakesh** (2024BCD0006) | Packaging the paper rebuild (`qvol`); quantum v2 models; fresh Bitstamp memory and realism study; paper-vs-ours comparison; sealed results; IBM hardware script |
 | **Vishnunath A Suresh** (2024BCS0315) | Literature survey and future-direction research; design of scoring metrics and statistical tests; report and presentation preparation |
 | **Gopi Krish** (2024BCS0054) | Code integration and review of pull requests #1 to #12; automated test and style checks; LTC/BNB/ADA and LINK/DOT/AVAX multi-coin studies; result plots |
 
