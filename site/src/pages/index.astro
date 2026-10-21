@@ -1,0 +1,124 @@
+---
+import Base from "../layouts/Base.astro";
+import Hero from "../components/Hero.astro";
+import Chapter from "../components/Chapter.astro";
+import Terminal from "../components/Terminal.astro";
+import Steps from "../components/Steps.astro";
+import Clip from "../components/Clip.astro";
+import Figure from "../components/Figure.astro";
+import Bars from "../components/Bars.astro";
+import Diverge from "../components/Diverge.astro";
+import Forest from "../components/Forest.astro";
+import data from "../../../paper/results.json";
+import { cfg, withBase, blob } from "../lib/source";
+
+const paper = withBase("papers/quantum-volatility-paper.pdf");
+const report = withBase("papers/IEG313_Schrodingers_Cat_Report.pdf");
+---
+
+<Base title={`${cfg.name}, ${cfg.tagline}`} description={cfg.description}>
+  <Hero headline="Quantum vs classical: who forecasts Bitcoin swings better?" sub="We rebuilt a published quantum model, made it far better, and then tested it fairly against simple classical models. Honest result: the classical ones still win." primary={{ label: "Read the paper (PDF)", href: paper }}>
+    <Clip name="OurForecast" poster="clips/OurForecast.png" alt="Animation of the two-qubit model turning recent volatility into probabilities for four volatility levels" />
+  </Hero>
+
+  <Chapter id="answer" title="Far better than the original, not better than classical" lede="Lower scores are better. Same Bitcoin test days (657 of them), same scoring rule.">
+    <Bars caption="Forecast error on fresh Bitcoin data" unit="log loss, lower is better" rows={data.fresh_btc.map((r) => ({ ...r, kind: r.kind as "quantum" | "classical" | "paper" }))} />
+    <ul class="plain">
+      <li><strong>Our quantum model scores 0.57; the original paper's scores 1.20.</strong> More than half the error is gone.</li>
+      <li><strong>The gain comes from better inputs, not from quantum.</strong> A plain classical model fed the same inputs scores 0.52, which is better.</li>
+      <li><strong>Across ten cryptocurrencies, the quantum model never cleared the bar</strong> we wrote down before testing.</li>
+    </ul>
+    <p><a class="btn btn-primary" href={paper}>Read the paper (PDF)</a> <a class="btn" href={report}>Course report (PDF)</a></p>
+  </Chapter>
+
+  <Chapter id="task" title="The task: say how wild tomorrow will be" lede="Volatility is how much the price swings in a day. Instead of one number, the model gives a chance for each of four levels." wide>
+    <div class="two">
+      <Clip name="VolatilityLevels" poster="clips/VolatilityLevels.png" alt="Animation of daily volatility being sorted into calm, normal, wild and extreme levels" />
+      <div class="prose">
+        <p>Wild days cluster: a big swing today makes a big swing tomorrow more likely. A classic model called HAR uses that by averaging the last day, week and month.</p>
+        <p>We cut history into four levels, <strong>calm, normal, wild and extreme</strong>. Two qubits have exactly four measurement outcomes, so each outcome is one level and the circuit's output is the forecast.</p>
+        <Figure name="levels" alt="The four volatility levels and their cut points" />
+      </div>
+    </div>
+  </Chapter>
+
+  <Chapter id="how" title="Four steps from the paper to a fair verdict" lede="Scroll through what we built and how we kept the test honest." wide>
+    <Steps steps={[
+      { title: "Rebuild the original one-qubit model", body: "We reproduced the published model and matched its closed-form formula to 5.6e-16. We also found one of its three angles has no effect, and that it sees only yesterday." },
+      { title: "Give it memory and two qubits", body: "The new circuit sees yesterday, the weekly and monthly average and the return. Data is loaded again in every layer, then a CNOT links the qubits." },
+      { title: "Add classical twins", body: "Every quantum model gets classical rivals fed exactly the same inputs: softmax, a small network, HAR and GARCH. Any win must beat them." },
+      { title: "Split by time and seal the test", body: "Train on the past, tune on the middle, test on the newest days. Trained models are hashed before test scoring, and pass rules are written first." },
+    ]}>
+      <Clip slot="frame-0" name="PaperQubit" poster="clips/PaperQubit.png" alt="Animation of the single-qubit paper model on a Bloch sphere" />
+      <Figure slot="frame-1" name="circuit" alt="One layer of the two-qubit circuit: data loading, trainable rotations and a CNOT" caption="One layer, repeated up to four times (24 parameters at three layers)." />
+      <Figure slot="frame-2" name="fair" alt="Each quantum model paired with classical models given identical inputs" />
+      <Clip slot="frame-3" name="SealedTest" poster="clips/SealedTest.png" alt="Animation of a time-ordered train, validation and sealed test split" />
+    </Steps>
+  </Chapter>
+
+  <Chapter id="memory" title="Memory helps, and the numbers say so" lede="Paired differences on the sealed Bitcoin test. An interval that stays on one side of zero is not luck." wide>
+    <Forest rows={data.contrasts} />
+    <ul class="plain">
+      <li>Adding week and month memory cut log loss by <strong>0.051</strong> (interval −0.071 to −0.030).</li>
+      <li>Training the model to also imitate realistic price histories made forecasts <strong>worse</strong>.</li>
+      <li>The classical twin with the same inputs still beat the quantum model by 0.051.</li>
+    </ul>
+  </Chapter>
+
+  <Chapter id="coins" title="Ten coins, one rule written in advance: no group passed" lede="Before testing we required a 5% win over the best classical model, on every coin in a group." wide>
+    <div class="two">
+      <Diverge rows={data.coins} target={data.threshold_percent} />
+      <Bars caption="Earlier test on the paper's own data" unit="log loss, lower is better" rows={data.paper_data.map((r) => ({ ...r, kind: r.kind as "quantum" | "classical" }))} />
+    </div>
+    <p class="note">Only AVAX passed 5% alone. Its group (LINK, DOT, AVAX) failed together, and the quantum model was worse on a second score (QLIKE) for all three.</p>
+  </Chapter>
+
+  <Chapter id="read" title="Read the evidence yourself" lede="Every number above comes from these documents and the saved result files.">
+    <ul class="links">
+      <li><a href={paper}>Research paper (PDF, 6 pages)</a> new Typst paper with citations; <a href={blob("paper/main.typ")}>source</a>, <a href={blob("paper/refs.bib")}>BibTeX</a>, <a href={blob("paper/results.json")}>numbers (JSON)</a></li>
+      <li><a href={report}>Course report (PDF, 17 pages)</a> full IEG 313 report; <a href={blob("report/main.typ")}>source</a></li>
+      <li><a href={blob("doc/fresh-study.md")}>Fresh-data study</a>, <a href={blob("doc/final-study.md")}>frozen 20-seed study</a>, <a href={blob("doc/multimarket-v3-results.md")}>ten-coin results</a></li>
+      <li><a href={blob("doc/research-ledger.md")}>Research and verification ledger</a>, <a href={blob("doc/progress.md")}>progress log</a></li>
+      <li><a href={withBase("guide/")}>Usage guide</a> quickstart, configuration, FAQ</li>
+    </ul>
+  </Chapter>
+
+  <Chapter id="start" title="Run it on a laptop in four commands" lede="Synthetic data, no network and no keys once installed.">
+    <Terminal title="quickstart" lines={[
+      "$ git clone " + cfg.repoUrl,
+      "$ cd " + cfg.repoName,
+      "$ uv sync --locked --extra dev --extra plots --python 3.12",
+      "$ uv run qcvol verify-paper",
+      "{",
+      "  \"samples\": 256,",
+      "  \"phi_max_error\": 0.0,",
+      "  \"twin_max_error\": 5.551115123125783e-16",
+      "}",
+      "$ uv run qcvol demo --config configs/smoke.json --output results/demo-01",
+    ]} />
+  </Chapter>
+
+  <Chapter id="limits" title="What this does not show" lede="Stated plainly, so the result is not over-read.">
+    <ul class="plain">
+      <li>No real quantum computer was used and no noise was modelled.</li>
+      <li>Later circuit versions reuse test days already inspected, so they are indicative only.</li>
+      <li>Twenty seeds measure training variation, not twenty independent markets.</li>
+      <li>The fresh Bitcoin test period contained no "extreme" days.</li>
+    </ul>
+  </Chapter>
+
+  <style>
+    .plain { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.6rem; }
+    .two { display: grid; gap: 2rem; align-items: start; }
+    @media (min-width: 960px) { .two { grid-template-columns: 1fr 1fr; } }
+    .prose { display: grid; gap: 1rem; }
+    .prose p { margin: 0; }
+    .links { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.7rem; }
+    .note { color: var(--muted-foreground); }
+  </style>
+
+  <script>
+    import { initReveals, initSteps, initCounts } from "../scripts/motion";
+    initReveals(); initSteps(); initCounts();
+  </script>
+</Base>
