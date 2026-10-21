@@ -103,7 +103,7 @@ pres.addSection({ title: "Opening" });
   text(s, "Can a qubit forecast a storm?", { x: M + 0.2, y: 1.95, w: CW, h: 1.1, fontSize: 52, bold: true });
   text(s, "Rebuilding a quantum model of market volatility, improving it, and testing it fairly against classical methods", { x: M + 0.2, y: 3.25, w: 10, h: 1.1, fontSize: 24, color: SOFT });
   text(s, "Team Schrödinger's Cat", { x: M + 0.2, y: 5.2, w: 6, h: 0.45, fontSize: 20, bold: true });
-  text(s, "Srimoneyshankar Ajith · Bharadwaj B Chand · Nidhi Rakesh · Vishnunath A Suresh · Gopi Krish", { x: M + 0.2, y: 5.65, w: 11, h: 0.45, fontSize: 16, color: MUTED });
+  text(s, "Nidhi Rakesh · Srimoneyshankar Ajith · Bharadwaj B Chand · Vishnunath A Suresh · Gopi Krish", { x: M + 0.2, y: 5.65, w: 11, h: 0.45, fontSize: 16, color: MUTED });
   if (fs.existsSync(LOGO)) s.addImage({ path: LOGO, x: W - M - 1.2, y: 0.6, w: 1.2, h: 1.2 });
 }
 {
@@ -474,9 +474,9 @@ divider("07", "What we learned", "The honest verdict, and where this could go ne
 {
   const s = content("The team");
   const team = [
+    ["Nidhi Rakesh", "qvol package, v2 models, fresh-data study, paper comparison, IBM script"],
     ["Srimoneyshankar Ajith", "Coordination, Binance data pipeline, ETH/BTC/SOL/DOGE studies, RY-HAR hybrid"],
     ["Bharadwaj B Chand", "Paper rebuild check, memory experiments, realism study, classical baselines"],
-    ["Nidhi Rakesh", "qvol package, v2 models, fresh-data study, paper comparison, IBM script"],
     ["Vishnunath A Suresh", "Literature survey, metrics and statistical design, report and presentation"],
     ["Gopi Krish", "Integration and PR review, automated checks, LTC/BNB/ADA and LINK/DOT/AVAX studies, plots"],
   ];

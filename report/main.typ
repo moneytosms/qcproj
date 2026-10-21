@@ -516,10 +516,10 @@ The team’s research and development responsibilities are summarized in @tab-co
  table(columns:(.75fr,1.6fr),inset:4pt,stroke:.35pt+rgb("ccd5dc"),
  table.header([*Team member*],[*Research and development*]),
  [Nidhi Rakesh],[Reproduction of the one-qubit reference model and investigation of quantum data encoding; development and evaluation of the v2 and v3 circuit variants.],
- [Gopi Krish],[Development of classical baselines and evaluation methods; comparative research on scoring rules, calibration, and the performance of quantum and classical models.],
  [Srimoneyshankar Ajith],[Market-data preparation and calendar effects; weekend-aware forecasting, probability calibration, and replication across multiple crypto assets.],
- [Vishnunath A Suresh],[Design of the multi-horizon regime-forecasting framework and experimental methodology; research on volatility memory, model selection, and out-of-sample generalization.],
  [Bharadwaj B Chand],[Development of the two-qubit Born model and realism-aware training; analysis of generated volatility dynamics, optimizer behavior, and controlled ablations.],
+ [Vishnunath A Suresh],[Design of the multi-horizon regime-forecasting framework and experimental methodology; research on volatility memory, model selection, and out-of-sample generalization.],
+ [Gopi Krish],[Development of classical baselines and evaluation methods; comparative research on scoring rules, calibration, and the performance of quantum and classical models.],
 )},[Team responsibilities across model development, experimental evaluation, and research.],<tab-contributions>)
 
 Interpretation of experimental results and assessment of methodological limitations are shared across the team.

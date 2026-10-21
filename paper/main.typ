@@ -23,8 +23,8 @@
   #line(length: 100%, stroke: 2pt)
   #v(1.2em)
   #align(center)[
-    #text(weight: "bold")[Nidhi Rakesh #h(1.2em) Gopi Krish #h(1.2em) Srimoneyshankar Ajith] \
-    #text(weight: "bold")[Vishnunath A Suresh #h(1.2em) Bharadwaj B Chand] \
+    #text(weight: "bold")[Nidhi Rakesh #h(1.2em) Srimoneyshankar Ajith #h(1.2em) Bharadwaj B Chand] \
+    #text(weight: "bold")[Vishnunath A Suresh #h(1.2em) Gopi Krish] \
     #v(0.3em)
     Team Schrödinger's Cat, Department of Computer Science and Engineering \
     Indian Institute of Information Technology Kottayam \
