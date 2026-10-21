@@ -1,32 +1,135 @@
 ---
-// First screen: the claim, the proof (a real screenshot), the way in.
-// Keep the headline to the one thing a stranger should remember.
-import { cfg, withBase } from "../lib/source";
-interface Props { headline: string; sub: string; primary?: { label: string; href: string }; }
-const { headline, sub, primary = { label: "Read the guide", href: withBase("guide/") } } = Astro.props;
+// First screen: the question, one live thing to play with, the way in.
+// The wave is decorative: a seeded volatility-clustering series, drawn at build time.
+import { withBase } from "../lib/source";
+interface Props { headline: string; sub: string }
+const { headline, sub } = Astro.props;
+
+// Volatility-clustering toy series (GARCH-like), seeded so builds are identical.
+let seed = 7;
+const rnd = () => ((seed = (seed * 1664525 + 1013904223) >>> 0) / 2 ** 32);
+const gauss = () => Math.sqrt(-2 * Math.log(rnd() + 1e-9)) * Math.cos(2 * Math.PI * rnd());
+const N = 80, W = 1200, H = 240;
+let h = 0.3, r = 0;
+const pts: number[] = [];
+for (let i = 0; i < N; i++) {
+  h = 0.03 + 0.12 * r * r + 0.85 * h;
+  r = Math.sqrt(h) * gauss();
+  pts.push(r);
+}
+const max = 1.3; // soft-clip so one spike never dominates
+const line = (shift: number, amp: number) =>
+  pts.map((p, i) => `${i ? "L" : "M"}${((i / (N - 1)) * W).toFixed(1)} ${(H / 2 - Math.tanh((p + shift * Math.sin(i / 9)) / max) * H * amp * 0.5).toFixed(1)}`).join(" ");
+const real = line(0, 0.9), qf = line(0.25, 0.85), cf = line(-0.2, 0.8);
+const words = headline.split(" ");
 ---
 
 <header class="hero">
-  <div class="hero__text">
-    <h1>{headline}</h1>
-    <p class="hero__sub">{sub}</p>
-    <p class="hero__cta">
-      <a class="btn btn-primary" href={primary.href}>{primary.label}</a>
-      <a class="btn" href={cfg.repoUrl} rel="noopener">View source</a>
-    </p>
+  <svg class="wave" viewBox={`0 0 ${W * 2} ${H}`} preserveAspectRatio="none" aria-hidden="true">
+    <g class="wave__run">
+      {[0, W].map((dx) => (
+        <g transform={`translate(${dx} 0)`}>
+          <path d={cf} class="wave__c" />
+          <path d={qf} class="wave__q" />
+          <path d={real} class="wave__r" />
+        </g>
+      ))}
+    </g>
+  </svg>
+
+  <div class="hero__grid">
+    <div class="hero__text">
+      <h1 aria-label={headline}>
+        {words.map((w, i) => <span class="w" aria-hidden="true" style={`--i:${i}`}><span>{w}</span></span>)}
+      </h1>
+      <p class="hero__sub">{sub}</p>
+      <p class="hero__cta">
+        <a class="btn btn-primary" href={withBase("papers/quantum-volatility-paper.pdf")}>Read the paper</a>
+        <a class="btn" href="#answer">See the results</a>
+      </p>
+    </div>
+
+    <div class="probe" data-probe>
+      <p class="probe__title">What the model hands back every day</p>
+      <label class="probe__ctl">
+        <span>Yesterday was <output data-out>moderately busy</output></span>
+        <input type="range" min="0" max="100" value="42" data-range aria-label="Yesterday's price swing, calm to wild" />
+        <span class="probe__ends"><i>calm</i><i>wild</i></span>
+      </label>
+      <ul class="probe__bars">
+        {["Calm", "Normal", "Wild", "Extreme"].map((l, i) => (
+          <li data-lvl={i}>
+            <span class="probe__l">{l}</span>
+            <span class="probe__t"><span class="probe__f"></span></span>
+            <span class="probe__p" data-p>0%</span>
+          </li>
+        ))}
+      </ul>
+      <p class="probe__note">Illustration of the output format. It is not a real forecast; real scores are below.</p>
+    </div>
   </div>
-  <div class="hero__media"><slot /></div>
 </header>
 
-<style>
-  .hero {
-    display: grid; gap: 2.5rem; align-items: center;
-    max-width: calc(var(--wide) + 2 * var(--gutter)); margin: 0 auto;
-    padding: clamp(3rem, 8vw, 6rem) var(--gutter) 0;
+<script>
+  const root = document.querySelector<HTMLElement>("[data-probe]");
+  if (root) {
+    const range = root.querySelector<HTMLInputElement>("[data-range]")!;
+    const out = root.querySelector("[data-out]")!;
+    const rows = [...root.querySelectorAll<HTMLElement>("[data-lvl]")];
+    const centers = [0.1, 0.42, 0.72, 1.0];
+    const names = ["very calm", "calm", "moderately busy", "wild", "extremely wild"];
+    const update = () => {
+      const x = Number(range.value) / 100;
+      const logits = centers.map((c, i) => -Math.pow((x - c) / (i === 3 ? 0.2 : 0.3), 2) - (i === 3 ? 1.2 : 0));
+      const e = logits.map(Math.exp), s = e.reduce((a, b) => a + b, 0);
+      e.forEach((v, i) => {
+        const p = v / s;
+        rows[i].querySelector<HTMLElement>(".probe__f")!.style.transform = `scaleX(${p})`;
+        rows[i].querySelector("[data-p]")!.textContent = `${Math.round(p * 100)}%`;
+      });
+      out.textContent = names[Math.min(4, Math.floor(x * 5))];
+    };
+    range.addEventListener("input", update);
+    update();
   }
-  @media (min-width: 960px) { .hero { grid-template-columns: 1fr 1.15fr; } }
-  h1 { font-size: var(--step-5); }
-  .hero__sub { margin-top: 1.25rem; font-size: var(--step-1); line-height: 1.4; color: var(--muted-foreground); max-width: 34ch; }
-  .hero__cta { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 0.75rem; }
-  .hero__media { min-width: 0; }
+</script>
+
+<style>
+  .hero { position: relative; overflow: hidden; padding: clamp(7.5rem, 14vw, 10rem) var(--gutter) clamp(9rem, 16vw, 13rem); isolation: isolate; }
+  .hero::before { content: ""; position: absolute; inset: -20% -10% auto; height: 80%; z-index: -2; background: radial-gradient(60% 60% at 18% 20%, color-mix(in oklab, var(--quantum) 22%, transparent), transparent 70%), radial-gradient(40% 50% at 88% 10%, color-mix(in oklab, var(--classical) 14%, transparent), transparent 70%); }
+  .wave { position: absolute; left: 0; bottom: 0; width: 100%; height: 30%; z-index: -1; mask-image: linear-gradient(to bottom, transparent, #000 40%, #000 70%, transparent); opacity: 0.85; overflow: hidden; }
+  .wave__run { animation: drift 60s linear infinite; }
+  @keyframes drift { to { transform: translateX(-1200px); } }
+  .wave path { fill: none; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
+  .wave__r { stroke: var(--foreground); stroke-opacity: 0.28; stroke-width: 1.5; }
+  .wave__q { stroke: var(--quantum); stroke-width: 2; stroke-opacity: 0.8; }
+  .wave__c { stroke: var(--classical); stroke-width: 2; stroke-opacity: 0.7; }
+
+  .hero__grid { max-width: var(--wide); margin: 0 auto; display: grid; gap: 3rem; align-items: center; }
+  @media (min-width: 980px) { .hero__grid { grid-template-columns: 1.45fr 1fr; gap: 3.5rem; } }
+  h1 { font-size: clamp(2.7rem, 1rem + 5.4vw, 4.9rem); font-weight: 800; line-height: 0.96; letter-spacing: -0.045em; }
+  .w { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: 0.08em; margin-right: 0.22em; }
+  .w > span { display: inline-block; animation: rise 900ms var(--ease-out) both; animation-delay: calc(var(--i) * 70ms + 80ms); }
+  @keyframes rise { from { transform: translateY(105%); } }
+  .hero__sub { margin-top: 1.6rem; font-size: var(--step-1); line-height: 1.42; color: var(--muted-foreground); max-width: 34ch; animation: fade 900ms 700ms both; }
+  .hero__cta { margin-top: 2.2rem; display: flex; flex-wrap: wrap; gap: 0.75rem; animation: fade 900ms 850ms both; }
+  @keyframes fade { from { opacity: 0; transform: translateY(8px); } }
+
+  .probe { padding: 1.5rem; border-radius: 1.5rem; background: var(--glass-fill); border: 1px solid var(--glass-border); backdrop-filter: blur(18px); box-shadow: var(--shadow-card); animation: fade 1000ms 600ms both; }
+  .probe__title { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; letter-spacing: -0.02em; }
+  .probe__ctl { display: grid; gap: 0.5rem; margin-top: 1.1rem; font-size: var(--step--1); color: var(--muted-foreground); }
+  .probe__ctl output { color: var(--foreground); font-weight: 600; }
+  .probe__ends { display: flex; justify-content: space-between; font-style: normal; font-size: 0.78rem; }
+  .probe__ends i { font-style: normal; }
+  input[type="range"] { appearance: none; width: 100%; height: 28px; background: transparent; cursor: pointer; }
+  input[type="range"]::-webkit-slider-runnable-track { height: 6px; border-radius: 6px; background: linear-gradient(90deg, var(--classical), var(--quantum)); }
+  input[type="range"]::-moz-range-track { height: 6px; border-radius: 6px; background: linear-gradient(90deg, var(--classical), var(--quantum)); }
+  input[type="range"]::-webkit-slider-thumb { appearance: none; width: 22px; height: 22px; margin-top: -8px; border-radius: 50%; background: var(--foreground); border: 4px solid var(--background); box-shadow: 0 0 0 2px var(--quantum); }
+  input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: var(--foreground); border: 4px solid var(--background); box-shadow: 0 0 0 2px var(--quantum); }
+  .probe__bars { list-style: none; margin: 1.4rem 0 0; padding: 0; display: grid; gap: 0.7rem; }
+  .probe__bars li { display: grid; grid-template-columns: 4.6rem 1fr 3rem; align-items: center; gap: 0.75rem; font-size: var(--step--1); }
+  .probe__t { height: 0.7rem; border-radius: 99px; background: var(--muted); overflow: hidden; }
+  .probe__f { display: block; height: 100%; border-radius: 99px; background: var(--quantum); transform-origin: left; transition: transform 380ms var(--ease-out); }
+  .probe__p { text-align: right; font-family: var(--font-mono); font-weight: 500; }
+  .probe__note { margin-top: 1.2rem; font-size: 0.78rem; color: var(--muted-foreground); }
 </style>

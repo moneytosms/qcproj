@@ -2,7 +2,9 @@
   "name": "project-site",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=24" },
+  "engines": {
+    "node": ">=24"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build && pagefind --site dist",
@@ -14,8 +16,9 @@
   },
   "dependencies": {
     "@astrojs/markdown-remark": "7.3.2",
-    "@fontsource/noto-sans": "5.3.0",
-    "@fontsource/noto-sans-mono": "5.2.8",
+    "@fontsource-variable/bricolage-grotesque": "5.3.0",
+    "@fontsource-variable/geist": "5.3.0",
+    "@fontsource-variable/geist-mono": "5.3.0",
     "astro": "7.3.8",
     "gsap": "3.15.0"
   },

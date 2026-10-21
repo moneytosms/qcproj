@@ -1,38 +1,29 @@
 ---
-// One section of the page. The title is a claim, not a label ("Corrections
-// never erase", not "Corrections"). Numbers only for real sequences.
-interface Props {
-  id: string;
-  title: string;
-  lede?: string;
-  n?: number;
-  wide?: boolean; // let the body run to --wide instead of --measure
-}
-const { id, title, lede, n, wide = false } = Astro.props;
+// One section. Title is a claim. On wide screens the head sits left and the body right;
+// `wide` stacks them so charts and steps can use the full width.
+interface Props { id: string; title: string; lede?: string; wide?: boolean }
+const { id, title, lede, wide = false } = Astro.props;
 ---
 
-<section class="chapter" id={id} aria-labelledby={`${id}-title`}>
-  <div class="chapter__head">
-    {n !== undefined && <p class="chapter__n">Chapter {n}</p>}
-    <h2 id={`${id}-title`} class="chapter__title">{title}</h2>
-    {lede && <p class="chapter__lede">{lede}</p>}
-  </div>
-  <div class:list={["chapter__body", { "chapter__body--wide": wide }]}>
-    <slot />
+<section class:list={["chapter", { "chapter--wide": wide }]} id={id} aria-labelledby={`${id}-title`}>
+  <div class="chapter__inner">
+    <div class="chapter__head">
+      <h2 id={`${id}-title`}>{title}</h2>
+      {lede && <p class="chapter__lede">{lede}</p>}
+    </div>
+    <div class="chapter__body"><slot /></div>
   </div>
 </section>
 
 <style>
-  .chapter {
-    padding: clamp(4rem, 9vw, 8rem) var(--gutter) 0;
-    max-width: calc(var(--wide) + 2 * var(--gutter));
-    margin: 0 auto;
-    scroll-margin-top: 64px;
+  .chapter { padding: clamp(4.5rem, 9vw, 8rem) var(--gutter) 0; }
+  .chapter__inner { max-width: var(--wide); margin: 0 auto; border-top: 1px solid var(--border); padding-top: clamp(2rem, 4vw, 3rem); display: grid; gap: 2rem; }
+  h2 { font-size: var(--step-3); }
+  .chapter__lede { margin-top: 1rem; color: var(--muted-foreground); font-size: var(--step-0); max-width: 40ch; }
+  .chapter__body { min-width: 0; display: grid; gap: 1.5rem; align-content: start; }
+  @media (min-width: 980px) {
+    .chapter:not(.chapter--wide) .chapter__inner { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 4rem; }
+    .chapter:not(.chapter--wide) .chapter__head { position: sticky; top: 110px; align-self: start; }
   }
-  .chapter__head { max-width: var(--measure); }
-  .chapter__n { color: var(--primary); font-weight: 500; font-size: var(--step--1); margin-bottom: 0.5rem; }
-  .chapter__title { font-size: var(--step-3); }
-  .chapter__lede { margin-top: 1rem; font-size: var(--step-1); line-height: 1.4; color: var(--muted-foreground); }
-  .chapter__body { margin-top: clamp(1.5rem, 4vw, 2.5rem); max-width: var(--measure); display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.25rem; }
-  .chapter__body--wide { max-width: var(--wide); }
+  .chapter--wide .chapter__head { max-width: 46ch; }
 </style>
