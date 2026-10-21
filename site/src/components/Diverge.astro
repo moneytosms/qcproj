@@ -1,0 +1,45 @@
+---
+// Per-coin gain over the best classical model, with the pre-registered target line.
+interface Row { coin: string; gain: number }
+interface Props { rows: Row[]; target: number }
+const { rows, target } = Astro.props;
+const sorted = [...rows].sort((a, b) => b.gain - a.gain);
+const lo = -8, hi = 8, pct = (v: number) => ((v - lo) / (hi - lo)) * 100;
+---
+
+<figure class="div" data-forest>
+  <figcaption>Quantum gain over the best classical model, per coin <span class="u">% of log loss, right is better for quantum</span></figcaption>
+  <div class="plot" role="img" aria-label={`Gain per coin: ${sorted.map((r) => `${r.coin} ${r.gain}%`).join(", ")}. Target ${target}%.`}>
+    <span class="zero" style={`left:${pct(0)}%`}></span>
+    <span class="target" style={`left:${pct(target)}%`}><b>{target}% target</b></span>
+    {sorted.map((r) => (
+      <div class="row">
+        <span class="name">{r.coin}</span>
+        <span class="lane">
+          <span class={`dot ${r.gain >= target ? "hit" : r.gain < 0 ? "neg" : ""}`} style={`left:${pct(r.gain)}%`}></span>
+          <span class:list={["val", { left: r.gain > 1.5 }]} style={r.gain > 1.5 ? `right:${100 - pct(r.gain)}%` : `left:${pct(r.gain)}%`}>{r.gain > 0 ? "+" : ""}{r.gain.toFixed(2)}%{r.gain >= target ? " (alone passes)" : ""}</span>
+        </span>
+      </div>
+    ))}
+  </div>
+</figure>
+
+<style>
+  .div { margin: 0; padding: 1.25rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); box-shadow: var(--shadow-card); min-width: 0; }
+  figcaption { font-weight: 600; margin-bottom: 1rem; }
+  .u { display: block; font-weight: 400; color: var(--muted-foreground); font-size: var(--step--1); }
+  .plot { position: relative; display: grid; gap: 0.35rem; padding-top: 1.4rem; }
+  .row { display: grid; grid-template-columns: 3.2rem 1fr; align-items: center; }
+  .name { font-size: var(--step--1); font-weight: 600; }
+  .lane { position: relative; height: 1.5rem; }
+  .zero, .target { position: absolute; top: 1.2rem; bottom: 0; width: 0; margin-left: 3.2rem; pointer-events: none; }
+  .zero { border-left: 1px solid var(--input); }
+  .target { border-left: 2px dashed var(--danger); }
+  .target b { position: absolute; top: -1.3rem; left: 0; transform: translateX(-50%); font-size: 0.72rem; color: var(--danger); white-space: nowrap; }
+  .dot { position: absolute; top: 50%; width: 0.8rem; height: 0.8rem; margin: -0.4rem 0 0 -0.4rem; border-radius: 50%; background: var(--primary); transition: left 800ms var(--ease-out); }
+  .dot.neg { background: var(--ok); }
+  .dot.hit { background: var(--warn); }
+  .val { position: absolute; top: 50%; transform: translateY(-50%); margin-left: 0.7rem; font-size: 0.72rem; color: var(--muted-foreground); white-space: nowrap; }
+  .val.left { margin-left: 0; margin-right: 0.7rem; }
+  @media (max-width: 560px) { .val { font-size: 0.65rem; } }
+</style>

@@ -147,7 +147,7 @@ rolling estimates were verified. Independent MFDFA fluctuation error is at most 
 The reproduction suite passes 13 tests; running it with this pipeline's 27 tests gives
 40 passing tests. Seven measured comparison plots were visually inspected.
 
-The [measured report on that branch](https://github.com/moneytosms/qcproj/blob/codex/paper-reproduction/doc/paper-reproduction.md)
+The [measured report on that branch](paper-reproduction.md)
 explains differences in generated return tails, the empirical zero-return convention,
 and the unpublished exact scale grid. This verifies the original-paper comparison
 milestone while preserving uncertainty about exact numerical replication. It does not

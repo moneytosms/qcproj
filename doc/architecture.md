@@ -477,3 +477,9 @@ Lilaq consumes saved interval rows, and SVG plots are rebuilt by
 results without retraining or mutating sealed artifacts. Compiled PDFs and page
 renders remain local build output. This adds a reporting layer, not a new model
 or production application architecture.
+
+## Project site and paper (`site/`, `docs/`, `paper/`)
+
+- `paper/results.json` is the single source for headline numbers (copied from the sealed fresh-study note and `report/assets/contrasts.json`). Both `paper/figures.py` (SVG figures for the Typst paper) and the Astro landing page import it, so site charts and paper cannot drift apart.
+- The paper (`paper/main.typ`, `refs.bib`) uses a single-column NeurIPS-2017 layout and reuses the report's pipeline and circuit figures. The longer IEEE-style course report stays in `report/`.
+- The site is the project-showcase Astro template; the guide renders `docs/*.md` in place. Deck clips are re-encoded to WebM/MP4 under `site/public/clips/`. No site content claims anything beyond the report and result notes.

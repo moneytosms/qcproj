@@ -1,0 +1,167 @@
+{
+ "source": "report/body.md Results section; contrasts from report/assets/contrasts.json (sealed fresh study, commit 0aeab94)",
+ "fresh_btc": [
+  {
+   "id": "paper",
+   "label": "Original paper model",
+   "kind": "paper",
+   "value": 1.196
+  },
+  {
+   "id": "q1",
+   "label": "Quantum v1",
+   "kind": "quantum",
+   "value": 0.5695
+  },
+  {
+   "id": "q2",
+   "label": "Quantum v2",
+   "kind": "quantum",
+   "value": 0.529
+  },
+  {
+   "id": "q3",
+   "label": "Quantum v3",
+   "kind": "quantum",
+   "value": 0.5145
+  },
+  {
+   "id": "s1",
+   "label": "Softmax, same inputs as v1",
+   "kind": "classical",
+   "value": 0.5184
+  },
+  {
+   "id": "s2",
+   "label": "Softmax, same inputs as v2",
+   "kind": "classical",
+   "value": 0.4962
+  }
+ ],
+ "paper_data": [
+  {
+   "label": "HAR quantile",
+   "kind": "classical",
+   "value": 0.5289
+  },
+  {
+   "label": "HAR residual",
+   "kind": "classical",
+   "value": 0.5295
+  },
+  {
+   "label": "Small network",
+   "kind": "classical",
+   "value": 0.5784
+  },
+  {
+   "label": "Softmax",
+   "kind": "classical",
+   "value": 0.5822
+  },
+  {
+   "label": "Quantum range",
+   "kind": "quantum",
+   "value": 0.692
+  },
+  {
+   "label": "Quantum + realism",
+   "kind": "quantum",
+   "value": 0.8623
+  }
+ ],
+ "coins": [
+  {
+   "coin": "ETH",
+   "q": 0.648,
+   "c": 0.6482,
+   "gain": 0.03
+  },
+  {
+   "coin": "BTC",
+   "q": 0.532,
+   "c": 0.5309,
+   "gain": -0.21
+  },
+  {
+   "coin": "SOL",
+   "q": 0.405,
+   "c": 0.4174,
+   "gain": 2.98
+  },
+  {
+   "coin": "DOGE",
+   "q": 0.7627,
+   "c": 0.7633,
+   "gain": 0.08
+  },
+  {
+   "coin": "LTC",
+   "q": 0.6132,
+   "c": 0.5966,
+   "gain": -2.79
+  },
+  {
+   "coin": "BNB",
+   "q": 0.3918,
+   "c": 0.3666,
+   "gain": -6.89
+  },
+  {
+   "coin": "ADA",
+   "q": 0.7602,
+   "c": 0.7698,
+   "gain": 1.24
+  },
+  {
+   "coin": "LINK",
+   "q": 0.5771,
+   "c": 0.5916,
+   "gain": 2.45
+  },
+  {
+   "coin": "DOT",
+   "q": 0.6387,
+   "c": 0.643,
+   "gain": 0.66
+  },
+  {
+   "coin": "AVAX",
+   "q": 0.4485,
+   "c": 0.4755,
+   "gain": 5.68
+  }
+ ],
+ "threshold_percent": 5,
+ "contrasts": [
+  {
+   "label": "Realism penalty (A) vs plain (D)",
+   "note": "positive: A worse",
+   "mean": 0.03471472786913199,
+   "lower": 0.02298042787176494,
+   "upper": 0.0453888253331821
+  },
+  {
+   "label": "Week+month memory vs short input",
+   "note": "negative: memory helps",
+   "mean": -0.05086957774930086,
+   "lower": -0.07109925698682537,
+   "upper": -0.030581049499101995
+  },
+  {
+   "label": "Quantum vs softmax, same inputs",
+   "note": "positive: quantum worse",
+   "mean": 0.05108536974957058,
+   "lower": 0.036603197188742116,
+   "upper": 0.0652218516044466
+  }
+ ],
+ "realism": {
+  "paper": 215.3,
+  "ours": 33.5
+ },
+ "qlike": {
+  "paper": 0.84,
+  "ours": 0.504
+ }
+}

@@ -14,6 +14,10 @@ Start with [the project guide and repository reading order](doc/project-guide.md
 the [research and verification ledger](doc/research-ledger.md), and [current progress](doc/progress.md). The two PDFs in this repository are the source
 specification and explanatory guide; their pilot numbers are not results from this code.
 
+## Project site and paper
+
+The [landing page](https://moneytosms.github.io/qcproj/) explains the result with charts and animations (source in `site/`, usage guide in `docs/`). The [research paper](paper/main.typ) is a 6-page Typst paper with BibTeX citations; build with `typst compile --font-path report/fonts --root . paper/main.typ paper/quantum-volatility-paper.pdf`. Figures come from `paper/results.json` via `paper/figures.py`.
+
 ## IEG 313 report
 
 The [implementation-based project report](report/README.md) provides editable Typst
