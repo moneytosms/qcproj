@@ -17,18 +17,16 @@ const report = withBase("papers/IEG313_Schrodingers_Cat_Report.pdf");
 ---
 
 <Base title={`${cfg.name}, ${cfg.tagline}`} description={cfg.description}>
-  <Hero headline="Quantum vs classical: who forecasts Bitcoin swings better?" sub="We rebuilt a published quantum model, made it far better, and then tested it fairly against simple classical models. Honest result: the classical ones still win." primary={{ label: "Read the paper (PDF)", href: paper }}>
-    <Clip name="OurForecast" poster="clips/OurForecast.png" alt="Animation of the two-qubit model turning recent volatility into probabilities for four volatility levels" />
-  </Hero>
+  <Hero headline="Quantum or classical: who forecasts Bitcoin's wild days better?" sub="We rebuilt a published quantum model, made it far better, then tested it fairly against simple classical models. The classical ones still win." />
 
-  <Chapter id="answer" title="Far better than the original, not better than classical" lede="Lower scores are better. Same Bitcoin test days (657 of them), same scoring rule.">
+  <Chapter id="answer" title="Far better than the original, not better than classical" lede="Lower scores are better. Same 657 Bitcoin test days, same scoring rule.">
     <Bars caption="Forecast error on fresh Bitcoin data" unit="log loss, lower is better" rows={data.fresh_btc.map((r) => ({ ...r, kind: r.kind as "quantum" | "classical" | "paper" }))} />
     <ul class="plain">
       <li><strong>Our quantum model scores 0.57; the original paper's scores 1.20.</strong> More than half the error is gone.</li>
-      <li><strong>The gain comes from better inputs, not from quantum.</strong> A plain classical model fed the same inputs scores 0.52, which is better.</li>
+      <li><strong>The gain comes from better inputs, not from quantum.</strong> A classical model fed the same inputs scores 0.52, which is better.</li>
       <li><strong>Across ten cryptocurrencies, the quantum model never cleared the bar</strong> we wrote down before testing.</li>
     </ul>
-    <p><a class="btn btn-primary" href={paper}>Read the paper (PDF)</a> <a class="btn" href={report}>Course report (PDF)</a></p>
+    <p class="row-btns"><a class="btn btn-primary" href={paper}>Read the paper</a> <a class="btn" href={report}>Course report</a></p>
   </Chapter>
 
   <Chapter id="task" title="The task: say how wild tomorrow will be" lede="Volatility is how much the price swings in a day. Instead of one number, the model gives a chance for each of four levels." wide>
@@ -36,7 +34,7 @@ const report = withBase("papers/IEG313_Schrodingers_Cat_Report.pdf");
       <Clip name="VolatilityLevels" poster="clips/VolatilityLevels.png" alt="Animation of daily volatility being sorted into calm, normal, wild and extreme levels" />
       <div class="prose">
         <p>Wild days cluster: a big swing today makes a big swing tomorrow more likely. A classic model called HAR uses that by averaging the last day, week and month.</p>
-        <p>We cut history into four levels, <strong>calm, normal, wild and extreme</strong>. Two qubits have exactly four measurement outcomes, so each outcome is one level and the circuit's output is the forecast.</p>
+        <p>We cut history into four levels: <strong>calm, normal, wild and extreme</strong>. Two qubits have exactly four measurement outcomes, so each outcome is one level and the circuit's output is the forecast.</p>
         <Figure name="levels" alt="The four volatility levels and their cut points" />
       </div>
     </div>
@@ -56,7 +54,7 @@ const report = withBase("papers/IEG313_Schrodingers_Cat_Report.pdf");
     </Steps>
   </Chapter>
 
-  <Chapter id="memory" title="Memory helps, and the numbers say so" lede="Paired differences on the sealed Bitcoin test. An interval that stays on one side of zero is not luck." wide>
+  <Chapter id="memory" title="Memory helps, and the numbers say so" lede="Paired differences on the sealed Bitcoin test. An interval that stays on one side of zero is not luck.">
     <Forest rows={data.contrasts} />
     <ul class="plain">
       <li>Adding week and month memory cut log loss by <strong>0.051</strong> (interval −0.071 to −0.030).</li>
@@ -74,12 +72,15 @@ const report = withBase("papers/IEG313_Schrodingers_Cat_Report.pdf");
   </Chapter>
 
   <Chapter id="read" title="Read the evidence yourself" lede="Every number above comes from these documents and the saved result files.">
-    <ul class="links">
-      <li><a href={paper}>Research paper (PDF, 6 pages)</a> new Typst paper with citations; <a href={blob("paper/main.typ")}>source</a>, <a href={blob("paper/refs.bib")}>BibTeX</a>, <a href={blob("paper/results.json")}>numbers (JSON)</a></li>
-      <li><a href={report}>Course report (PDF, 17 pages)</a> full IEG 313 report; <a href={blob("report/main.typ")}>source</a></li>
-      <li><a href={blob("doc/fresh-study.md")}>Fresh-data study</a>, <a href={blob("doc/final-study.md")}>frozen 20-seed study</a>, <a href={blob("doc/multimarket-v3-results.md")}>ten-coin results</a></li>
-      <li><a href={blob("doc/research-ledger.md")}>Research and verification ledger</a>, <a href={blob("doc/progress.md")}>progress log</a></li>
-      <li><a href={withBase("guide/")}>Usage guide</a> quickstart, configuration, FAQ</li>
+    <ul class="docs">
+      <li><a href={paper}><b>Research paper</b><span>New Typst paper with citations</span><em>PDF, 6 pages</em></a></li>
+      <li><a href={report}><b>Course report</b><span>Full IEG 313 report</span><em>PDF, 17 pages</em></a></li>
+      <li><a href={blob("doc/fresh-study.md")}><b>Fresh-data study</b><span>Sealed Bitcoin test</span><em>Notes</em></a></li>
+      <li><a href={blob("doc/final-study.md")}><b>Frozen 20-seed study</b><span>Paper's data, all models</span><em>Notes</em></a></li>
+      <li><a href={blob("doc/multimarket-v3-results.md")}><b>Ten-coin results</b><span>Pre-registered 5% rule</span><em>Notes</em></a></li>
+      <li><a href={blob("paper/results.json")}><b>Headline numbers</b><span>Feeds paper figures and this page</span><em>JSON</em></a></li>
+      <li><a href={blob("paper/refs.bib")}><b>Bibliography</b><span>All paper citations</span><em>BibTeX</em></a></li>
+      <li><a href={withBase("guide/")}><b>Usage guide</b><span>Quickstart, configuration, FAQ</span><em>Guide</em></a></li>
     </ul>
   </Chapter>
 
@@ -108,14 +109,20 @@ const report = withBase("papers/IEG313_Schrodingers_Cat_Report.pdf");
   </Chapter>
 
   <style>
-    .plain { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.6rem; }
-    .two { display: grid; gap: 2rem; align-items: start; }
-    @media (min-width: 960px) { .two { grid-template-columns: 1fr 1fr; } }
+    .plain { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.7rem; }
+    .two { display: grid; gap: 2.5rem; align-items: start; }
+    @media (min-width: 960px) { .two { grid-template-columns: 1fr 1fr; gap: 4rem; } }
     .prose { display: grid; gap: 1rem; }
-    .prose p { margin: 0; }
-    .links { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.7rem; }
-    .note { color: var(--muted-foreground); }
-  </style>
+    .row-btns { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .note { color: var(--muted-foreground); max-width: 62ch; }
+    .docs { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border); }
+    .docs li { border-bottom: 1px solid var(--border); }
+    .docs a { display: grid; grid-template-columns: 1fr auto; gap: 0 1rem; padding: 1.05rem 0.25rem; color: var(--foreground); text-decoration: none; transition: padding 220ms var(--ease-out), background-color 220ms; }
+    .docs a:hover { padding-left: 1rem; background: color-mix(in oklab, var(--quantum) 9%, transparent); color: var(--foreground); }
+    .docs b { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em; }
+    .docs span { grid-column: 1; color: var(--muted-foreground); font-size: var(--step--1); }
+    .docs em { grid-row: 1 / span 2; grid-column: 2; align-self: center; font-style: normal; font-family: var(--font-mono); font-size: 0.78rem; color: var(--quantum); }
+    </style>
 
   <script>
     import { initReveals, initSteps, initCounts } from "../scripts/motion";

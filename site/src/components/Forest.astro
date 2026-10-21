@@ -21,15 +21,15 @@ const lo = -0.09, hi = 0.08, pct = (v: number) => ((v - lo) / (hi - lo)) * 100;
 </figure>
 
 <style>
-  .forest { margin: 0; padding: 1.25rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); box-shadow: var(--shadow-card); display: grid; gap: 1rem; min-width: 0; }
+  .forest { margin: 0; display: grid; gap: 1.4rem; min-width: 0; }
   figcaption { font-weight: 600; }
   .u { display: block; font-weight: 400; color: var(--muted-foreground); font-size: var(--step--1); }
   .t { font-size: var(--step--1); margin: 0; } .t small { display: block; color: var(--muted-foreground); }
   .n { margin: 0.2rem 0 0; font-variant-numeric: tabular-nums; font-weight: 600; font-size: var(--step--1); } .n small { font-weight: 400; color: var(--muted-foreground); }
   .lane { position: relative; height: 1.2rem; margin-top: 0.3rem; }
   .zero { position: absolute; top: -0.2rem; bottom: -0.2rem; border-left: 1px solid var(--foreground); }
-  .ci { position: absolute; top: 50%; height: 4px; margin-top: -2px; background: var(--primary); border-radius: 2px; transform-origin: center; transition: transform 700ms var(--ease-out); }
-  .pt { position: absolute; top: 50%; width: 0.8rem; height: 0.8rem; margin: -0.4rem 0 0 -0.4rem; border-radius: 50%; background: var(--primary); }
+  .ci { position: absolute; top: 50%; height: 4px; margin-top: -2px; background: var(--quantum); border-radius: 2px; transform-origin: center; transition: transform 700ms var(--ease-out); }
+  .pt { position: absolute; top: 50%; width: 0.8rem; height: 0.8rem; margin: -0.4rem 0 0 -0.4rem; border-radius: 50%; background: var(--quantum); box-shadow: 0 0 14px var(--quantum); }
   :global(html.js) .forest:not(.in) .ci { transform: scaleX(0); }
   @media (prefers-reduced-motion: reduce) { .ci { transition: none; } :global(html.js) .forest:not(.in) .ci { transform: none; } }
 </style>
