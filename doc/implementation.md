@@ -202,6 +202,18 @@ labelled. Physical-unit risk and the novelty literature check remain open. The 2
 experiment and plotting tasks are complete; the broader original plan is not. Report
 and slides remain paused. No test-driven rescue tuning follows this result.
 
+## Frontier research sprint (22 October 2026)
+
+Completed the bounded [v4–v6 development protocol](frontier-protocol.md),
+[measured scorecard](frontier-results.md), primary-source literature review,
+and [nine-work-package research plan](frontier-research-plan.md). The plan
+specifies ownership, dependencies, commands, budgets, tests and stop rules.
+The new runner completes 16 readout fits plus HAR per asset/seed; the replay
+checks saved daily metrics and provenance. Fifteen measured runs do not show
+robust superiority. The separate `paper/frontier.typ` manuscript compiles and
+includes these findings. Future confirmation and publication readiness remain
+unfulfilled; no outcome is promised by expanding the model search.
+
 ## New improvement investigation after Nidhi's PR #8
 
 The user requested a further improvement attempt after checking Nidhi's latest changes.

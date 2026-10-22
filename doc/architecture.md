@@ -1,5 +1,29 @@
 # Architecture decisions
 
+## Frontier sprint: frozen features and separate evidence replay (22 October 2026)
+
+The new `scripts/run_frontier_study.py` reuses existing past-only preparation,
+training transforms, WeekendBorn and WeekendHAR. It trims data before 2025,
+fits through 2022, selects on 2023 and scores exposed 2024 development data.
+Frozen quantum/sine/tanh maps feed convex regularized reference-logit heads;
+the residual variant offsets logits by transformed-HAR probabilities. A fixed
+15-combination mixture grid is selected on calibration only. No historical
+package, seal or model implementation changes.
+
+`scripts/summarize_frontier_study.py` independently replays scores from saved
+probabilities, checks source/data hashes and cross-seed configuration, and
+resamples paired date losses. It is not an independent circuit/feature replay
+or a confirmatory inference engine. New directories refuse overwrite; outputs
+stay ignored. A zero residual recovers HAR, and a zero mixture weight recovers
+the selected classical predictor. These nesting properties hold in the model
+family; they do not guarantee future forecast improvement.
+
+The full [scorecard](frontier-results.md) records negative outcomes, overlapping
+feature seeds, unmatched mixture search and the transformed-HAR limitation.
+The [research plan](frontier-research-plan.md) gates more costly models on fixing
+these controls. `paper/frontier.typ` is a separate seven-page research draft;
+existing manuscript/source PDFs remain unchanged.
+
 These records explain choices made while implementing the project. The project PDFs
 are the specification and explanatory references; their pilot claims are not execution
 results. See [implementation.md](implementation.md) for the full research plan and
