@@ -26,6 +26,11 @@ scientific/writing review records. Build it with the commands in that directory.
 It reports completed studies and distinguishes post-hoc findings and limitations.
 Historical milestone notes below retain their original experiment boundaries.
 
+The separate [quantum software contributions assignment](report/quantum-contributions.typ)
+describes my merged work in pyRiemann-Qiskit and Quartz, with implementation diagrams
+and GitHub merge screenshots. Compile it with
+`typst compile --font-path report/fonts --root . report/quantum-contributions.typ output/pdf/quantum-contributions-report.pdf`.
+
 ## Quick start
 
 Python 3.11+; the locked setup uses Python 3.12 and uv:
