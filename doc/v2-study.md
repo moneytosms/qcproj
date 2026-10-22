@@ -31,6 +31,12 @@ All choices were made on 2023-2024 validation data.
 | Network, v2 inputs | 26 | 0.504 | 0.287 | 0.336 |
 | Softmax, v2 inputs | 28 | 0.496 | 0.288 | 0.289 |
 
+**Effective parameters (added 22 Oct 2026):** "Params" counts nominal parameters. A Jacobian
+rank check ([ADR 021](architecture.md)) shows the final-layer RZ weights of quantum v2
+cannot affect its probabilities: 84 → 70 effective (60 → 50 without calendar). The classical
+models also have redundant directions: softmax-v2 28 → 21, network-v2 26 → 23. Scores are
+unchanged; `qcvol_next.trimmed_v2` is the 70-parameter form for future runs.
+
 Paired date-bootstrap intervals (95%, 30-day blocks; 7-day blocks give the same
 conclusions), left minus right, negative favors quantum v2:
 

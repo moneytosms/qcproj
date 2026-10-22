@@ -466,6 +466,35 @@ opened only after protocol, tuning, training, and hashes are frozen.
 Use each actual adjacent close return once, even when it spans missing intervals. This
 avoids discarding an observed price move while keeping data quality visible.
 
+## ADR 021 — Count effective parameters with a Jacobian rank check
+
+**Context:** a Z rotation just before a Z-basis measurement cannot change Born
+probabilities. Tests already pinned the dead paper phi and the two terminal RZ angles of
+the v1 circuit by hand, but v2 and v3 reuse a layer that ends in RZ and their reports quote
+84 parameters.
+
+**Decision:** `qcvol_next.identifiability.effective_parameters` stacks central-difference
+derivatives of every output over many inputs and reports the numerical rank of that
+Jacobian at random parameter points. Active directions sit at 1e-2 relative singular value
+or above and dead ones at finite-difference noise (about 1e-11), so the 1e-7 cut has wide
+margin. `qcvol_next.trimmed_v2` optimizes only the 70 active depth-3 v2 weights and runs
+them through the unchanged v2 circuit with the final-layer RZ weights fixed at zero.
+
+**Measured (nominal → effective):** paper readout 3 → 2; v1 Born circuit 8L → 8L − 2;
+memory circuit 6L → 6L − 1; quantum-v2 84 → 70; quantum-v2-nocal 60 → 50; v3 Born 84 → 70;
+v3 Pauli readout 148 → 130 (16 from the softmax shift; the other 2 are not yet attributed).
+Classical comparators also lose directions: softmax-v2 28 → 21, network-v2 26 → 23.
+
+**Reason for placement:** `run_v2_study.py` and `evaluate_calibrated_v3.py` hash every
+`*.py` file in `src/qcvol_v2`, so editing or adding a file there would break re-verification
+of scored studies. `qcvol_next` is the unsealed follow-up package. The ETH upgrade's local
+`code_hashes()` covers `src/qcvol_next` too, so any unscored local ETH seal must be evaluated
+from its sealed commit.
+
+**Consequence:** published v2/v3 scores stand. With the 0.001 ridge, the dead weights carried
+only penalty, so a trimmed fit reaches the same optimum class; the trimmed model saves
+optimizer dimensions and gives honest capacity comparisons (v2 still has about 3× the
+effective parameters of either classical comparator).
 
 ## Report source and evidence boundary
 
