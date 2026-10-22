@@ -534,3 +534,14 @@ Replaced document-production duties with concise research and development areas
 for all five members. Removed assignment commentary from the submitted section.
 The report was recompiled, writing checks passed, and the affected pages were
 rendered and inspected. Experimental results and implementation files are unchanged.
+
+## Effective-parameter check and trimmed v2 — 22 October 2026
+
+Added `qcvol_next.identifiability` (Jacobian-rank count of active parameters) and
+`qcvol_next.trimmed_v2` (v2 without its 14 inactive final-layer RZ weights; 70 parameters at
+depth 3). Tests confirm the known dead directions (paper phi, v1 and memory terminal RZ),
+that v2 loses exactly 14, that the trimmed model is full rank, matches v2 for any value
+of the dropped weights, has correct gradients, and fits to a stationary v2 solution.
+Sealed `qcvol_v2`, `qcvol_v3` and `qcvol` sources are unchanged; no study was re-run, so
+no score changed. The submitted report and frozen v2 protocol still quote 84 nominal
+parameters. See ADR 021.
