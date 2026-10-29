@@ -1,5 +1,26 @@
 # Verified progress
 
+## Frontier sprint: measured v4–v6, 22 October 2026
+
+- Completed 15 runs across Bitstamp BTC and Binance BTC/ETH/SOL/DOGE,
+  three feature seeds each, 240/240 eligible readout fits plus 15 HAR fits.
+  [Protocol](frontier-protocol.md), [results](frontier-results.md).
+- v6's largest mean NLL gain is ETH 0.477%; every v6 7/30-day interval crosses
+  zero. Binance BTC and SOL lose. QLIKE improves only on DOGE. No robust
+  superiority, independent confirmation or hardware advantage is established.
+- Added source/data-checked loss replay, 16 focused tests, a primary-source
+  review, nine bounded research work packages, and a seven-page compiled paper
+  draft. Future experiments remain explicitly proposed.
+- Verification: `uv run pytest -q`: **170 passed, 2 skipped** with locked extras.
+  Full Ruff lint/format commands were run and fail only on the pre-existing
+  untracked `study-guide/scripts/make_figs.py` (unused noqa and formatting).
+  Both pass with `--exclude study-guide`; that unrelated work is untouched.
+  Typst compilation succeeds; measured-results page rendered and inspected;
+  per-date metric replay and artifact/configuration checks pass for all runs.
+- Generated runs and PDF remain local ignored output. Source PDFs, existing
+  models, prior seals and user files remain unchanged. Full future confirmation
+  and publication readiness are open; see [the plan](frontier-research-plan.md).
+
 Updated 20 October 2026. This records what was actually built and run. The long-term
 research checklist is [implementation.md](implementation.md). Completed software does
 not imply that the scientific gates have passed.

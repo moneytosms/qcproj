@@ -16,6 +16,15 @@ specification and explanatory guide; their pilot numbers are not results from th
 
 ## Project site and paper
 
+The [frontier research sprint](doc/frontier-results.md) adds measured v4–v6 development
+experiments: 15 runs, 240 converged readout fits, and no robust quantum advantage.
+The [agent-ready research plan](doc/frontier-research-plan.md) defines the next gated
+experiments; the [new manuscript draft](paper/frontier.typ) includes the complete
+five-series scorecard and uncertainty. Build with
+`typst compile --font-path report/fonts --root . paper/frontier.typ output/pdf/quantum-volatility-frontier.pdf`.
+This draft preserves the earlier paper and distinguishes exposed development data
+from future confirmation.
+
 The [landing page](https://moneytosms.github.io/qcproj/) explains the result with charts and animations (source in `site/`, usage guide in `docs/`). The [research paper](paper/main.typ) is a 6-page Typst paper with BibTeX citations; build with `typst compile --font-path report/fonts --root . paper/main.typ paper/quantum-volatility-paper.pdf`. Figures come from `paper/results.json` via `paper/figures.py`.
 
 ## IEG 313 report
